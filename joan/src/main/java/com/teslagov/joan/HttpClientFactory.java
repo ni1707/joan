@@ -7,11 +7,15 @@ import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
+import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -34,21 +38,18 @@ public class HttpClientFactory
 	 */
 	private static final int CONNECTION_REQUEST_TIMEOUT = 30000;
 
-	public static HttpClient createHttpClient( HttpHost proxy )
+	public static HttpClient createHttpClient( int portNumber )
 	{
-		final int portNumber = proxy.getPort();
 		return HttpClientBuilder.create()
 			// The NO_OP HostnameVerifier essentially turns hostname verification off.
 			// This implementation is a no-op, and never throws the SSLException.
 			.setSSLHostnameVerifier( new NoopHostnameVerifier() )
 			.setSSLContext( getSslContext() )
-			.setDefaultCookieStore( new BasicCookieStore() )
 			.setDefaultRequestConfig(
 				RequestConfig.custom()
 					.setSocketTimeout( SOCKET_TIMEOUT )
 					.setConnectTimeout( CONNECTION_TIMEOUT )
 					.setConnectionRequestTimeout( CONNECTION_REQUEST_TIMEOUT )
-					.setProxy( proxy )
 					.build()
 			)
 			.setSchemePortResolver( host -> portNumber )
@@ -67,9 +68,9 @@ public class HttpClientFactory
 	{
 		try
 		{
-			return SSLContext.getDefault();
+			return SSLContexts.custom().loadTrustMaterial( null, new TrustSelfSignedStrategy() ).build();
 		}
-		catch ( NoSuchAlgorithmException e )
+		catch ( KeyStoreException | KeyManagementException | NoSuchAlgorithmException e )
 		{
 			throw new RuntimeException( "Could not make default SSLContext", e );
 		}

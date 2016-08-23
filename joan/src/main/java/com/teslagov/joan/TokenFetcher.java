@@ -51,10 +51,8 @@ public class TokenFetcher
 
 	private static HttpClient createPortalHttpClient( ArcConfiguration arcConfiguration )
 	{
-		String portalUrl = arcConfiguration.getPortalUrl();
 		int portNumber = arcConfiguration.getPort();
-
-		return HttpClientFactory.createHttpClient( new HttpHost( portalUrl, portNumber ) );
+		return HttpClientFactory.createHttpClient( portNumber );
 	}
 
 	private static URI createURI( ArcConfiguration arcConfiguration, String path )
@@ -63,16 +61,19 @@ public class TokenFetcher
 		logger.info( "Creating URL to {}", url );
 
 		URIBuilder uriBuilder;
+		URI uri;
 		try
 		{
 			uriBuilder = new URIBuilder( url );
-			return uriBuilder
+			uri = uriBuilder
 				.addParameter( "username", arcConfiguration.getUsername() )
 				.addParameter( "password", arcConfiguration.getPassword() )
 				.addParameter( "client", "referer" )
 				.addParameter( "expiration", "60" ) // TODO make configurable?
 				.addParameter( "f", "json" )
 				.build();
+			logger.info( "Built URI: {}", uri.toString() );
+			return uri;
 		}
 		catch ( URISyntaxException e )
 		{
