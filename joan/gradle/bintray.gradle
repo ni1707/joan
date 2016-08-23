@@ -44,6 +44,7 @@ bintray {
         }
     }
 }
+bintrayUpload.onlyIf { !gitVersion().endsWith(".dirty") }
 
 // test for sanity
 task echoProps << {

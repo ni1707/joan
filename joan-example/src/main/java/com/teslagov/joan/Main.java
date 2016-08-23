@@ -7,8 +7,7 @@ public class Main
 {
 	public static void main( String[] args )
 	{
-		ArcConfiguration arcConfiguration = null;
-
+		ArcConfiguration arcConfiguration = ArcConfigurationFactory.createArcConfiguration();
 		TokenFetcher tokenFetcher = new TokenFetcher();
 		Token token = tokenFetcher.fetchToken( arcConfiguration );
 	}
