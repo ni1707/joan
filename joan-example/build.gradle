@@ -1,0 +1,12 @@
+repositories {
+    maven { url 'http://jcenter.bintray.com' }
+}
+
+dependencies {
+    def slf4jVersion = "1.7.21"
+    compile project(':joan')
+    compile     group: 'org.slf4j',                 name: 'slf4j-api',      version: "${slf4jVersion}"
+    compile     group: 'org.slf4j',                 name: 'slf4j-simple',   version: "${slf4jVersion}"
+
+    compile     group: 'com.teslagov',              name: 'Properties',     version: '1.4.0'
+}

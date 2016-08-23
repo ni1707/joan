@@ -1,2 +1,4 @@
-rootProject.name = 'joan'
+include 'joan'
+include 'joan-example'
 
+rootProject.name = 'joan'

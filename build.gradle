@@ -1,15 +1,36 @@
-group 'com.teslagov'
-version '1.0-SNAPSHOT'
+plugins {
+    id "com.jfrog.bintray" version "1.6"
+    id 'com.palantir.git-version' version '0.5.2'
+}
 
-apply plugin: 'java'
-
-sourceCompatibility = 1.5
+group = 'com.teslagov'
+version = '0.0.1'//versionDetails().lastTag
+description = """Helper classes over ArcGIS Portal's REST API"""
 
 repositories {
     mavenCentral()
+    maven { url "http://repo.maven.apache.org/maven2" }
 }
 
-dependencies {
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+}
+
+ext.githubOrgName = 'TeslaGov'
+ext.githubRepoName = 'joan'
+
+ext.bintrayUser = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+ext.bintrayApiKey = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+ext.bintrayOrgName = 'teslagov'
+ext.bintrayRepoName = 'joan'
+ext.bintrayPackageName = project.name
+
+ext.ossrhUser = project.property('nexusUsername')
+ext.ossrhPass = project.property('nexusPassword')
+ext.passPhrase = project.property('signing.password')
+ext.labels = ['arcgis','portal','esri']
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
 }

@@ -1,0 +1,66 @@
+// requires com.jfrog.bintray plugin
+// for pushing to Bintray
+// Bintray will handle artifact signing for us
+// and will also push to Maven Central for us
+// no need to make a JIRA ticket, wait 2 days for approval,
+// and go through some clumsy Nexus UI
+// http://blog.bintray.com/2014/02/11/bintray-as-pain-free-gateway-to-maven-central/
+apply plugin: 'com.jfrog.bintray'
+bintray {
+    // inside ~/.gradle/gradle.properties I have
+    // bintrayUser=kevinmichaelchen
+    // bintrayApiKey=MY_API_KEY
+    user = project.bintrayUser
+    key = project.bintrayApiKey
+
+    publications = ['MyPublication']
+//    configurations = ['archives']
+
+    dryRun = false
+
+    pkg {
+        repo = project.bintrayRepoName
+        name = project.bintrayPackageName
+        userOrg = project.bintrayOrgName
+        licenses = ['MIT']
+        vcsUrl = "https://github.com/${githubOrgName}/${githubRepoName}.git"
+        labels = project.labels
+        publicDownloadNumbers = true
+        version {
+            released = new Date()
+            desc = "TeslaGov ${rootProject.name} ${project.version}"
+
+            gpg {
+                sign = false // Determines whether to GPG sign the files. The default is false
+//                passphrase = project.passPhrase // Optional. The passphrase for GPG signing
+            }
+            // Optional configuration for Maven Central sync of the version
+            mavenCentralSync {
+                sync = true // Optional (true by default). Determines whether to sync the version to Maven Central.
+                user = project.ossrhUser // OSS user token
+                password = project.ossrhPass // OSS user password
+                close = '1' // Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by putting 0 as value) and release the version manually.
+            }
+        }
+    }
+}
+
+// test for sanity
+task echoProps << {
+    println "               user: $bintrayUser"
+    println "                org: $bintrayOrgName"
+    println "               repo: $bintrayRepoName"
+    println "                pkg: $bintrayPackageName"
+    println "            api key: $bintrayApiKey"
+    println "         ossrh user: $ossrhUser"
+    println "         ossrh pass: $ossrhPass"
+    println "         passphrase: $passPhrase"
+    println "   rootProject.name: ${rootProject.name}"
+    println "    project.version: ${project.version}"
+    println "rootProject.version: ${rootProject.version}"
+    println "            version: ${version}"
+    println "      inceptionYear: ${inceptionYear.toString()}"
+    println "             labels: ${labels}"
+}
+
+bintrayUpload.dependsOn echoProps
