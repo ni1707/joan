@@ -39,7 +39,7 @@ public class HttpClientFactory
 
 	public static HttpClient createVeryUnsafePortalHttpClient( ArcConfiguration arcConfiguration )
 	{
-		int portNumber = arcConfiguration.getPort();
+		int portNumber = arcConfiguration.getPortalPort();
 		return HttpClientFactory.createVeryUnsafeHttpClient( portNumber );
 	}
 

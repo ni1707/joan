@@ -41,7 +41,7 @@ public class UserCreator
 				.urlFormParam( "password", password )
 				.urlFormParam( "firstname", firstName )
 				.urlFormParam( "lastname", lastName )
-				.urlFormParam( "referer", arcConfiguration.getReferer() )
+				.urlFormParam( "referer", arcConfiguration.getPortalUserName() )
 				.urlFormParam( "fullname", fullName )
 				.urlFormParam( "email", email )
 				.urlFormParam( "description", description )
