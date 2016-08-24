@@ -35,7 +35,7 @@ public class HttpPostBuilder
 
 	public HttpPost build()
 	{
-		URI uri = PortalUriFactory.createURI( url );
+		URI uri = UriFactory.createURI( url );
 
 		HttpPost httpPost = new HttpPost( uri );
 

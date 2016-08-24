@@ -10,9 +10,9 @@ import java.net.URISyntaxException;
 /**
  * @author Kevin Chen
  */
-class PortalUriFactory
+class UriFactory
 {
-	private static final Logger logger = LoggerFactory.getLogger( PortalUriFactory.class );
+	private static final Logger logger = LoggerFactory.getLogger( UriFactory.class );
 
 	static URI createURI( String url )
 	{
