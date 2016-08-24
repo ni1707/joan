@@ -10,12 +10,12 @@ public enum ArcProperties implements PropertyEnum
 	/**
 	 * The username of a Portal admin.
 	 */
-	USERNAME( "username" ),
+	PORTAL_ADMIN_USERNAME( "portalAdminUsername" ),
 
 	/**
 	 * The password of a Portal admin.
 	 */
-	PASSWORD( "password" ),
+	PORTAL_ADMIN_PASSWORD( "portalAdminPassword" ),
 
 	/**
 	 * The Portal URL, e.g., https://my.web.adaptor.url/arcgis
@@ -25,12 +25,27 @@ public enum ArcProperties implements PropertyEnum
 	/**
 	 * The port Portal is running on.
 	 */
-	PORT( "port" ),
+	PORTAL_PORT( "portalPort" ),
 
 	/**
-	 * The referer to use when communicating with Portal's REST API.
+	 * The username of a ArcGIS Server admin.
 	 */
-	REFERER( "referer" );
+	ARC_GIS_SERVER_ADMIN_USERNAME( "serverAdminUsername" ),
+
+	/**
+	 * The password of a ArcGIS Server admin.
+	 */
+	ARC_GIS_SERVER_ADMIN_PASSWORD( "serverAdminPassword" ),
+
+	/**
+	 * The URL for ArcGIS Server.
+	 */
+	ARC_GIS_SERVER_URL( "serverUrl" ),
+
+	/**
+	 * The port for ArcGIS Server.
+	 */
+	ARC_GIS_SERVER_PORT( "serverPort" );
 
 	private final String propertyName;
 

@@ -13,15 +13,15 @@ public class ArcConfigurationFactory
 		return new ArcConfiguration()
 		{
 			@Override
-			public String getUsername()
+			public String getPortalUserName()
 			{
-				return properties.getString( ArcProperties.USERNAME );
+				return properties.getString( ArcProperties.PORTAL_ADMIN_USERNAME );
 			}
 
 			@Override
-			public String getPassword()
+			public String getPortalUserPassword()
 			{
-				return properties.getString( ArcProperties.PASSWORD );
+				return properties.getString( ArcProperties.PORTAL_ADMIN_PASSWORD );
 			}
 
 			@Override
@@ -31,15 +31,33 @@ public class ArcConfigurationFactory
 			}
 
 			@Override
-			public int getPort()
+			public int getPortalPort()
 			{
-				return properties.getInteger( ArcProperties.PORT );
+				return properties.getInteger( ArcProperties.PORTAL_PORT );
 			}
 
 			@Override
-			public String getReferer()
+			public String getArcGISServerUserName()
 			{
-				return properties.getString( ArcProperties.REFERER );
+				return properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_USERNAME );
+			}
+
+			@Override
+			public String getArcGISUserPassword()
+			{
+				return properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_PASSWORD );
+			}
+
+			@Override
+			public String getArcGISUrl()
+			{
+				return properties.getString( ArcProperties.ARC_GIS_SERVER_URL );
+			}
+
+			@Override
+			public int getArcGISPort()
+			{
+				return properties.getInteger( ArcProperties.ARC_GIS_SERVER_PORT );
 			}
 		};
 	}
