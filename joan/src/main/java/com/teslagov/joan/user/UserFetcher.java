@@ -6,6 +6,7 @@ import com.teslagov.joan.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalResponse;
 import com.teslagov.joan.token.TokenResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,16 +41,20 @@ public class UserFetcher
 		int num
 	)
 	{
-		String path = String.format( "%s/sharing/rest/portals/%s/users", arcConfiguration.getPortalUrl(), portalResponse.id );
-		logger.debug( "Hitting path: {}", path );
-		HttpPost httpPost =
-			new HttpPostBuilder( arcConfiguration, path )
-				.urlFormParam( "token", tokenResponse.getToken() )
-				.urlFormParam( "start", start + "" )
-				.urlFormParam( "num", num + "" )
-				.build();
+		String path = String.format(
+			"%s/sharing/rest/portals/%s/users?token=%s&f=json&start=%s&num=%s",
+			arcConfiguration.getPortalUrl(),
+			portalResponse.id,
+			tokenResponse.getToken(),
+			start + "",
+			num + ""
+		);
 
-		UserListResponse userListResponse = HttpExecutor.getResponse( httpClient, httpPost, UserListResponse.class );
+		logger.debug( "Hitting path: {}", path );
+
+		HttpGet httpGet = new HttpGet( path );
+
+		UserListResponse userListResponse = HttpExecutor.getResponse( httpClient, httpGet, UserListResponse.class );
 		return userListResponse.users;
 	}
 }

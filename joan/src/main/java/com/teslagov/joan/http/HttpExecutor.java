@@ -18,9 +18,9 @@ public class HttpExecutor
 {
 	private static final Logger logger = LoggerFactory.getLogger( HttpExecutor.class );
 
-	public static <T> T getResponse( HttpClient httpClient, HttpRequestBase httpPost, Class<T> clazz )
+	public static <T> T getResponse( HttpClient httpClient, HttpRequestBase httpRequestBase, Class<T> clazz )
 	{
-		String response = getStringResponse( httpClient, httpPost );
+		String response = getStringResponse( httpClient, httpRequestBase );
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -30,36 +30,46 @@ public class HttpExecutor
 		}
 		catch ( IOException e )
 		{
-			throw new RuntimeException( "Could not deserialize tokenResponse... ", e );
+			throw new RuntimeException( "Could not deserialize response... ", e );
 		}
 	}
 
-	private static String getStringResponse( HttpClient httpClient, HttpRequestBase httpPost )
+	private static String getStringResponse( HttpClient httpClient, HttpRequestBase httpRequestBase )
 	{
+		HttpResponse response = null;
 		try
 		{
-			HttpResponse response = httpClient.execute( httpPost );
-			if ( response != null )
-			{
-				int status = response.getStatusLine().getStatusCode();
-				if ( status != 200 )
-				{
-					logger.warn( "Non-200 status: {}", status );
-				}
-				else
-				{
-					logger.debug( "200 OK" );
-				}
-				HttpEntity httpEntity = response.getEntity();
-				String responseString = EntityUtils.toString( httpEntity );
-				logger.debug( "{}", responseString );
-				return responseString;
-			}
+			response = httpClient.execute( httpRequestBase );
 		}
 		catch ( IOException e )
 		{
-			throw new RuntimeException( "Could not fetch tokenResponse... ", e );
+			throw new RuntimeException( "Could not execute http request... ", e );
 		}
+		if ( response != null )
+		{
+			int status = response.getStatusLine().getStatusCode();
+			if ( status != 200 )
+			{
+				logger.warn( "Non-200 status: {}", status );
+			}
+			else
+			{
+				logger.debug( "200 OK" );
+			}
+			HttpEntity httpEntity = response.getEntity();
+			String responseString = null;
+			try
+			{
+				responseString = EntityUtils.toString( httpEntity );
+			}
+			catch ( IOException e )
+			{
+				throw new RuntimeException( "Could not convert HttpEntity to string... ", e );
+			}
+			logger.debug( "{}", responseString );
+			return responseString;
+		}
+
 		throw new RuntimeException( "No response found... " );
 	}
 }

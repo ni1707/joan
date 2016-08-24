@@ -17,6 +17,7 @@ public class PortalFetcher
 	{
 		HttpPost httpPost =
 			new HttpPostBuilder( arcConfiguration, Endpoint.PORTAL_ID.getEndpointPath() )
+				.urlFormParam( "f", "json" )
 				.urlFormParam( "username", arcConfiguration.getUsername() )
 				.urlFormParam( "password", arcConfiguration.getPassword() )
 				.urlFormParam( "referer", arcConfiguration.getReferer() )
