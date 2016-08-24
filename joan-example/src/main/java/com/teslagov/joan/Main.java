@@ -68,6 +68,8 @@ public class Main
 			tokenResponse,
 			"Cool.Person1",
 			"Password123!",
+			"Cool",
+			"Person",
 			"Cool Person1",
 			"cool.person1@gmail.com",
 			"a cool person"
