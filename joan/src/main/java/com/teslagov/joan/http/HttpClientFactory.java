@@ -1,6 +1,5 @@
-package com.teslagov.joan;
+package com.teslagov.joan.http;
 
-import org.apache.http.HttpHost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.RegistryBuilder;
@@ -8,7 +7,6 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
-import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
@@ -38,6 +36,7 @@ public class HttpClientFactory
 	 */
 	private static final int CONNECTION_REQUEST_TIMEOUT = 30000;
 
+	// TODO mark this method as an example-only
 	public static HttpClient createHttpClient( int portNumber )
 	{
 		return HttpClientBuilder.create()
