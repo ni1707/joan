@@ -2,3 +2,6 @@ include 'joan'
 include 'joan-example'
 
 rootProject.name = 'joan'
+include 'joan-arc-server'
+include 'joan-arc-portal'
+

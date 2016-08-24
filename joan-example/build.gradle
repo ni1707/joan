@@ -7,6 +7,8 @@ repositories {
 dependencies {
 
     compile project(':joan')
+    compile project(':joan-arc-portal')
+    compile project(':joan-arc-server')
 
     def slf4jVersion = "1.7.21"
     compile     group: 'org.slf4j',                 name: 'slf4j-simple',   version: "${slf4jVersion}"
