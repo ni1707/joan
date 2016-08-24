@@ -8,6 +8,7 @@ import com.teslagov.joan.portal.PortalResponse;
 import com.teslagov.joan.portal.PortalFetcher;
 import com.teslagov.joan.token.TokenFetcher;
 import com.teslagov.joan.token.TokenResponse;
+import com.teslagov.joan.user.UserCreator;
 import com.teslagov.joan.user.UserFetcher;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
@@ -59,5 +60,17 @@ public class Main
 
 		UserFetcher userFetcher = new UserFetcher();
 		userFetcher.fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse );
+
+		UserCreator userCreator = new UserCreator();
+		userCreator.createArcGisUser(
+			httpClient,
+			arcConfiguration,
+			tokenResponse,
+			"Cool.Person1",
+			"Password123!",
+			"Cool Person1",
+			"cool.person1@gmail.com",
+			"a cool person"
+		);
 	}
 }
