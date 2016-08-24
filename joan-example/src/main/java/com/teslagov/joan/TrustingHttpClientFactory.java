@@ -1,6 +1,5 @@
-package com.teslagov.joan.http;
+package com.teslagov.joan;
 
-import com.teslagov.joan.ArcConfiguration;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.RegistryBuilder;
@@ -20,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author Kevin Chen
  */
-public class HttpClientFactory
+public class TrustingHttpClientFactory
 {
 	/**
 	 * Timeout in milliseconds until a connection is established.
@@ -40,7 +39,7 @@ public class HttpClientFactory
 	public static HttpClient createVeryUnsafePortalHttpClient( ArcConfiguration arcConfiguration )
 	{
 		int portNumber = arcConfiguration.getPortalPort();
-		return HttpClientFactory.createVeryUnsafeHttpClient( portNumber );
+		return createVeryUnsafeHttpClient( portNumber );
 	}
 
 	// TODO mark this method as an example-only

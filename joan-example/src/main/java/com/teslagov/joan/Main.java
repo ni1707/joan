@@ -3,9 +3,8 @@ package com.teslagov.joan;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.teslagov.joan.http.HttpClientFactory;
-import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.portal.PortalFetcher;
+import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
 import com.teslagov.joan.portal.user.PortalUserCreator;
@@ -28,7 +27,7 @@ public class Main
 	{
 		ArcConfiguration arcConfiguration = ArcConfigurationFactory.createArcConfiguration();
 
-		HttpClient httpClient = HttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
+		HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
 
 		PortalTokenFetcher portalTokenFetcher = new PortalTokenFetcher();
 
