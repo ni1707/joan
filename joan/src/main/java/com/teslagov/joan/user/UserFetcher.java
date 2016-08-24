@@ -2,6 +2,7 @@ package com.teslagov.joan.user;
 
 import com.teslagov.joan.ArcConfiguration;
 import com.teslagov.joan.token.TokenResponse;
+import org.apache.http.client.HttpClient;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public class UserFetcher
 {
-	public List<User> fetchUsers( TokenResponse tokenResponse, ArcConfiguration arcConfiguration )
+	public List<User> fetchUsers( HttpClient httpClient, ArcConfiguration arcConfiguration, TokenResponse tokenResponse )
 	{
 		throw new UnsupportedOperationException( "" );
 	}

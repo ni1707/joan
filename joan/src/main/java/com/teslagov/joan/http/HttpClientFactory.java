@@ -1,5 +1,6 @@
 package com.teslagov.joan.http;
 
+import com.teslagov.joan.ArcConfiguration;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.RegistryBuilder;
@@ -36,8 +37,14 @@ public class HttpClientFactory
 	 */
 	private static final int CONNECTION_REQUEST_TIMEOUT = 30000;
 
+	public static HttpClient createVeryUnsafePortalHttpClient( ArcConfiguration arcConfiguration )
+	{
+		int portNumber = arcConfiguration.getPort();
+		return HttpClientFactory.createVeryUnsafeHttpClient( portNumber );
+	}
+
 	// TODO mark this method as an example-only
-	public static HttpClient createHttpClient( int portNumber )
+	public static HttpClient createVeryUnsafeHttpClient( int portNumber )
 	{
 		return HttpClientBuilder.create()
 			// The NO_OP HostnameVerifier essentially turns hostname verification off.

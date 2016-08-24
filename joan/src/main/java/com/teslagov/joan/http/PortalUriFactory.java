@@ -12,11 +12,11 @@ import java.net.URISyntaxException;
 /**
  * @author Kevin Chen
  */
-public class PortalUriFactory
+class PortalUriFactory
 {
 	private static final Logger logger = LoggerFactory.getLogger( PortalUriFactory.class );
 
-	public static URI createURI( ArcConfiguration arcConfiguration, Endpoint endpoint )
+	static URI createURI( ArcConfiguration arcConfiguration, Endpoint endpoint )
 	{
 		String path = endpoint.getEndpointPath();
 		String url = arcConfiguration.getPortalUrl() + path;
