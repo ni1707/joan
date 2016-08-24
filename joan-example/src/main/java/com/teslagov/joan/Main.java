@@ -8,7 +8,7 @@ import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
-import com.teslagov.joan.portal.user.UserCreator;
+import com.teslagov.joan.portal.user.PortalUserCreator;
 import com.teslagov.joan.portal.user.UserFetcher;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
@@ -61,8 +61,8 @@ public class Main
 		UserFetcher userFetcher = new UserFetcher();
 		userFetcher.fetchUsers( httpClient, arcConfiguration, portalTokenResponse, portalResponse );
 
-		UserCreator userCreator = new UserCreator();
-		userCreator.createArcGisUser(
+		PortalUserCreator portalUserCreator = new PortalUserCreator();
+		portalUserCreator.createArcGisUser(
 			httpClient,
 			arcConfiguration,
 			portalTokenResponse,
