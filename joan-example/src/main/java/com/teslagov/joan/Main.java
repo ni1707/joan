@@ -3,6 +3,11 @@ package com.teslagov.joan;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teslagov.joan.portal.group.Group;
+import com.teslagov.joan.portal.group.GroupAccess;
+import com.teslagov.joan.portal.group.GroupCreator;
+import com.teslagov.joan.portal.group.GroupResponse;
+import com.teslagov.joan.portal.group.GroupSortField;
 import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
@@ -16,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Arrays;
 
 /**
  * @author Kevin Chen
@@ -61,7 +67,23 @@ public class Main
 		UserFetcher userFetcher = new UserFetcher();
 		userFetcher.fetchUsers( httpClient, arcConfiguration, portalTokenResponse, portalResponse );
 
-		ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();
-		ServerTokenResponse serverTokenResponse = serverTokenFetcher.fetchServer( httpClient, arcConfiguration, 120 );
+		GroupCreator groupCreator = new GroupCreator();
+		Group group = new Group();
+		group.title = "Kevin's Test Group";
+		group.description = "A test group owned by Kevin";
+		group.snippet = "snippet...";
+		group.tags = Arrays.asList( "tag1", "tag2" );
+		group.phone = "Contact info";
+		group.access = GroupAccess.PUBLIC;
+		group.sortField = GroupSortField.TITLE;
+		group.sortOrder = SortOrder.ASCENDING;
+		group.isViewOnly = true;
+		group.isInvitationOnly = false;
+		group.thumbnail = "";
+		GroupResponse groupResponse = groupCreator.createGroup( httpClient, arcConfiguration, portalTokenResponse, group );
+
+		// FETCH TOKEN FOR SERVER ADMIN API
+//		ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();
+//		ServerTokenResponse serverTokenResponse = serverTokenFetcher.fetchServer( httpClient, arcConfiguration, 120 );
 	}
 }

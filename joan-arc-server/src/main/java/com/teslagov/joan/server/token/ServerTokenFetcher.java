@@ -25,7 +25,7 @@ public class ServerTokenFetcher
 				.urlFormParam( "password", arcConfiguration.getArcServerAdminPassword() )
 				.urlFormParam( "client", "referer" )
 				.urlFormParam( "referer", arcConfiguration.getArcServerAdminUsername() )
-				.urlFormParam( "expiration", "" + tokenLifeMinutes )
+				.urlFormParam( "expiration", tokenLifeMinutes )
 				.build();
 
 		return HttpExecutor.getResponse( httpClient, httpPost, ServerTokenResponse.class );

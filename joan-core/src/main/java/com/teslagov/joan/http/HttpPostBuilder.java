@@ -33,6 +33,18 @@ public class HttpPostBuilder
 		return this;
 	}
 
+	public HttpPostBuilder urlFormParam( String key, boolean value )
+	{
+		urlFormParams.put( key, value + "" );
+		return this;
+	}
+
+	public HttpPostBuilder urlFormParam( String key, int value )
+	{
+		urlFormParams.put( key, value + "" );
+		return this;
+	}
+
 	public HttpPost build()
 	{
 		URI uri = UriFactory.createURI( url );
