@@ -17,6 +17,8 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ * This creates a HttpClient that trusts all self-signed certs. You shouldn't actually write code like this. It's just an example.
+ *
  * @author Kevin Chen
  */
 public class TrustingHttpClientFactory
@@ -42,7 +44,6 @@ public class TrustingHttpClientFactory
 		return createVeryUnsafeHttpClient( portNumber );
 	}
 
-	// TODO mark this method as an example-only
 	public static HttpClient createVeryUnsafeHttpClient( int portNumber )
 	{
 		return HttpClientBuilder.create()
