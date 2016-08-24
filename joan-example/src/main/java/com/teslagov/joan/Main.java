@@ -7,7 +7,6 @@ import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
-import com.teslagov.joan.portal.user.PortalUserCreator;
 import com.teslagov.joan.portal.user.UserFetcher;
 import com.teslagov.joan.server.token.ServerTokenFetcher;
 import com.teslagov.joan.server.token.ServerTokenResponse;
@@ -64,21 +63,5 @@ public class Main
 
 		ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();
 		ServerTokenResponse serverTokenResponse = serverTokenFetcher.fetchServer( httpClient, arcConfiguration, 120 );
-
-		// TODO apparently you cannot create a user via the Portal endpoint with a Server token...
-		// TODO so instead we should try creating a user via the Server endpoint with a Server token...
-		PortalUserCreator portalUserCreator = new PortalUserCreator();
-		portalUserCreator.createArcGisUser(
-			httpClient,
-			arcConfiguration,
-			serverTokenResponse.token,
-			"Cool.Person1",
-			"Password123!",
-			"Cool",
-			"Person",
-			"Cool Person1",
-			"cool.person1@gmail.com",
-			"a cool person"
-		);
 	}
 }

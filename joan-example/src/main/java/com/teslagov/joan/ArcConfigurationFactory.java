@@ -37,6 +37,12 @@ public class ArcConfigurationFactory
 			}
 
 			@Override
+			public String getPortalApiPath()
+			{
+				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
+			}
+
+			@Override
 			public String getArcServerAdminUsername()
 			{
 				return properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_USERNAME );

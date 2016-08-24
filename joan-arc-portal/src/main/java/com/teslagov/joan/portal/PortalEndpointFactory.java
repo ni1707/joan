@@ -7,18 +7,18 @@ import com.teslagov.joan.ArcConfiguration;
  */
 public class PortalEndpointFactory
 {
-	public static String createCreateUserPath( ArcConfiguration arcConfiguration )
+	public static String createFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )
 	{
-		return arcConfiguration.getPortalUrl() + "/portaladmin/security/users/createUser";
+		return String.format( "%s/portals/%s/users", arcConfiguration.getPortalApiPath(), portalID );
 	}
 
 	public static String createGenerateTokenPath( ArcConfiguration arcConfiguration )
 	{
-		return arcConfiguration.getPortalUrl() + "/sharing/rest/generateToken";
+		return arcConfiguration.getPortalApiPath() + "/generateToken";
 	}
 
 	public static String createGetPortalIDPath( ArcConfiguration arcConfiguration )
 	{
-		return arcConfiguration.getPortalUrl() + "/sharing/rest/portals/self";
+		return arcConfiguration.getPortalApiPath() + "/portals/self";
 	}
 }

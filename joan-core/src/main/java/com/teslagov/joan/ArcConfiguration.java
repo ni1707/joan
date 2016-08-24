@@ -34,6 +34,13 @@ public interface ArcConfiguration
 	int getPortalPort();
 
 	/**
+	 * Returns the URL to the ArcGIS Portal REST API, e.g., http://<host>:<port>/arcgis/sharing/rest
+	 *
+	 * @return the URL to the ArcGIS Portal REST API.
+	 */
+	String getPortalApiPath();
+
+	/**
 	 * Returns the username of a ArcGIS for Server admin.
 	 *
 	 * @return the username of a ArcGIS for Server admin.

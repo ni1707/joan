@@ -2,6 +2,7 @@ package com.teslagov.joan.portal.user;
 
 import com.teslagov.joan.ArcConfiguration;
 import com.teslagov.joan.http.HttpExecutor;
+import com.teslagov.joan.portal.PortalEndpointFactory;
 import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.http.client.HttpClient;
@@ -40,9 +41,8 @@ public class UserFetcher
 	)
 	{
 		String path = String.format(
-			"%s/sharing/rest/portals/%s/users?token=%s&f=json&start=%s&num=%s",
-			arcConfiguration.getPortalUrl(),
-			portalResponse.id,
+			"%s?token=%s&f=json&start=%s&num=%s",
+			PortalEndpointFactory.createFetchUsersPath( arcConfiguration, portalResponse.id ),
 			portalTokenResponse.getToken(),
 			start + "",
 			num + ""
