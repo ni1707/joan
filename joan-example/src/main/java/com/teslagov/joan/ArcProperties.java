@@ -10,7 +10,8 @@ public enum ArcProperties implements PropertyEnum
 	USERNAME( "username" ),
 	PASSWORD( "password" ),
 	PORTAL_URL( "portalUrl" ),
-	PORT( "port" );
+	PORT( "port" ),
+	REFERER( "referer" );
 
 	private final String propertyName;
 

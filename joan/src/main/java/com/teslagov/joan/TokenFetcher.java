@@ -1,18 +1,23 @@
 package com.teslagov.joan;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Kevin Chen
@@ -26,10 +31,26 @@ public class TokenFetcher
 		HttpClient httpClient = createPortalHttpClient( arcConfiguration );
 
 		URI uri = createURI( arcConfiguration, "/sharing/rest/generateToken" );
-		HttpGet httpGet = new HttpGet( uri );
+		HttpPost httpPost = new HttpPost( uri );
+
+		List<NameValuePair> urlParameters = new ArrayList<>();
+		urlParameters.add( new BasicNameValuePair( "username", arcConfiguration.getUsername() ) );
+		urlParameters.add( new BasicNameValuePair( "password", arcConfiguration.getPassword() ) );
+		urlParameters.add( new BasicNameValuePair( "referer", arcConfiguration.getReferer() ) );
+		urlParameters.add( new BasicNameValuePair( "f", "json" ) );
+
 		try
 		{
-			HttpResponse response = httpClient.execute( httpGet );
+			httpPost.setEntity( new UrlEncodedFormEntity( urlParameters ) );
+		}
+		catch ( UnsupportedEncodingException e )
+		{
+			throw new RuntimeException( "shit", e );
+		}
+
+		try
+		{
+			HttpResponse response = httpClient.execute( httpPost );
 			if ( response != null )
 			{
 				int status = response.getStatusLine().getStatusCode();
@@ -66,11 +87,6 @@ public class TokenFetcher
 		{
 			uriBuilder = new URIBuilder( url );
 			uri = uriBuilder
-				.addParameter( "username", arcConfiguration.getUsername() )
-				.addParameter( "password", arcConfiguration.getPassword() )
-				.addParameter( "client", "referer" )
-				.addParameter( "expiration", "60" ) // TODO make configurable?
-				.addParameter( "f", "json" )
 				.build();
 			logger.info( "Built URI: {}", uri.toString() );
 			return uri;

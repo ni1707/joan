@@ -12,4 +12,6 @@ public interface ArcConfiguration
 	String getPortalUrl();
 
 	int getPort();
+
+	String getReferer();
 }

@@ -35,6 +35,12 @@ public class ArcConfigurationFactory
 			{
 				return properties.getInteger( ArcProperties.PORT );
 			}
+
+			@Override
+			public String getReferer()
+			{
+				return properties.getString( ArcProperties.REFERER );
+			}
 		};
 	}
 }
