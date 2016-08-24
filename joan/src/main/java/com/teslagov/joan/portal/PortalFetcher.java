@@ -13,13 +13,16 @@ import org.apache.http.client.methods.HttpPost;
  */
 public class PortalFetcher
 {
-	public Portal fetchPortal( HttpClient httpClient, ArcConfiguration arcConfiguration, TokenResponse tokenResponse )
+	public PortalResponse fetchPortal( HttpClient httpClient, ArcConfiguration arcConfiguration, TokenResponse tokenResponse )
 	{
 		HttpPost httpPost =
-			new HttpPostBuilder( arcConfiguration, Endpoint.PORTAL_ID )
+			new HttpPostBuilder( arcConfiguration, Endpoint.PORTAL_ID.getEndpointPath() )
+				.urlFormParam( "username", arcConfiguration.getUsername() )
+				.urlFormParam( "password", arcConfiguration.getPassword() )
+				.urlFormParam( "referer", arcConfiguration.getReferer() )
 				.urlFormParam( "token", tokenResponse.getToken() )
-				.build();
+		.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, Portal.class );
+		return HttpExecutor.getResponse( httpClient, httpPost, PortalResponse.class );
 	}
 }

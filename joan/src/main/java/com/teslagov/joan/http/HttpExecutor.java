@@ -52,7 +52,7 @@ public class HttpExecutor
 				}
 				HttpEntity httpEntity = response.getEntity();
 				String responseString = EntityUtils.toString( httpEntity );
-				logger.info( "{}", responseString );
+				logger.debug( "{}", responseString );
 				return responseString;
 			}
 		}

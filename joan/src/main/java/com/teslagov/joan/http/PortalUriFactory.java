@@ -1,7 +1,6 @@
 package com.teslagov.joan.http;
 
 import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.Endpoint;
 import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +15,8 @@ class PortalUriFactory
 {
 	private static final Logger logger = LoggerFactory.getLogger( PortalUriFactory.class );
 
-	static URI createURI( ArcConfiguration arcConfiguration, Endpoint endpoint )
+	static URI createURI( ArcConfiguration arcConfiguration, String path )
 	{
-		String path = endpoint.getEndpointPath();
 		String url = arcConfiguration.getPortalUrl() + path;
 		logger.debug( "Creating URL to {}", url );
 

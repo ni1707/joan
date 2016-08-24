@@ -15,7 +15,10 @@ public class TokenFetcher
 	public TokenResponse fetchToken( HttpClient httpClient, ArcConfiguration arcConfiguration )
 	{
 		HttpPost httpPost =
-			new HttpPostBuilder( arcConfiguration, Endpoint.GENERATE_TOKEN )
+			new HttpPostBuilder( arcConfiguration, Endpoint.GENERATE_TOKEN.getEndpointPath() )
+				.urlFormParam( "username", arcConfiguration.getUsername() )
+				.urlFormParam( "password", arcConfiguration.getPassword() )
+				.urlFormParam( "referer", arcConfiguration.getReferer() )
 				.build();
 
 		return HttpExecutor.getResponse( httpClient, httpPost, TokenResponse.class );

@@ -9,7 +9,7 @@ import com.teslagov.joan.Response;
  */
 @JsonInclude( JsonInclude.Include.NON_NULL )
 @JsonIgnoreProperties( ignoreUnknown = true )
-public class Portal extends Response
+public class PortalResponse extends Response
 {
 	public String id;
 }

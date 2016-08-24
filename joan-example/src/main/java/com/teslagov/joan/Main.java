@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teslagov.joan.http.HttpClientFactory;
-import com.teslagov.joan.portal.Portal;
+import com.teslagov.joan.portal.PortalResponse;
 import com.teslagov.joan.portal.PortalFetcher;
 import com.teslagov.joan.token.TokenFetcher;
 import com.teslagov.joan.token.TokenResponse;
+import com.teslagov.joan.user.UserFetcher;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,20 +33,20 @@ public class Main
 
 		TokenResponse tokenResponse = tokenFetcher.fetchToken( httpClient, arcConfiguration );
 
-		logger.info( "TokenResponse successful: {}", tokenResponse.isSuccess() );
-		logger.info( "TokenResponse toString: {}", tokenResponse );
+		logger.debug( "TokenResponse successful: {}", tokenResponse.isSuccess() );
+		logger.debug( "TokenResponse toString: {}", tokenResponse );
 
 		long expiresEpochMs = tokenResponse.getExpires();
 		LocalDateTime localDateTime = LocalDateTime.ofEpochSecond( expiresEpochMs / 1000, 0, ZoneOffset.UTC );
-		logger.info( "Current time = {}", LocalDateTime.now( ZoneOffset.UTC ) );
-		logger.info( "Token expires at {}", localDateTime );
+		logger.debug( "Current time = {}", LocalDateTime.now( ZoneOffset.UTC ) );
+		logger.debug( "Token expires at {}", localDateTime );
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion( JsonInclude.Include.NON_NULL );
 
 		try
 		{
-			logger.info( "TOKEN SERIALIZED = {}", objectMapper.writeValueAsString( tokenResponse ) );
+			logger.debug( "TOKEN SERIALIZED = {}", objectMapper.writeValueAsString( tokenResponse ) );
 		}
 		catch ( JsonProcessingException e )
 		{
@@ -53,7 +54,10 @@ public class Main
 		}
 
 		PortalFetcher portalFetcher = new PortalFetcher();
-		Portal portal = portalFetcher.fetchPortal( httpClient, arcConfiguration, tokenResponse );
-		logger.info( "Portal ID = {}", portal.id );
+		PortalResponse portalResponse = portalFetcher.fetchPortal( httpClient, arcConfiguration, tokenResponse );
+		logger.debug( "Portal ID = {}", portalResponse.id );
+
+		UserFetcher userFetcher = new UserFetcher();
+		userFetcher.fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse );
 	}
 }

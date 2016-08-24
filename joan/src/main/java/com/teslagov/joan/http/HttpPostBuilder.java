@@ -1,7 +1,6 @@
 package com.teslagov.joan.http;
 
 import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.Endpoint;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -21,19 +20,16 @@ public class HttpPostBuilder
 {
 	private final ArcConfiguration arcConfiguration;
 
-	private final Endpoint endpoint;
+	private final String path;
 
 	private final Map<String, String> urlFormParams;
 
-	public HttpPostBuilder( ArcConfiguration arcConfiguration, Endpoint endpoint )
+	public HttpPostBuilder( ArcConfiguration arcConfiguration, String path )
 	{
 		this.arcConfiguration = arcConfiguration;
-		this.endpoint = endpoint;
+		this.path = path;
 		this.urlFormParams = new TreeMap<>();
 
-		this.urlFormParams.put( "username", arcConfiguration.getUsername() );
-		this.urlFormParams.put( "password", arcConfiguration.getPassword() );
-		this.urlFormParams.put( "referer", arcConfiguration.getReferer() );
 		this.urlFormParams.put( "f", "json" );
 	}
 
@@ -45,7 +41,8 @@ public class HttpPostBuilder
 
 	public HttpPost build()
 	{
-		URI uri = PortalUriFactory.createURI( arcConfiguration, endpoint );
+		URI uri = PortalUriFactory.createURI( arcConfiguration, path );
+
 		HttpPost httpPost = new HttpPost( uri );
 
 		List<NameValuePair> nameValuePairs = new ArrayList<>();
