@@ -6,7 +6,7 @@ repositories {
 
 dependencies {
 
-    compile project(':joan')
+    compile project(':joan-core')
     compile project(':joan-arc-portal')
     compile project(':joan-arc-server')
 

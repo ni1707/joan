@@ -3,6 +3,6 @@ repositories {
 }
 
 dependencies {
-    compile project(':joan')
+    compile project(':joan-core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
