@@ -1,7 +1,7 @@
-package com.teslagov.joan.token;
+package com.teslagov.joan.portal.token;
 
 import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.Endpoint;
+import com.teslagov.joan.portal.PortalEndpoint;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.http.HttpPostBuilder;
 import org.apache.http.client.HttpClient;
@@ -10,18 +10,18 @@ import org.apache.http.client.methods.HttpPost;
 /**
  * @author Kevin Chen
  */
-public class TokenFetcher
+public class PortalTokenFetcher
 {
-	public TokenResponse fetchToken( HttpClient httpClient, ArcConfiguration arcConfiguration )
+	public PortalTokenResponse fetchToken( HttpClient httpClient, ArcConfiguration arcConfiguration )
 	{
 		HttpPost httpPost =
-			new HttpPostBuilder( arcConfiguration, Endpoint.GENERATE_TOKEN.getEndpointPath() )
+			new HttpPostBuilder( arcConfiguration, PortalEndpoint.GENERATE_TOKEN.getEndpointPath() )
 				.urlFormParam( "f", "json" )
 				.urlFormParam( "username", arcConfiguration.getPortalUserName() )
 				.urlFormParam( "password", arcConfiguration.getPortalUserPassword() )
 				.urlFormParam( "referer", arcConfiguration.getPortalUserName() )
 				.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, TokenResponse.class );
+		return HttpExecutor.getResponse( httpClient, httpPost, PortalTokenResponse.class );
 	}
 }

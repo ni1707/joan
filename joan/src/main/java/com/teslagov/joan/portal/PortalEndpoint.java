@@ -1,21 +1,21 @@
-package com.teslagov.joan;
+package com.teslagov.joan.portal;
 
 /**
  * @author Kevin Chen
  */
-public enum Endpoint
+public enum PortalEndpoint
 {
 	GENERATE_TOKEN( "/sharing/rest/generateToken" ),
 	PORTAL_ID( "/sharing/rest/portals/self" );
 
 	private String endpointPath;
 
-	Endpoint( String endpointPath )
+	PortalEndpoint( String endpointPath )
 	{
 		this.endpointPath = endpointPath;
 	}
 
-	Endpoint()
+	PortalEndpoint()
 	{
 
 	}

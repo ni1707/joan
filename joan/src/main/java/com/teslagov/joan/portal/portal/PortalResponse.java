@@ -1,4 +1,4 @@
-package com.teslagov.joan.portal;
+package com.teslagov.joan.portal.portal;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

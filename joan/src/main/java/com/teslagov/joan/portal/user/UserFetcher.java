@@ -1,13 +1,11 @@
-package com.teslagov.joan.user;
+package com.teslagov.joan.portal.user;
 
 import com.teslagov.joan.ArcConfiguration;
 import com.teslagov.joan.http.HttpExecutor;
-import com.teslagov.joan.http.HttpPostBuilder;
-import com.teslagov.joan.portal.PortalResponse;
-import com.teslagov.joan.token.TokenResponse;
+import com.teslagov.joan.portal.portal.PortalResponse;
+import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,17 +23,17 @@ public class UserFetcher
 	public List<User> fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
-		TokenResponse tokenResponse,
+		PortalTokenResponse portalTokenResponse,
 		PortalResponse portalResponse
 	)
 	{
-		return fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse, 0, 100 );
+		return fetchUsers( httpClient, arcConfiguration, portalTokenResponse, portalResponse, 0, 100 );
 	}
 
 	public List<User> fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
-		TokenResponse tokenResponse,
+		PortalTokenResponse portalTokenResponse,
 		PortalResponse portalResponse,
 		int start,
 		int num
@@ -45,7 +43,7 @@ public class UserFetcher
 			"%s/sharing/rest/portals/%s/users?token=%s&f=json&start=%s&num=%s",
 			arcConfiguration.getPortalUrl(),
 			portalResponse.id,
-			tokenResponse.getToken(),
+			portalTokenResponse.getToken(),
 			start + "",
 			num + ""
 		);

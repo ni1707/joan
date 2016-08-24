@@ -1,4 +1,4 @@
-package com.teslagov.joan.user;
+package com.teslagov.joan.portal.user;
 
 import com.teslagov.joan.ArcConfiguration;
 import com.teslagov.joan.Provider;
@@ -6,7 +6,7 @@ import com.teslagov.joan.Response;
 import com.teslagov.joan.Role;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.http.HttpPostBuilder;
-import com.teslagov.joan.token.TokenResponse;
+import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class UserCreator
 	public Response createArcGisUser(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
-		TokenResponse tokenResponse,
+		PortalTokenResponse portalTokenResponse,
 		String username,
 		String password,
 		String firstName,
@@ -32,11 +32,11 @@ public class UserCreator
 		String description
 	)
 	{
-		logger.debug( "Creating user with token: {}", tokenResponse.getToken() );
+		logger.debug( "Creating user with token: {}", portalTokenResponse.getToken() );
 		HttpPost httpPost =
 			new HttpPostBuilder( arcConfiguration, "/portaladmin/security/users/createUser" )
 				.urlFormParam( "f", "json" )
-				.urlFormParam( "token", tokenResponse.getToken() )
+				.urlFormParam( "token", portalTokenResponse.getToken() )
 				.urlFormParam( "username", username )
 				.urlFormParam( "password", password )
 				.urlFormParam( "firstname", firstName )

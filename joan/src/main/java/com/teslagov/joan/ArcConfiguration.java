@@ -38,26 +38,33 @@ public interface ArcConfiguration
 	 *
 	 * @return the username of a ArcGIS for Server admin.
 	 */
-	String getArcGISServerUserName();
+	String getArcServerAdminUsername();
 
 	/**
 	 * Returns the password of a ArcGIS for Server admin.
 	 *
 	 * @return the password of a ArcGIS for Server admin.
 	 */
-	String getArcGISUserPassword();
+	String getArcServerAdminPassword();
 
 	/**
 	 * Returns the url where ArcGIS for Server lives.
 	 *
 	 * @return the url where ArcGIS for Server lives.
 	 */
-	String getArcGISUrl();
+	String getArcServerUrl();
 
 	/**
 	 * Returns the port on which ArcGIS for Server runs.
 	 *
 	 * @return the port on which ArcGIS for Server runs.
 	 */
-	int getArcGISPort();
+	int getArcServerPort();
+
+	/**
+	 * Returns the URL to the ArcGIS Server Administration REST API, e.g., http://server:port/arcgis/admin
+	 *
+	 * @return the URL to the ArcGIS Server Administration REST API.
+	 */
+	String getArcServerAdminApiPath();
 }

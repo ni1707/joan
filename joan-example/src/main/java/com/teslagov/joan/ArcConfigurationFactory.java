@@ -37,27 +37,33 @@ public class ArcConfigurationFactory
 			}
 
 			@Override
-			public String getArcGISServerUserName()
+			public String getArcServerAdminUsername()
 			{
 				return properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_USERNAME );
 			}
 
 			@Override
-			public String getArcGISUserPassword()
+			public String getArcServerAdminPassword()
 			{
 				return properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_PASSWORD );
 			}
 
 			@Override
-			public String getArcGISUrl()
+			public String getArcServerUrl()
 			{
 				return properties.getString( ArcProperties.ARC_GIS_SERVER_URL );
 			}
 
 			@Override
-			public int getArcGISPort()
+			public int getArcServerPort()
 			{
 				return properties.getInteger( ArcProperties.ARC_GIS_SERVER_PORT );
+			}
+
+			@Override
+			public String getArcServerAdminApiPath()
+			{
+				return getArcServerUrl() + ":" + getArcServerPort() + "/arcgis/admin";
 			}
 		};
 	}

@@ -1,4 +1,4 @@
-package com.teslagov.joan.token;
+package com.teslagov.joan.portal.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.teslagov.joan.Response;
@@ -7,7 +7,7 @@ import com.teslagov.joan.Response;
  * @author Kevin Chen
  */
 @JsonInclude( JsonInclude.Include.NON_NULL )
-public class TokenResponse extends Response
+public class PortalTokenResponse extends Response
 {
 	private String token;
 
@@ -48,7 +48,7 @@ public class TokenResponse extends Response
 	@Override
 	public String toString()
 	{
-		return "TokenResponse{" +
+		return "PortalTokenResponse{" +
 			"error=" + error +
 			", token='" + token + '\'' +
 			", expires=" + expires +

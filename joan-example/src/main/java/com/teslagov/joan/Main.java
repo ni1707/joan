@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teslagov.joan.http.HttpClientFactory;
-import com.teslagov.joan.portal.PortalResponse;
-import com.teslagov.joan.portal.PortalFetcher;
-import com.teslagov.joan.token.TokenFetcher;
-import com.teslagov.joan.token.TokenResponse;
-import com.teslagov.joan.user.UserCreator;
-import com.teslagov.joan.user.UserFetcher;
+import com.teslagov.joan.portal.portal.PortalResponse;
+import com.teslagov.joan.portal.portal.PortalFetcher;
+import com.teslagov.joan.portal.token.PortalTokenFetcher;
+import com.teslagov.joan.portal.token.PortalTokenResponse;
+import com.teslagov.joan.portal.user.UserCreator;
+import com.teslagov.joan.portal.user.UserFetcher;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +30,14 @@ public class Main
 
 		HttpClient httpClient = HttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
 
-		TokenFetcher tokenFetcher = new TokenFetcher();
+		PortalTokenFetcher portalTokenFetcher = new PortalTokenFetcher();
 
-		TokenResponse tokenResponse = tokenFetcher.fetchToken( httpClient, arcConfiguration );
+		PortalTokenResponse portalTokenResponse = portalTokenFetcher.fetchToken( httpClient, arcConfiguration );
 
-		logger.debug( "TokenResponse successful: {}", tokenResponse.isSuccess() );
-		logger.debug( "TokenResponse toString: {}", tokenResponse );
+		logger.debug( "PortalTokenResponse successful: {}", portalTokenResponse.isSuccess() );
+		logger.debug( "PortalTokenResponse toString: {}", portalTokenResponse );
 
-		long expiresEpochMs = tokenResponse.getExpires();
+		long expiresEpochMs = portalTokenResponse.getExpires();
 		LocalDateTime localDateTime = LocalDateTime.ofEpochSecond( expiresEpochMs / 1000, 0, ZoneOffset.UTC );
 		logger.debug( "Current time = {}", LocalDateTime.now( ZoneOffset.UTC ) );
 		logger.debug( "Token expires at {}", localDateTime );
@@ -47,7 +47,7 @@ public class Main
 
 		try
 		{
-			logger.debug( "TOKEN SERIALIZED = {}", objectMapper.writeValueAsString( tokenResponse ) );
+			logger.debug( "TOKEN SERIALIZED = {}", objectMapper.writeValueAsString( portalTokenResponse ) );
 		}
 		catch ( JsonProcessingException e )
 		{
@@ -55,17 +55,17 @@ public class Main
 		}
 
 		PortalFetcher portalFetcher = new PortalFetcher();
-		PortalResponse portalResponse = portalFetcher.fetchPortal( httpClient, arcConfiguration, tokenResponse );
+		PortalResponse portalResponse = portalFetcher.fetchPortal( httpClient, arcConfiguration, portalTokenResponse );
 		logger.debug( "Portal ID = {}", portalResponse.id );
 
 		UserFetcher userFetcher = new UserFetcher();
-		userFetcher.fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse );
+		userFetcher.fetchUsers( httpClient, arcConfiguration, portalTokenResponse, portalResponse );
 
 		UserCreator userCreator = new UserCreator();
 		userCreator.createArcGisUser(
 			httpClient,
 			arcConfiguration,
-			tokenResponse,
+			portalTokenResponse,
 			"Cool.Person1",
 			"Password123!",
 			"Cool",
