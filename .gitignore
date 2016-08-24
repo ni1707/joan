@@ -9,3 +9,4 @@ built
 build
 .gradle
 out
+*.secret
