@@ -23,6 +23,6 @@ public class PropertiesFactory
 					() -> Clock.systemUTC().instant(),
 					Duration.ofSeconds( 60 ) ),
 				new CascadingPropertySource(
-					new ClasspathPropertySource( new PropertyMapReader(), "/secrets.properties" ) ) ) );
+					new ClasspathPropertySource( new PropertyMapReader(), "/arc.properties" ) ) ) );
 	}
 }
