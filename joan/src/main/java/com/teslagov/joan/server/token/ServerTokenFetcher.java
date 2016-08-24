@@ -19,9 +19,8 @@ public class ServerTokenFetcher
 	public ServerTokenResponse fetchServer( HttpClient httpClient, ArcConfiguration arcConfiguration, int tokenLifeMinutes )
 	{
 		String url = ServerEndpointFactory.createGenerateTokenEndpoint( arcConfiguration );
-		// TODO new HttpPostBuilder( url )
 		HttpPost httpPost =
-			new HttpPostBuilder( arcConfiguration, PortalEndpoint.GENERATE_TOKEN.getEndpointPath() )
+			new HttpPostBuilder( url )
 				.urlFormParam( "f", "json" )
 				.urlFormParam( "username", arcConfiguration.getArcServerAdminUsername() )
 				.urlFormParam( "password", arcConfiguration.getArcServerAdminPassword() )

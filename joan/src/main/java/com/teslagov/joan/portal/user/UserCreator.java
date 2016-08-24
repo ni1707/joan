@@ -33,8 +33,9 @@ public class UserCreator
 	)
 	{
 		logger.debug( "Creating user with token: {}", portalTokenResponse.getToken() );
+		String path = arcConfiguration.getPortalUrl() + "/portaladmin/security/users/createUser";
 		HttpPost httpPost =
-			new HttpPostBuilder( arcConfiguration, "/portaladmin/security/users/createUser" )
+			new HttpPostBuilder( path )
 				.urlFormParam( "f", "json" )
 				.urlFormParam( "token", portalTokenResponse.getToken() )
 				.urlFormParam( "username", username )

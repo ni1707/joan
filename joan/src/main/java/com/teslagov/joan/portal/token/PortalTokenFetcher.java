@@ -14,8 +14,9 @@ public class PortalTokenFetcher
 {
 	public PortalTokenResponse fetchToken( HttpClient httpClient, ArcConfiguration arcConfiguration )
 	{
+		String path = arcConfiguration.getPortalUrl() + PortalEndpoint.GENERATE_TOKEN.getEndpointPath();
 		HttpPost httpPost =
-			new HttpPostBuilder( arcConfiguration, PortalEndpoint.GENERATE_TOKEN.getEndpointPath() )
+			new HttpPostBuilder( path )
 				.urlFormParam( "f", "json" )
 				.urlFormParam( "username", arcConfiguration.getPortalUserName() )
 				.urlFormParam( "password", arcConfiguration.getPortalUserPassword() )

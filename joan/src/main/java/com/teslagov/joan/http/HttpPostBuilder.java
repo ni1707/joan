@@ -18,16 +18,13 @@ import java.util.TreeMap;
  */
 public class HttpPostBuilder
 {
-	private final ArcConfiguration arcConfiguration;
-
-	private final String path;
+	private final String url;
 
 	private final Map<String, String> urlFormParams;
 
-	public HttpPostBuilder( ArcConfiguration arcConfiguration, String path )
+	public HttpPostBuilder( String url )
 	{
-		this.arcConfiguration = arcConfiguration;
-		this.path = path;
+		this.url = url;
 		this.urlFormParams = new TreeMap<>();
 	}
 
@@ -39,7 +36,7 @@ public class HttpPostBuilder
 
 	public HttpPost build()
 	{
-		URI uri = PortalUriFactory.createURI( arcConfiguration, path );
+		URI uri = PortalUriFactory.createURI( url );
 
 		HttpPost httpPost = new HttpPost( uri );
 
