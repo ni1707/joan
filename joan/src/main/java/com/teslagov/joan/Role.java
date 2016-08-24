@@ -7,9 +7,6 @@ package com.teslagov.joan;
  */
 public enum Role
 {
-	ACCOUNT_USER( "account_user", "User (built-in)" ),
-	ACCOUNT_PUBLISHER( "account_publisher", "Publisher (built-in)" ),
-	ACCOUNT_ADMIN( "account_admin", "Admin (built-in)" ),
 	ORG_USER( "org_user", "User (built-in)" ),
 	ORG_PUBLISHER( "org_publisher", "Publisher (built-in)" ),
 	ORG_ADMIN( "org_admin", "Admin (built-in)" );
