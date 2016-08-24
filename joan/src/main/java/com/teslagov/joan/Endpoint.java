@@ -5,6 +5,7 @@ package com.teslagov.joan;
  */
 public enum Endpoint
 {
+	PORTAL_ID( "/sharing/rest/portals/self" ),
 	GENERATE_TOKEN( "/sharing/rest/generateToken" );
 
 	private final String endpointPath;

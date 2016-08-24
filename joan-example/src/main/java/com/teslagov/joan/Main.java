@@ -4,11 +4,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teslagov.joan.http.HttpClientFactory;
+import com.teslagov.joan.portal.Portal;
+import com.teslagov.joan.portal.PortalFetcher;
 import com.teslagov.joan.token.TokenFetcher;
 import com.teslagov.joan.token.TokenResponse;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * @author Kevin Chen
@@ -30,6 +35,11 @@ public class Main
 		logger.info( "TokenResponse successful: {}", tokenResponse.isSuccess() );
 		logger.info( "TokenResponse toString: {}", tokenResponse );
 
+		long expiresEpochMs = tokenResponse.getExpires();
+		LocalDateTime localDateTime = LocalDateTime.ofEpochSecond( expiresEpochMs / 1000, 0, ZoneOffset.UTC );
+		logger.info( "Current time = {}", LocalDateTime.now( ZoneOffset.UTC ) );
+		logger.info( "Token expires at {}", localDateTime );
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion( JsonInclude.Include.NON_NULL );
 
@@ -41,5 +51,9 @@ public class Main
 		{
 			e.printStackTrace();
 		}
+
+		PortalFetcher portalFetcher = new PortalFetcher();
+		Portal portal = portalFetcher.fetchPortal( httpClient, arcConfiguration, tokenResponse );
+		logger.info( "Portal ID = {}", portal.id );
 	}
 }

@@ -16,9 +16,6 @@ public class TokenFetcher
 	{
 		HttpPost httpPost =
 			new HttpPostBuilder( arcConfiguration, Endpoint.GENERATE_TOKEN )
-				.urlFormParam( "username", arcConfiguration.getUsername() )
-				.urlFormParam( "password", arcConfiguration.getPassword() )
-				.urlFormParam( "referer", arcConfiguration.getReferer() )
 				.build();
 
 		return HttpExecutor.getResponse( httpClient, httpPost, TokenResponse.class );

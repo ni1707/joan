@@ -30,6 +30,10 @@ public class HttpPostBuilder
 		this.arcConfiguration = arcConfiguration;
 		this.endpoint = endpoint;
 		this.urlFormParams = new TreeMap<>();
+
+		this.urlFormParams.put( "username", arcConfiguration.getUsername() );
+		this.urlFormParams.put( "password", arcConfiguration.getPassword() );
+		this.urlFormParams.put( "referer", arcConfiguration.getReferer() );
 		this.urlFormParams.put( "f", "json" );
 	}
 
