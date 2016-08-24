@@ -1,9 +1,9 @@
 package com.teslagov.joan.portal.token;
 
 import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.portal.PortalEndpoint;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.http.HttpPostBuilder;
+import com.teslagov.joan.portal.PortalEndpoint;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 
