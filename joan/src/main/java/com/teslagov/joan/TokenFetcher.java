@@ -1,5 +1,6 @@
 package com.teslagov.joan;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -26,7 +27,7 @@ public class TokenFetcher
 {
 	private static final Logger logger = LoggerFactory.getLogger( TokenFetcher.class );
 
-	public Token fetchToken( ArcConfiguration arcConfiguration )
+	public TokenResponse fetchToken( ArcConfiguration arcConfiguration )
 	{
 		HttpClient httpClient = createPortalHttpClient( arcConfiguration );
 
@@ -45,8 +46,10 @@ public class TokenFetcher
 		}
 		catch ( UnsupportedEncodingException e )
 		{
-			throw new RuntimeException( "shit", e );
+			throw new RuntimeException( "Could not url encode params", e );
 		}
+
+		String responseString = null;
 
 		try
 		{
@@ -58,16 +61,35 @@ public class TokenFetcher
 				{
 					logger.warn( "Non-200 status: {}", status );
 				}
+				else
+				{
+					logger.debug( "200 OK" );
+				}
 				HttpEntity httpEntity = response.getEntity();
-				String responseString = EntityUtils.toString( httpEntity );
+				responseString = EntityUtils.toString( httpEntity );
 				logger.info( "{}", responseString );
 			}
 		}
 		catch ( IOException e )
 		{
-			throw new RuntimeException( "Could not fetch token... ", e );
+			throw new RuntimeException( "Could not fetch tokenResponse... ", e );
 		}
-		return null;
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		TokenResponse tokenResponse = null;
+		try
+		{
+			tokenResponse = objectMapper.readValue( responseString, TokenResponse.class );
+		}
+		catch ( IOException e )
+		{
+			throw new RuntimeException( "Could not deserialize tokenResponse... ", e );
+		}
+
+		logger.info( "TokenResponse successful: {}", tokenResponse.isSuccess() );
+		logger.info( "TokenResponse toString: {}", tokenResponse );
+
+		return tokenResponse;
 	}
 
 	private static HttpClient createPortalHttpClient( ArcConfiguration arcConfiguration )
@@ -79,7 +101,7 @@ public class TokenFetcher
 	private static URI createURI( ArcConfiguration arcConfiguration, String path )
 	{
 		String url = arcConfiguration.getPortalUrl() + path;
-		logger.info( "Creating URL to {}", url );
+		logger.debug( "Creating URL to {}", url );
 
 		URIBuilder uriBuilder;
 		URI uri;
@@ -88,7 +110,7 @@ public class TokenFetcher
 			uriBuilder = new URIBuilder( url );
 			uri = uriBuilder
 				.build();
-			logger.info( "Built URI: {}", uri.toString() );
+			logger.debug( "Built URI: {}", uri.toString() );
 			return uri;
 		}
 		catch ( URISyntaxException e )
