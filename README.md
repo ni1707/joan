@@ -27,7 +27,7 @@ ArcConfiguration arcConfiguration =
     .build();
 ```
 
-and your Apache `HttpClient`, and you'd be on your way:
+and your [Apache `HttpClient`](https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/), and you'd be on your way:
 
 ```java
 ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
