@@ -13,9 +13,9 @@ import java.time.Duration;
 /**
  * @author Kevin Chen
  */
-public class PropertiesFactory
+public class ArcPropertiesFactory
 {
-	public static Properties createProperties()
+	public static Properties createArcProperties()
 	{
 		return new Properties(
 			new CachingPropertySource(

@@ -10,14 +10,14 @@ public interface ArcConfiguration
 	 *
 	 * @return the username of a Portal admin.
 	 */
-	String getPortalUserName();
+	String getPortalAdminUsername();
 
 	/**
 	 * Returns the password of a Portal admin.
 	 *
 	 * @return the password of a Portal admin.
 	 */
-	String getPortalUserPassword();
+	String getPortalAdminPassword();
 
 	/**
 	 * Returns the url where Portal lives.

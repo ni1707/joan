@@ -18,9 +18,9 @@ public class PortalTokenFetcher
 		HttpPost httpPost =
 			new HttpPostBuilder( path )
 				.urlFormParam( "f", "json" )
-				.urlFormParam( "username", arcConfiguration.getPortalUserName() )
-				.urlFormParam( "password", arcConfiguration.getPortalUserPassword() )
-				.urlFormParam( "referer", arcConfiguration.getPortalUserName() )
+				.urlFormParam( "username", arcConfiguration.getPortalAdminUsername() )
+				.urlFormParam( "password", arcConfiguration.getPortalAdminPassword() )
+				.urlFormParam( "referer", arcConfiguration.getPortalAdminUsername() )
 				.build();
 
 		return HttpExecutor.getResponse( httpClient, httpPost, PortalTokenResponse.class );

@@ -3,8 +3,10 @@ package com.teslagov.joan;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.GroupAccess;
 import com.teslagov.joan.portal.group.GroupSortField;
+import com.teslagov.properties.Properties;
 import org.apache.http.client.HttpClient;
 
+import static com.teslagov.joan.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.group.GroupBuilder.newGroup;
 
 /**
@@ -14,12 +16,23 @@ public class Main
 {
 	public static void main( String[] args )
 	{
-		ArcConfiguration arcConfiguration = ArcConfigurationFactory.createArcConfiguration();
+		Properties properties = ArcPropertiesFactory.createArcProperties();
+
+		ArcConfiguration arcConfiguration =
+			arcConfig()
+				.portalAdminUsername( properties.getString( ArcProperties.PORTAL_ADMIN_USERNAME ) )
+				.portalAdminPassword( properties.getString( ArcProperties.PORTAL_ADMIN_PASSWORD ) )
+				.portalUrl( properties.getString( ArcProperties.PORTAL_URL ) )
+				.portalPort( properties.getInteger( ArcProperties.PORTAL_PORT ) )
+				.arcServerAdminUsername( properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_USERNAME ) )
+				.arcServerAdminPassword( properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_PASSWORD ) )
+				.arcServerUrl( properties.getString( ArcProperties.ARC_GIS_SERVER_URL ) )
+				.arcServerPort( properties.getInteger( ArcProperties.ARC_GIS_SERVER_PORT ) )
+				.build();
 
 		HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
 
 		ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
-		arcApi.fetchToken();
 		arcApi.fetchUsers();
 
 		Group group = newGroup()

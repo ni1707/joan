@@ -9,17 +9,17 @@ public class ArcConfigurationFactory
 {
 	public static ArcConfiguration createArcConfiguration()
 	{
-		Properties properties = PropertiesFactory.createProperties();
+		Properties properties = ArcPropertiesFactory.createArcProperties();
 		return new ArcConfiguration()
 		{
 			@Override
-			public String getPortalUserName()
+			public String getPortalAdminUsername()
 			{
 				return properties.getString( ArcProperties.PORTAL_ADMIN_USERNAME );
 			}
 
 			@Override
-			public String getPortalUserPassword()
+			public String getPortalAdminPassword()
 			{
 				return properties.getString( ArcProperties.PORTAL_ADMIN_PASSWORD );
 			}
