@@ -1,7 +1,8 @@
 rootProject.name = 'joan'
 
-include 'joan-core'
+include 'joan-arc-core'
 include 'joan-arc-server'
 include 'joan-arc-portal'
 include 'joan-example'
+include 'joan-arc'
 

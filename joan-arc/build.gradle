@@ -4,6 +4,7 @@ repositories {
 
 dependencies {
     compile project(':joan-arc-core')
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    compile project(':joan-arc-portal')
+    compile project(':joan-arc-server')
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
