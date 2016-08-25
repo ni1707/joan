@@ -1,6 +1,8 @@
 # Joan
+<figure>
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Joan_of_arc_miniature_graded.jpg" width="200" alt="Joan of Arc"/>
-[Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a Java SDK that simplifies communicating with [ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).
+<figcaption><a href="https://en.wikipedia.org/wiki/Joan_of_Arc">Joan</a> is a Java SDK that simplifies communicating with <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html">ArcGIS REST APIs</a>.</figcaption>
+</figure>
 
 ## joan-arc-server
 `joan-arc-server` is a Java SDK for hitting the **ArcGIS Server**.
