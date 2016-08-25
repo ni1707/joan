@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -35,11 +36,11 @@ public class ArcPortalApi
 {
 	private static final Logger logger = LoggerFactory.getLogger( ArcApi.class );
 
-	private static final ZoneOffset ZONE_OFFSET = ZoneOffset.UTC;
-
 	private final HttpClient httpClient;
 
 	private final ArcConfiguration arcConfiguration;
+
+	private final ZoneOffset zoneOffset;
 
 	private final PortalTokenFetcher portalTokenFetcher = new PortalTokenFetcher();
 
@@ -61,10 +62,11 @@ public class ArcPortalApi
 
 	private final GroupUserRemover groupUserRemover = new GroupUserRemover();
 
-	public ArcPortalApi( HttpClient httpClient, ArcConfiguration arcConfiguration )
+	public ArcPortalApi( HttpClient httpClient, ArcConfiguration arcConfiguration, ZoneOffset zoneOffset )
 	{
 		this.httpClient = httpClient;
 		this.arcConfiguration = arcConfiguration;
+		this.zoneOffset = zoneOffset;
 	}
 
 	public void fetchToken()
@@ -74,7 +76,7 @@ public class ArcPortalApi
 		logger.debug( "PortalTokenResponse toString: {}", portalTokenResponse );
 
 		LocalDateTime expirationDate = getTokenExpirationTime();
-		LocalDateTime now = LocalDateTime.now( ZONE_OFFSET );
+		LocalDateTime now = LocalDateTime.now( zoneOffset );
 		logger.debug( "Current time is {}", now );
 		logger.debug( "Token will expire on {}", expirationDate );
 		logger.debug(
@@ -175,7 +177,7 @@ public class ArcPortalApi
 			return true;
 		}
 
-		LocalDateTime now = LocalDateTime.now( ZONE_OFFSET );
+		LocalDateTime now = LocalDateTime.now( zoneOffset );
 		LocalDateTime expirationTime = getTokenExpirationTime();
 
 		if ( now.isAfter( expirationTime ) )
@@ -190,6 +192,6 @@ public class ArcPortalApi
 	private LocalDateTime getTokenExpirationTime()
 	{
 		long expiresEpochMs = portalTokenResponse.getExpires();
-		return LocalDateTime.ofEpochSecond( expiresEpochMs / 1000, 0, ZONE_OFFSET );
+		return LocalDateTime.ofEpochSecond( expiresEpochMs / 1000, 0, zoneOffset );
 	}
 }

@@ -9,7 +9,27 @@ import com.teslagov.joan.Response;
 @JsonInclude( JsonInclude.Include.NON_NULL )
 public class ServerTokenResponse extends Response
 {
-	public String token;
+	private String token;
 
-	public long expires;
+	private long expires;
+
+	public String getToken()
+	{
+		return token;
+	}
+
+	public void setToken( String token )
+	{
+		this.token = token;
+	}
+
+	public long getExpires()
+	{
+		return expires;
+	}
+
+	public void setExpires( long expires )
+	{
+		this.expires = expires;
+	}
 }

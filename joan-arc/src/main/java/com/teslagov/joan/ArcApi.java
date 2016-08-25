@@ -9,6 +9,7 @@ import com.teslagov.joan.portal.group.userremove.GroupUserRemoveResponse;
 import com.teslagov.joan.server.user.UserAddResponse;
 import org.apache.http.client.HttpClient;
 
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -18,14 +19,16 @@ import java.util.List;
  */
 public class ArcApi
 {
+	private static final ZoneOffset ZONE_OFFSET = ZoneOffset.UTC;
+
 	private final ArcPortalApi arcPortalApi;
 
 	private final ArcServerApi arcServerApi;
 
 	public ArcApi( HttpClient httpClient, ArcConfiguration arcConfiguration )
 	{
-		this.arcPortalApi = new ArcPortalApi( httpClient, arcConfiguration );
-		this.arcServerApi = new ArcServerApi( httpClient, arcConfiguration );
+		this.arcPortalApi = new ArcPortalApi( httpClient, arcConfiguration, ZONE_OFFSET );
+		this.arcServerApi = new ArcServerApi( httpClient, arcConfiguration, ZONE_OFFSET );
 	}
 
 	public void getPortal()

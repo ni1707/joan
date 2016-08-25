@@ -15,7 +15,15 @@ import org.apache.http.client.methods.HttpPost;
  */
 public class ServerTokenFetcher
 {
-	public ServerTokenResponse fetchServer(
+	public ServerTokenResponse fetchServerToken(
+		HttpClient httpClient,
+		ArcConfiguration arcConfiguration
+	)
+	{
+		return fetchServerToken( httpClient, arcConfiguration, 120 );
+	}
+
+	public ServerTokenResponse fetchServerToken(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		int tokenLifeMinutes
