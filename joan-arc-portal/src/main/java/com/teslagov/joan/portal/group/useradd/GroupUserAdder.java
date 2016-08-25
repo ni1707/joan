@@ -1,4 +1,4 @@
-package com.teslagov.joan.portal.group.adduser;
+package com.teslagov.joan.portal.group.useradd;
 
 import com.teslagov.joan.ArcConfiguration;
 import com.teslagov.joan.http.HttpExecutor;
