@@ -3,6 +3,7 @@
 [ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).
 
 ## Usage
+### Dependency
 In a Gradle buildscript
 ```groovy
 dependencies {
@@ -10,6 +11,7 @@ dependencies {
 }
 ```
 
+### Constructing an ArcApi
 Then in Java, you'd create your configuration class
 ```java
 ArcConfiguration arcConfiguration =
@@ -29,13 +31,21 @@ and your Apache `HttpClient`, and you'd be on your way:
 
 ```java
 ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
+```
 
+### Users API
+#### Fetch User List
+```java
 // fetch first 100 users
 List<User> users = arcApi.fetchUsers();
 
 // fetch users 101 thru 150
 List<User> users = arcApi.fetchUsers( 100, 50 );
+```
 
+### Groups API
+#### Create Group
+```java
 // upload a new group
 Group group = newGroup()
   .title( "Kevin's Test Group 5" )
@@ -52,7 +62,10 @@ Group group = newGroup()
   .build();
 
 group = arcApi.createGroup( group ).group;
+```
 
+#### Delete Group
+```java
 String groupID = group.id;
 
 arcApi.deleteGroup( groupID );
