@@ -28,4 +28,13 @@ public abstract class TokenResponse extends Response
 	{
 		this.expires = expires;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "TokenResponse{" +
+			"token='" + token + '\'' +
+			", expires=" + expires +
+			'}';
+	}
 }
