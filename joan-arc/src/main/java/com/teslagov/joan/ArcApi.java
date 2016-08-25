@@ -69,7 +69,11 @@ public class ArcApi
 		LocalDateTime now = LocalDateTime.now( ZONE_OFFSET );
 		logger.debug( "Current time is {}", now );
 		logger.debug( "Token will expire on {}", expirationDate );
-		logger.debug( "Token expires in {} seconds", now.until( expirationDate, ChronoUnit.SECONDS ) );
+		logger.debug(
+			"Token expires in {} seconds ({} minutes)",
+			now.until( expirationDate, ChronoUnit.SECONDS ),
+			now.until( expirationDate, ChronoUnit.MINUTES )
+		);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion( JsonInclude.Include.NON_NULL );
