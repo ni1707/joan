@@ -34,7 +34,7 @@ public interface ArcConfiguration
 	int getPortalPort();
 
 	/**
-	 * Returns the URL to the ArcGIS Portal REST API, e.g., http://<host>:<port>/arcgis/sharing/rest
+	 * Returns the URL to the ArcGIS Portal REST API, e.g., {@code http://<host>:<port>/arcgis/sharing/rest}
 	 *
 	 * @return the URL to the ArcGIS Portal REST API.
 	 */
@@ -69,7 +69,7 @@ public interface ArcConfiguration
 	int getArcServerPort();
 
 	/**
-	 * Returns the URL to the ArcGIS Server Administration REST API, e.g., http://server:port/arcgis/admin
+	 * Returns the URL to the ArcGIS Server Administration REST API, e.g., {@code http://server:port/arcgis/admin}
 	 *
 	 * @return the URL to the ArcGIS Server Administration REST API.
 	 */
