@@ -1,6 +1,8 @@
 package com.teslagov.joan.portal.token;
 
 import com.teslagov.joan.ArcConfiguration;
+import com.teslagov.joan.TokenFetcher;
+import com.teslagov.joan.TokenResponse;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
@@ -10,9 +12,10 @@ import org.apache.http.client.methods.HttpPost;
 /**
  * @author Kevin Chen
  */
-public class PortalTokenFetcher
+public class PortalTokenFetcher implements TokenFetcher
 {
-	public PortalTokenResponse fetchToken( HttpClient httpClient, ArcConfiguration arcConfiguration )
+	@Override
+	public TokenResponse fetchToken( HttpClient httpClient, ArcConfiguration arcConfiguration )
 	{
 		String path = PortalEndpointFactory.createGenerateTokenPath( arcConfiguration );
 		HttpPost httpPost =

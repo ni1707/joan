@@ -1,8 +1,5 @@
 package com.teslagov.joan;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.group.create.GroupCreator;
@@ -22,9 +19,7 @@ import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
@@ -33,14 +28,6 @@ import java.util.List;
 public class ArcPortalApi extends AbstractArcRestApi
 {
 	private static final Logger logger = LoggerFactory.getLogger( ArcApi.class );
-
-	private final HttpClient httpClient;
-
-	private final ArcConfiguration arcConfiguration;
-
-	private final ZoneOffset zoneOffset;
-
-	private final PortalTokenFetcher portalTokenFetcher = new PortalTokenFetcher();
 
 	private final PortalFetcher portalFetcher = new PortalFetcher();
 
@@ -60,43 +47,12 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	public ArcPortalApi( HttpClient httpClient, ArcConfiguration arcConfiguration, ZoneOffset zoneOffset )
 	{
-		this.httpClient = httpClient;
-		this.arcConfiguration = arcConfiguration;
-		this.zoneOffset = zoneOffset;
-	}
-
-	public void fetchToken()
-	{
-		tokenResponse = portalTokenFetcher.fetchToken( httpClient, arcConfiguration );
-		logger.debug( "PortalTokenResponse successful: {}", tokenResponse.isSuccess() );
-		logger.debug( "PortalTokenResponse toString: {}", tokenResponse );
-
-		LocalDateTime expirationDate = getTokenExpirationTime();
-		LocalDateTime now = LocalDateTime.now( zoneOffset );
-		logger.debug( "Current time is {}", now );
-		logger.debug( "Token will expire on {}", expirationDate );
-		logger.debug(
-			"Token expires in {} seconds ({} minutes)",
-			now.until( expirationDate, ChronoUnit.SECONDS ),
-			now.until( expirationDate, ChronoUnit.MINUTES )
-		);
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setSerializationInclusion( JsonInclude.Include.NON_NULL );
-
-		try
-		{
-			logger.debug( "TOKEN SERIALIZED = {}", objectMapper.writeValueAsString( tokenResponse ) );
-		}
-		catch ( JsonProcessingException e )
-		{
-			e.printStackTrace();
-		}
+		super( httpClient, arcConfiguration, zoneOffset, new PortalTokenFetcher(), "Portal" );
 	}
 
 	public void getPortal()
 	{
-		refreshPortalTokenIfNecessary();
+		refreshTokenIfNecessary();
 		portalResponse = portalFetcher.fetchPortal( httpClient, arcConfiguration, tokenResponse );
 		logger.debug( "Portal ID = {}", portalResponse.id );
 	}
@@ -108,7 +64,7 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	public List<User> fetchUsers( int start, int num )
 	{
-		refreshPortalTokenIfNecessary();
+		refreshTokenIfNecessary();
 
 		if ( portalResponse == null )
 		{
@@ -120,7 +76,7 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	public GroupCreateResponse createGroup( Group group )
 	{
-		refreshPortalTokenIfNecessary();
+		refreshTokenIfNecessary();
 		GroupCreateResponse groupCreateResponse = groupCreator.createGroup( httpClient, arcConfiguration, tokenResponse, group );
 		logger.debug( "GROUP ACCESS = {}", groupCreateResponse.group.access );
 
@@ -134,60 +90,25 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	public GroupDeleteResponse deleteGroup( String groupID )
 	{
-		refreshPortalTokenIfNecessary();
+		refreshTokenIfNecessary();
 		return groupDeleter.deleteGroup( httpClient, arcConfiguration, tokenResponse, groupID );
 	}
 
 	public GroupUpdateResponse updateGroup( Group group )
 	{
-		refreshPortalTokenIfNecessary();
+		refreshTokenIfNecessary();
 		return groupUpdater.updateGroup( httpClient, arcConfiguration, tokenResponse, group );
 	}
 
 	public GroupUserAddResponse addUsersToGroup( Group group, List<String> usernames )
 	{
-		refreshPortalTokenIfNecessary();
+		refreshTokenIfNecessary();
 		return groupUserAdder.addUserToGroup( httpClient, arcConfiguration, tokenResponse, group, usernames );
 	}
 
 	public GroupUserRemoveResponse removeUsersFromGroup( Group group, List<String> usernames )
 	{
-		refreshPortalTokenIfNecessary();
+		refreshTokenIfNecessary();
 		return groupUserRemover.removeUsersFromGroup( httpClient, arcConfiguration, tokenResponse, group, usernames );
-	}
-
-	// TODO maybe move this to a decorator class
-	private void refreshPortalTokenIfNecessary()
-	{
-		if ( isTokenExpired() )
-		{
-			fetchToken();
-		}
-	}
-
-	private boolean isTokenExpired()
-	{
-		if ( tokenResponse == null )
-		{
-			logger.debug( "Portal token is null... fetching one now..." );
-			return true;
-		}
-
-		LocalDateTime now = LocalDateTime.now( zoneOffset );
-		LocalDateTime expirationTime = getTokenExpirationTime();
-
-		if ( now.isAfter( expirationTime ) )
-		{
-			logger.debug( "Current time {} is after token expiration time {}", now, expirationTime );
-			return true;
-		}
-
-		return false;
-	}
-
-	private LocalDateTime getTokenExpirationTime()
-	{
-		long expiresEpochMs = tokenResponse.getExpires();
-		return LocalDateTime.ofEpochSecond( expiresEpochMs / 1000, 0, zoneOffset );
 	}
 }

@@ -1,6 +1,8 @@
 package com.teslagov.joan.server.token;
 
 import com.teslagov.joan.ArcConfiguration;
+import com.teslagov.joan.TokenFetcher;
+import com.teslagov.joan.TokenResponse;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.http.HttpPostBuilder;
 import com.teslagov.joan.server.ServerEndpointFactory;
@@ -13,17 +15,19 @@ import org.apache.http.client.methods.HttpPost;
  *
  * @author Kevin Chen
  */
-public class ServerTokenFetcher
+public class ServerTokenFetcher implements TokenFetcher
 {
-	public ServerTokenResponse fetchServerToken(
+	@Override
+	public TokenResponse fetchToken(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration
 	)
 	{
+		// TODO param for tokenLife??
 		return fetchServerToken( httpClient, arcConfiguration, 120 );
 	}
 
-	public ServerTokenResponse fetchServerToken(
+	private ServerTokenResponse fetchServerToken(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		int tokenLifeMinutes
