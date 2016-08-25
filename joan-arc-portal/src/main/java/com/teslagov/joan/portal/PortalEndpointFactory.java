@@ -1,6 +1,7 @@
 package com.teslagov.joan.portal;
 
 import com.teslagov.joan.ArcConfiguration;
+import com.teslagov.joan.portal.group.Group;
 
 /**
  * @author Kevin Chen
@@ -12,9 +13,19 @@ public class PortalEndpointFactory
 		return String.format( "%s/community", arcConfiguration.getPortalApiPath() );
 	}
 
+	private static String createGroupsUrl( ArcConfiguration arcConfiguration )
+	{
+		return createCommunityPath( arcConfiguration ) + "/groups";
+	}
+
 	public static String createCreateGroupPath( ArcConfiguration arcConfiguration )
 	{
 		return createCommunityPath( arcConfiguration ) + "/createGroup";
+	}
+
+	public static String createDeleteGroupPath( ArcConfiguration arcConfiguration, Group group )
+	{
+		return createGroupsUrl( arcConfiguration ) + "/" + group.id + "/delete";
 	}
 
 	public static String createFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )

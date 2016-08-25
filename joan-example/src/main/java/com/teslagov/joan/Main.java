@@ -3,8 +3,11 @@ package com.teslagov.joan;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.GroupAccess;
 import com.teslagov.joan.portal.group.GroupSortField;
+import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
 import com.teslagov.properties.Properties;
 import org.apache.http.client.HttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.teslagov.joan.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.group.GroupBuilder.newGroup;
@@ -14,7 +17,9 @@ import static com.teslagov.joan.portal.group.GroupBuilder.newGroup;
  */
 public class Main
 {
-	public static void main( String[] args )
+	private static final Logger logger = LoggerFactory.getLogger( Main.class );
+
+	public static void main( String[] args ) throws InterruptedException
 	{
 		Properties properties = ArcPropertiesFactory.createArcProperties();
 
@@ -36,7 +41,7 @@ public class Main
 		arcApi.fetchUsers();
 
 		Group group = newGroup()
-			.title( "Kevin's Test Group 5" )
+			.title( "Hillary Clinton Group 2" )
 			.description( "A test group owned by Kevin" )
 			.snippet( "snippet..." )
 			.tag( "tag1" ).tag( "tag2" ).tag( "tag3" )
@@ -48,6 +53,15 @@ public class Main
 			.isInvitationOnly( false )
 			.thumbnail( "" )
 			.build();
-		arcApi.createGroup( group );
+
+		group = arcApi.createGroup( group ).group;
+
+		logger.info( "Created Group {}", group.id );
+
+//		Thread.sleep( 1000 * 2 );
+
+		GroupDeleteResponse groupDeleteResponse = arcApi.deleteGroup( group );
+
+		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
 	}
 }

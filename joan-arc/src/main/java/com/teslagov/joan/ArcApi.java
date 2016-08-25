@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.GroupCreator;
 import com.teslagov.joan.portal.group.GroupResponse;
+import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
+import com.teslagov.joan.portal.group.delete.GroupDeleter;
 import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
@@ -47,6 +49,8 @@ public class ArcApi
 
 	private final GroupCreator groupCreator = new GroupCreator();
 
+	private final GroupDeleter groupDeleter = new GroupDeleter();
+
 	private final ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();
 
 	public ArcApi( HttpClient httpClient, ArcConfiguration arcConfiguration )
@@ -82,6 +86,7 @@ public class ArcApi
 
 	public void getPortal()
 	{
+		refreshPortalTokenIfNecessary();
 		portalResponse = portalFetcher.fetchPortal( httpClient, arcConfiguration, portalTokenResponse );
 		logger.debug( "Portal ID = {}", portalResponse.id );
 	}
@@ -112,6 +117,12 @@ public class ArcApi
 		return groupResponse;
 	}
 
+	public GroupDeleteResponse deleteGroup( Group group )
+	{
+		refreshPortalTokenIfNecessary();
+		return groupDeleter.deleteGroup( httpClient, arcConfiguration, portalTokenResponse, group );
+	}
+
 	// TODO maybe move this to a decorator class
 	private void refreshPortalTokenIfNecessary()
 	{
@@ -123,22 +134,22 @@ public class ArcApi
 
 	private boolean isTokenExpired()
 	{
-		LocalDateTime now = LocalDateTime.now( ZONE_OFFSET );
-		LocalDateTime expirationTime = getTokenExpirationTime();
-
 		if ( portalTokenResponse == null )
 		{
 			logger.debug( "Portal token is null... fetching one now..." );
-			return false;
+			return true;
 		}
+
+		LocalDateTime now = LocalDateTime.now( ZONE_OFFSET );
+		LocalDateTime expirationTime = getTokenExpirationTime();
 
 		if ( now.isAfter( expirationTime ) )
 		{
 			logger.debug( "Current time {} is after token expiration time {}", now, expirationTime );
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private LocalDateTime getTokenExpirationTime()
