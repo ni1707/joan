@@ -1,10 +1,13 @@
 package com.teslagov.joan;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 /**
  * @author Kevin Chen
  */
+@JsonIgnoreProperties( ignoreUnknown = true )
 public class Error
 {
 	private int code;
