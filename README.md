@@ -1,4 +1,15 @@
-[Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a Java SDK that simplifies communicating with ArcGIS REST APIs.
+# Joan
+![alt text](https://upload.wikimedia.org/wikipedia/commons/3/39/Joan_of_arc_miniature_graded.jpg "Joan of Arc")
+[Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a Java SDK that simplifies communicating with [ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).
 
-Find REST docs for Portal at /arcgis/portalhelp/apidocs/rest/index.html.
-Find REST docs for ArcGIS Server at /arcgis/admin/www/doc/index.html.
+## joan-arc-server
+`joan-arc-server` is a Java SDK for hitting the **ArcGIS Server**.
+```groovy
+compile com.teslagov:joan-arc-server:0.0.1 
+```
+
+## joan-arc-portal
+`joan-arc-portal` is a Java SDK for hitting the **Portal for ArcGIS Server**. 
+```groovy
+compile com.teslagov:joan-arc-portal:0.0.1 
+```
