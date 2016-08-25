@@ -1,39 +1,13 @@
 package com.teslagov.joan.portal.token;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.teslagov.joan.Response;
+import com.teslagov.joan.TokenResponse;
 
 /**
  * @author Kevin Chen
  */
-@JsonInclude( JsonInclude.Include.NON_NULL )
-public class PortalTokenResponse extends Response
+public class PortalTokenResponse extends TokenResponse
 {
-	private String token;
-
-	private long expires;
-
 	private boolean ssl;
-
-	public String getToken()
-	{
-		return token;
-	}
-
-	public void setToken( String token )
-	{
-		this.token = token;
-	}
-
-	public long getExpires()
-	{
-		return expires;
-	}
-
-	public void setExpires( long expires )
-	{
-		this.expires = expires;
-	}
 
 	public boolean isSsl()
 	{
@@ -50,8 +24,8 @@ public class PortalTokenResponse extends Response
 	{
 		return "PortalTokenResponse{" +
 			"error=" + error +
-			", token='" + token + '\'' +
-			", expires=" + expires +
+			", token='" + super.getToken() + '\'' +
+			", expires=" + super.getExpires() +
 			", ssl=" + ssl +
 			'}';
 	}
