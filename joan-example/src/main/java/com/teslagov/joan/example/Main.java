@@ -2,8 +2,9 @@ package com.teslagov.joan.example;
 
 import com.teslagov.joan.api.ArcApi;
 import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.Role;
 import com.teslagov.joan.core.SortOrder;
-import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.GroupAccess;
@@ -19,7 +20,7 @@ import java.util.List;
 
 import static com.teslagov.joan.api.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.group.GroupBuilder.newGroup;
-import static com.teslagov.joan.core.User.newUser;
+import static com.teslagov.joan.core.UserRequestModel.newUser;
 
 /**
  * @author Kevin Chen
@@ -60,9 +61,12 @@ public class Main
 
 	private static void createNewUserExample( ArcApi arcApi )
 	{
-		User newUser = newUser( "jon.snow2", "Password123!" ).build();
+		// EMAIL must be supplied!
+		String username = "jon.snow2";
+		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@gmail.com", Role.ORG_USER )
+			.build();
 //		arcApi.addUserViaServer( newUser );
-		arcApi.addUserViaPortal( newUser );
+		arcApi.addUserViaPortal( newUserRequestModel );
 	}
 
 	private static void removeUserExample( ArcApi arcApi )

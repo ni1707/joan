@@ -2,7 +2,7 @@ package com.teslagov.joan.server.user.add;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
-import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.server.ServerEndpointFactory;
@@ -22,7 +22,7 @@ public class UserAdder
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
-		User user
+		UserRequestModel userRequestModel
 	)
 	{
 		String url = ServerEndpointFactory.SecurityEndpointFactory.UserEndpointFactory.createAddUserPath( arcConfiguration );
@@ -33,11 +33,11 @@ public class UserAdder
 				.urlFormParam( "client", "referer" )
 				.urlFormParam( "token", tokenResponse.getToken() )
 				.urlFormParam( "referer", arcConfiguration.getArcServerAdminUsername() )
-				.urlFormParam( "username", user.getUsername() )
-				.urlFormParam( "password", user.getPassword() )
-				.urlFormParam( "fullname", user.getFullname() )
-				.urlFormParam( "description", user.getDescription() )
-				.urlFormParam( "email", user.getEmail() )
+				.urlFormParam( "username", userRequestModel.getUsername() )
+				.urlFormParam( "password", userRequestModel.getPassword() )
+				.urlFormParam( "fullname", userRequestModel.getFullname() )
+				.urlFormParam( "description", userRequestModel.getDescription() )
+				.urlFormParam( "email", userRequestModel.getEmail() )
 				.build();
 
 		return HttpExecutor.getResponse( httpClient, httpPost, UserAddResponse.class );

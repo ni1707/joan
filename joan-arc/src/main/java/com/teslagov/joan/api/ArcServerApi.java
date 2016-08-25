@@ -2,7 +2,7 @@ package com.teslagov.joan.api;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenRefresher;
-import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.server.token.ServerTokenFetcher;
 import com.teslagov.joan.server.user.add.UserAddResponse;
 import com.teslagov.joan.server.user.add.UserAdder;
@@ -38,10 +38,10 @@ public class ArcServerApi extends AbstractArcRestApi
 		);
 	}
 
-	public UserAddResponse addUser( User user )
+	public UserAddResponse addUser( UserRequestModel userRequestModel )
 	{
 		refreshTokenIfNecessary();
-		return userAdder.addUser( httpClient, arcConfiguration, tokenResponse, user );
+		return userAdder.addUser( httpClient, arcConfiguration, tokenResponse, userRequestModel );
 	}
 
 	public UserRemoveResponse removeUser( String username )

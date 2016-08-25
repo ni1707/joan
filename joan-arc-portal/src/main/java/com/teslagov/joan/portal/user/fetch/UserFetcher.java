@@ -2,7 +2,6 @@ package com.teslagov.joan.portal.user.fetch;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
-import com.teslagov.joan.core.User;
 import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.portal.PortalEndpointFactory;

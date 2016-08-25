@@ -2,11 +2,9 @@ package com.teslagov.joan.server.user.remove;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
-import com.teslagov.joan.core.User;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.server.ServerEndpointFactory;
-import com.teslagov.joan.server.user.add.UserAddResponse;
 import com.teslagov.joan.server.user.add.UserAdder;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;

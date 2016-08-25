@@ -2,7 +2,7 @@ package com.teslagov.joan.api;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenRefresher;
-import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.create.GroupCreateResponse;
@@ -132,9 +132,9 @@ public class ArcPortalApi extends AbstractArcRestApi
 		return groupUserRemover.removeUsersFromGroup( httpClient, arcConfiguration, tokenResponse, group, usernames );
 	}
 
-	public UserAddResponse addUser( User user )
+	public UserAddResponse addUser( UserRequestModel userRequestModel )
 	{
 		refreshTokenIfNecessary();
-		return userAdder.addUser( httpClient, arcConfiguration, tokenResponse, user );
+		return userAdder.addUser( httpClient, arcConfiguration, tokenResponse, userRequestModel );
 	}
 }
