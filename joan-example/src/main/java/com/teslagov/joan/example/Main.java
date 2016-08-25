@@ -46,17 +46,24 @@ public class Main
 
 		ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
 
-//		arcApi.fetchUsers();
+		arcApi.fetchUsers();
 
 //		createGroupExample( arcApi );
 
-		createNewUserExample( arcApi );
+//		createNewUserExample( arcApi );
+
+//		removeUserExample( arcApi );
 	}
 
 	private static void createNewUserExample( ArcApi arcApi )
 	{
 		User newUser = newUser( "jon.snow", "Password123!" ).build();
 		arcApi.addUser( newUser );
+	}
+
+	private static void removeUserExample( ArcApi arcApi )
+	{
+		arcApi.removeUser( "jack.bauer" );
 	}
 
 	private static void createGroupExample( ArcApi arcApi )

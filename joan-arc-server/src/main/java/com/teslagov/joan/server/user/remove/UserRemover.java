@@ -1,4 +1,4 @@
-package com.teslagov.joan.server.user;
+package com.teslagov.joan.server.user.remove;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
@@ -6,6 +6,8 @@ import com.teslagov.joan.core.User;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.server.ServerEndpointFactory;
+import com.teslagov.joan.server.user.add.UserAddResponse;
+import com.teslagov.joan.server.user.add.UserAdder;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.slf4j.Logger;
@@ -14,18 +16,18 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Kevin Chen
  */
-public class UserAdder
+public class UserRemover
 {
 	private static final Logger logger = LoggerFactory.getLogger( UserAdder.class );
 
-	public UserAddResponse addUser(
+	public UserRemoveResponse removeUser(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
-		User user
+		String username
 	)
 	{
-		String url = ServerEndpointFactory.SecurityEndpointFactory.UserEndpointFactory.createAddUserPath( arcConfiguration );
+		String url = ServerEndpointFactory.SecurityEndpointFactory.UserEndpointFactory.createRemoveUserPath( arcConfiguration );
 		logger.debug( "Hitting url {} with token {}", url, tokenResponse.getToken() );
 		HttpPost httpPost =
 			new HttpPostBuilder( url )
@@ -33,13 +35,9 @@ public class UserAdder
 				.urlFormParam( "client", "referer" )
 				.urlFormParam( "token", tokenResponse.getToken() )
 				.urlFormParam( "referer", arcConfiguration.getArcServerAdminUsername() )
-				.urlFormParam( "username", user.getUsername() )
-				.urlFormParam( "password", user.getPassword() )
-				.urlFormParam( "fullname", user.getFullname() )
-				.urlFormParam( "description", user.getDescription() )
-				.urlFormParam( "email", user.getEmail() )
+				.urlFormParam( "username", username )
 				.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, UserAddResponse.class );
+		return HttpExecutor.getResponse( httpClient, httpPost, UserRemoveResponse.class );
 	}
 }

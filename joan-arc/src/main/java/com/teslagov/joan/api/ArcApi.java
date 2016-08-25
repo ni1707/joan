@@ -8,7 +8,8 @@ import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.group.update.GroupUpdateResponse;
 import com.teslagov.joan.portal.group.useradd.GroupUserAddResponse;
 import com.teslagov.joan.portal.group.userremove.GroupUserRemoveResponse;
-import com.teslagov.joan.server.user.UserAddResponse;
+import com.teslagov.joan.server.user.add.UserAddResponse;
+import com.teslagov.joan.server.user.remove.UserRemoveResponse;
 import org.apache.http.client.HttpClient;
 
 import java.time.ZoneOffset;
@@ -81,5 +82,10 @@ public class ArcApi
 	public UserAddResponse addUser( User user )
 	{
 		return arcServerApi.addUser( user );
+	}
+
+	public UserRemoveResponse removeUser( String username )
+	{
+		return arcServerApi.removeUser( username );
 	}
 }

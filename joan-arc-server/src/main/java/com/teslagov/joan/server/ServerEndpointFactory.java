@@ -30,6 +30,11 @@ public class ServerEndpointFactory
 			{
 				return createUserPath( arcConfiguration ) + "/add";
 			}
+
+			public static String createRemoveUserPath( ArcConfiguration arcConfiguration )
+			{
+				return createUserPath( arcConfiguration ) + "/remove";
+			}
 		}
 	}
 }

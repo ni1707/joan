@@ -1,4 +1,4 @@
-package com.teslagov.joan.server.user;
+package com.teslagov.joan.server.user.add;
 
 import com.teslagov.joan.core.Response;
 
