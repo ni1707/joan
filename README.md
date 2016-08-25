@@ -48,11 +48,11 @@ List<User> users = arcApi.fetchUsers( 100, 50 );
 ```java
 // upload a new group
 Group group = newGroup()
-  .title( "Kevin's Test Group 5" )
-  .description( "A test group owned by Kevin" )
-  .snippet( "snippet..." )
-  .tag( "tag1" ).tag( "tag2" ).tag( "tag3" )
-  .phone( "1600 Pennsylvania Ave" )
+  .title( "House Stark" )
+  .description( "House Stark of Winterfell is one of the oldest lines of Westerosi nobility, stretching back over 8000 years." )
+  .snippet( "Jon Snow is the current King in the North" )
+  .tag( "game of thrones" ).tag( "got" ).tag( "alive" )
+  .phone( "Winterfell, The North" )
   .access( GroupAccess.PUBLIC )
   .sortField( GroupSortField.TITLE )
   .sortOrder( SortOrder.ASCENDING )
@@ -62,6 +62,14 @@ Group group = newGroup()
   .build();
 
 group = arcApi.createGroup( group ).group;
+```
+
+#### Update Group
+```java
+group.title = "Roose Bolton Group";
+group.description = "Weddings..."
+group.snippet = "What goes around comes around"
+arcApi.updateGroup( group );
 ```
 
 #### Delete Group

@@ -4,7 +4,6 @@ import com.teslagov.joan.ArcConfiguration;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
-import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;

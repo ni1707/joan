@@ -41,7 +41,7 @@ public class Main
 		arcApi.fetchUsers();
 
 		Group group = newGroup()
-			.title( "Hillary Clinton Group 2" )
+			.title( "Batman" )
 			.description( "A test group owned by Kevin" )
 			.snippet( "snippet..." )
 			.tag( "tag1" ).tag( "tag2" ).tag( "tag3" )
@@ -58,10 +58,13 @@ public class Main
 
 		logger.info( "Created Group {}", group.id );
 
+		group.title = "Superman";
+		arcApi.updateGroup( group );
+
 //		Thread.sleep( 1000 * 2 );
 
-		GroupDeleteResponse groupDeleteResponse = arcApi.deleteGroup( group );
+//		GroupDeleteResponse groupDeleteResponse = arcApi.deleteGroup( group );
 
-		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
+//		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
 	}
 }

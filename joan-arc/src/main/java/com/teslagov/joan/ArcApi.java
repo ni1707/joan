@@ -8,6 +8,8 @@ import com.teslagov.joan.portal.group.create.GroupCreator;
 import com.teslagov.joan.portal.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.group.delete.GroupDeleter;
+import com.teslagov.joan.portal.group.update.GroupUpdateResponse;
+import com.teslagov.joan.portal.group.update.GroupUpdater;
 import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
@@ -50,6 +52,8 @@ public class ArcApi
 	private final GroupCreator groupCreator = new GroupCreator();
 
 	private final GroupDeleter groupDeleter = new GroupDeleter();
+
+	private final GroupUpdater groupUpdater = new GroupUpdater();
 
 	private final ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();
 
@@ -130,6 +134,12 @@ public class ArcApi
 	{
 		refreshPortalTokenIfNecessary();
 		return groupDeleter.deleteGroup( httpClient, arcConfiguration, portalTokenResponse, groupID );
+	}
+
+	public GroupUpdateResponse updateGroup( Group group )
+	{
+		refreshPortalTokenIfNecessary();
+		return groupUpdater.updateGroup( httpClient, arcConfiguration, portalTokenResponse, group );
 	}
 
 	// TODO maybe move this to a decorator class
