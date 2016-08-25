@@ -28,7 +28,7 @@ bintray {
         publicDownloadNumbers = true
         version {
             released = new Date()
-            desc = "TeslaGov ${rootProject.name} ${project.version}"
+            desc = "TeslaGov ${rootProject.name} ${rootProject.version}"
 
             gpg {
                 sign = false // Determines whether to GPG sign the files. The default is false
@@ -44,24 +44,28 @@ bintray {
         }
     }
 }
-bintrayUpload.onlyIf { !gitVersion().endsWith(".dirty") }
 
 // test for sanity
 task echoProps << {
-    println "               user: $bintrayUser"
-    println "                org: $bintrayOrgName"
-    println "               repo: $bintrayRepoName"
-    println "                pkg: $bintrayPackageName"
-    println "            api key: $bintrayApiKey"
-    println "         ossrh user: $ossrhUser"
-    println "         ossrh pass: $ossrhPass"
-    println "         passphrase: $passPhrase"
-    println "   rootProject.name: ${rootProject.name}"
-    println "    project.version: ${project.version}"
-    println "rootProject.version: ${rootProject.version}"
-    println "            version: ${version}"
-    println "      inceptionYear: ${inceptionYear.toString()}"
-    println "             labels: ${labels}"
+    println "      project.githubOrgName: $project.githubOrgName"
+    println "     project.githubRepoName: $project.githubRepoName"
+    println "        project.bintrayUser: $project.bintrayUser"
+    println "     project.bintrayOrgName: $project.bintrayOrgName"
+    println "    project.bintrayRepoName: $project.bintrayRepoName"
+    println "    rootProject.bintrayUser: $rootProject.bintrayUser"
+    println " rootProject.bintrayOrgName: $rootProject.bintrayOrgName"
+    println "rootProject.bintrayRepoName: $rootProject.bintrayRepoName"
+    println "                        pkg: $bintrayPackageName"
+    println "            bintray api key: $bintrayApiKey"
+    println "                 ossrh user: $ossrhUser"
+    println "                 ossrh pass: $ossrhPass"
+    println "                 passphrase: $passPhrase"
+    println "           rootProject.name: ${rootProject.name}"
+    println "               project.name: ${project.name}"
+    println "            project.version: ${project.version}"
+    println "        rootProject.version: ${rootProject.version}"
+    println "              inceptionYear: ${inceptionYear.toString()}"
+    println "                     labels: ${labels}"
 }
 
 bintrayUpload.dependsOn echoProps

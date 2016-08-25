@@ -27,7 +27,7 @@ publishing {
                 root.appendNode('name', project.name)
                 root.appendNode('description', project.description)
                 root.appendNode('url', "https://github.com/${githubOrgName}/${githubRepoName}")
-                root.appendNode('inceptionYear', ${inceptionYear.toString()})
+                root.appendNode('inceptionYear', inceptionYear.toString())
 
                 def scm = root.appendNode('scm')
                 scm.appendNode('url', "https://github.com/${githubOrgName}/${githubRepoName}")

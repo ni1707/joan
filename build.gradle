@@ -19,6 +19,7 @@ subprojects {
 
 ext.githubOrgName = 'TeslaGov'
 ext.githubRepoName = 'joan'
+ext.inceptionYear = 2016
 
 ext.bintrayUser = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
 ext.bintrayApiKey = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
