@@ -88,6 +88,11 @@ public class ArcApi
 
 	public List<User> fetchUsers()
 	{
+		return fetchUsers( 0, 100 );
+	}
+
+	public List<User> fetchUsers( int start, int num )
+	{
 		refreshPortalTokenIfNecessary();
 
 		if ( portalResponse == null )
@@ -95,7 +100,7 @@ public class ArcApi
 			getPortal();
 		}
 
-		return userFetcher.fetchUsers( httpClient, arcConfiguration, portalTokenResponse, portalResponse );
+		return userFetcher.fetchUsers( httpClient, arcConfiguration, portalTokenResponse, portalResponse, start, num );
 	}
 
 	public GroupResponse createGroup( Group group )

@@ -5,10 +5,14 @@
 </figure>
 
 ## Usage
+In a Gradle buildscript
 ```groovy
-compile com.teslagov:joan-arc:0.0.1 
+dependencies {
+  compile 'com.teslagov:joan-arc:0.0.1'
+}
 ```
 
+Then in Java, you'd create your configuration class
 ```java
 ArcConfiguration arcConfiguration =
   arcConfig()
@@ -21,12 +25,20 @@ ArcConfiguration arcConfiguration =
     .arcServerUrl( "ARC_GIS_SERVER_URL" )
     .arcServerPort( "ARC_GIS_SERVER_PORT" )
     .build();
-    
-HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
-    
-ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
-arcApi.fetchUsers();
+```
 
+and your Apache `HttpClient`, and you'd be on your way:
+
+```java
+ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
+
+// fetch first 100 users
+List<User> users = arcApi.fetchUsers();
+
+// fetch users 101 thru 150
+List<User> users = arcApi.fetchUsers( 100, 50 );
+
+// upload a new group
 Group group = newGroup()
   .title( "Kevin's Test Group 5" )
   .description( "A test group owned by Kevin" )
