@@ -1,4 +1,4 @@
-package com.teslagov.joan;
+package com.teslagov.joan.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

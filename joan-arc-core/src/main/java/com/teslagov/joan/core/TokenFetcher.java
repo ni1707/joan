@@ -1,6 +1,4 @@
-package com.teslagov.joan;
-
-import org.apache.http.client.HttpClient;
+package com.teslagov.joan.core;
 
 /**
  * @author Kevin Chen

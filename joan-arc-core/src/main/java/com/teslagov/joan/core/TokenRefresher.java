@@ -1,4 +1,4 @@
-package com.teslagov.joan;
+package com.teslagov.joan.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,7 +27,7 @@ public class TokenRefresher
 		this.zoneOffset = zoneOffset;
 	}
 
-	protected TokenResponse fetchToken()
+	public TokenResponse fetchToken()
 	{
 		TokenResponse tokenResponse = tokenFetcher.fetchToken();
 		logger.debug( "TokenResponse successful: {}", tokenResponse.isSuccess() );
@@ -58,7 +58,7 @@ public class TokenRefresher
 		return tokenResponse;
 	}
 
-	protected boolean isTokenExpired( TokenResponse tokenResponse )
+	public boolean isTokenExpired( TokenResponse tokenResponse )
 	{
 		if ( tokenResponse == null )
 		{

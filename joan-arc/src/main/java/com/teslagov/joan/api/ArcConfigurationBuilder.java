@@ -1,4 +1,6 @@
-package com.teslagov.joan;
+package com.teslagov.joan.api;
+
+import com.teslagov.joan.core.ArcConfiguration;
 
 /**
  * @author Kevin Chen

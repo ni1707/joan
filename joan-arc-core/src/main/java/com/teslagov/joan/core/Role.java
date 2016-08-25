@@ -1,4 +1,4 @@
-package com.teslagov.joan;
+package com.teslagov.joan.core;
 
 /**
  * The roles in Portal and ArcGIS Server.

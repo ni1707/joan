@@ -2,7 +2,7 @@ package com.teslagov.joan.portal.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.teslagov.joan.User;
+import com.teslagov.joan.core.User;
 
 import java.util.List;
 

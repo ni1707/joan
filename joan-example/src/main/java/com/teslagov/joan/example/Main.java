@@ -1,5 +1,9 @@
-package com.teslagov.joan;
+package com.teslagov.joan.example;
 
+import com.teslagov.joan.api.ArcApi;
+import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.SortOrder;
+import com.teslagov.joan.core.User;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.GroupAccess;
 import com.teslagov.joan.portal.group.GroupSortField;
@@ -11,9 +15,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-import static com.teslagov.joan.ArcConfigurationBuilder.arcConfig;
+import static com.teslagov.joan.api.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.group.GroupBuilder.newGroup;
-import static com.teslagov.joan.User.newUser;
+import static com.teslagov.joan.core.User.newUser;
 
 /**
  * @author Kevin Chen

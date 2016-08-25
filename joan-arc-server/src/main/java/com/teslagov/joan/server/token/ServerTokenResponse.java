@@ -1,7 +1,7 @@
 package com.teslagov.joan.server.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.teslagov.joan.TokenResponse;
+import com.teslagov.joan.core.TokenResponse;
 
 /**
  * @author Kevin Chen

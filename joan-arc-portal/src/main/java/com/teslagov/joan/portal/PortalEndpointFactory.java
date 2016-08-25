@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal;
 
-import com.teslagov.joan.ArcConfiguration;
+import com.teslagov.joan.core.ArcConfiguration;
 
 /**
  * @author Kevin Chen

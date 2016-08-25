@@ -1,5 +1,8 @@
-package com.teslagov.joan;
+package com.teslagov.joan.api;
 
+import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.TokenRefresher;
+import com.teslagov.joan.core.User;
 import com.teslagov.joan.server.token.ServerTokenFetcher;
 import com.teslagov.joan.server.user.UserAddResponse;
 import com.teslagov.joan.server.user.UserAdder;
