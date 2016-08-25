@@ -82,6 +82,34 @@ arcApi.deleteGroup( groupID );
 #### Add Users To Group
 ```java
 GroupUserAddResponse response;
-response = arcApi.addUsersToGroup( group, Arrays.asList( "jon.snow", "arya.stark" ) );
+List<String> usersToAdd;
+
+usersToAdd = Arrays.asList(
+  "arya.stark",
+  "jon.snow",
+  "robb.stark",
+  "talisa.stark",
+  "catelyn.stark",
+  "edmure.tully"
+);
+response = arcApi.addUsersToGroup( group, usersToAdd );
 response.allUsersAdded() == true
+```
+
+#### Remove Users From Group
+```java
+GroupUserRemoveResponse response;
+List<String> usersToRemove;
+
+usersToRemove = Arrays.asList(
+  "robb.stark",
+  "talisa.stark",
+  "catelyn.stark",
+  "edmure.tully",
+  "stark.impostor"
+);
+response = arcApi.removeUsersFromGroup( group, usersToRemove );
+response.allUsersRemoved() == true
+response.notRemoved.size() == 1
+response.notRemoved.contains( "stark.impostor" ) == true
 ```

@@ -43,7 +43,7 @@ public class Main
 		arcApi.fetchUsers();
 
 		Group group = newGroup()
-			.title( "GOT 1" )
+			.title( "GOT 2" )
 			.description( "A test group owned by Kevin" )
 			.snippet( "snippet..." )
 			.tag( "tag1" ).tag( "tag2" ).tag( "tag3" )
@@ -61,6 +61,8 @@ public class Main
 		logger.info( "Created Group {}", group.id );
 
 		GroupUserAddResponse groupUserAddResponse = arcApi.addUsersToGroup( group, Arrays.asList( "david.grosso", "modibo" ) );
+
+		arcApi.removeUsersFromGroup( group, Arrays.asList( "david.grosso" ) );
 
 //		Thread.sleep( 1000 * 2 );
 
