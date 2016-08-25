@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teslagov.joan.portal.group.Group;
+import com.teslagov.joan.portal.group.adduser.GroupUserAddResponse;
+import com.teslagov.joan.portal.group.adduser.GroupUserAdder;
 import com.teslagov.joan.portal.group.create.GroupCreator;
 import com.teslagov.joan.portal.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
@@ -54,6 +56,8 @@ public class ArcApi
 	private final GroupDeleter groupDeleter = new GroupDeleter();
 
 	private final GroupUpdater groupUpdater = new GroupUpdater();
+
+	private final GroupUserAdder groupUserAdder = new GroupUserAdder();
 
 	private final ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();
 
@@ -140,6 +144,12 @@ public class ArcApi
 	{
 		refreshPortalTokenIfNecessary();
 		return groupUpdater.updateGroup( httpClient, arcConfiguration, portalTokenResponse, group );
+	}
+
+	public GroupUserAddResponse addUsersToGroup( Group group, List<String> usernames )
+	{
+		refreshPortalTokenIfNecessary();
+		return groupUserAdder.addUserToGroup( httpClient, arcConfiguration, portalTokenResponse, group, usernames );
 	}
 
 	// TODO maybe move this to a decorator class

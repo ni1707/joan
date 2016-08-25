@@ -37,6 +37,11 @@ public class PortalEndpointFactory
 		return createGroupUrl( arcConfiguration, groupID ) + "/update";
 	}
 
+	public static String createAddUserToGroupPath( ArcConfiguration arcConfiguration, String groupID )
+	{
+		return createGroupUrl( arcConfiguration, groupID ) + "/addUsers";
+	}
+
 	public static String createFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )
 	{
 		return String.format( "%s/portals/%s/users", arcConfiguration.getPortalApiPath(), portalID );

@@ -78,3 +78,10 @@ String groupID = group.id;
 
 arcApi.deleteGroup( groupID );
 ```
+
+#### Add Users To Group
+```java
+GroupUserAddResponse response;
+response = arcApi.addUsersToGroup( group, Arrays.asList( "jon.snow", "arya.stark" ) );
+response.allUsersAdded() == true
+```

@@ -3,11 +3,14 @@ package com.teslagov.joan;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.GroupAccess;
 import com.teslagov.joan.portal.group.GroupSortField;
+import com.teslagov.joan.portal.group.adduser.GroupUserAddResponse;
 import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
 import com.teslagov.properties.Properties;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 import static com.teslagov.joan.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.group.GroupBuilder.newGroup;
@@ -41,7 +44,7 @@ public class Main
 		arcApi.fetchUsers();
 
 		Group group = newGroup()
-			.title( "Batman" )
+			.title( "GOT 1" )
 			.description( "A test group owned by Kevin" )
 			.snippet( "snippet..." )
 			.tag( "tag1" ).tag( "tag2" ).tag( "tag3" )
@@ -58,8 +61,7 @@ public class Main
 
 		logger.info( "Created Group {}", group.id );
 
-		group.title = "Superman";
-		arcApi.updateGroup( group );
+		GroupUserAddResponse groupUserAddResponse = arcApi.addUsersToGroup( group, Arrays.asList( "david.grosso", "modibo" ) );
 
 //		Thread.sleep( 1000 * 2 );
 
