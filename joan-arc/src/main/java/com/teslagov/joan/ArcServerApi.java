@@ -19,7 +19,7 @@ import java.time.temporal.ChronoUnit;
 /**
  * @author Kevin Chen
  */
-public class ArcServerApi
+public class ArcServerApi extends AbstractArcRestApi
 {
 	private static final Logger logger = LoggerFactory.getLogger( ArcServerApi.class );
 
@@ -30,8 +30,6 @@ public class ArcServerApi
 	private final ZoneOffset zoneOffset;
 
 	private final ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();
-
-	private ServerTokenResponse tokenResponse;
 
 	private final UserAdder userAdder = new UserAdder();
 
@@ -44,7 +42,7 @@ public class ArcServerApi
 
 	public UserAddResponse addUser( User user )
 	{
-		return userAdder.addUser( httpClient, arcConfiguration, user );
+		return userAdder.addUser( httpClient, arcConfiguration, tokenResponse, user );
 	}
 
 	public void fetchToken()

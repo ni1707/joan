@@ -1,6 +1,7 @@
 package com.teslagov.joan.server.user;
 
 import com.teslagov.joan.ArcConfiguration;
+import com.teslagov.joan.TokenResponse;
 import com.teslagov.joan.User;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.http.HttpPostBuilder;
@@ -16,6 +17,7 @@ public class UserAdder
 	public UserAddResponse addUser(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
+		TokenResponse tokenResponse,
 		User user
 	)
 	{
