@@ -1,5 +1,5 @@
 # Joan
-![alt text](https://upload.wikimedia.org/wikipedia/commons/3/39/Joan_of_arc_miniature_graded.jpg "Joan of Arc")
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Joan_of_arc_miniature_graded.jpg" width="200" alt="Joan of Arc"/>
 [Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a Java SDK that simplifies communicating with [ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).
 
 ## joan-arc-server
