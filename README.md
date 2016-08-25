@@ -18,12 +18,12 @@ ArcConfiguration arcConfiguration =
   arcConfig()
     .portalAdminUsername( "PORTAL_ADMIN_USERNAME" )
     .portalAdminPassword( "PORTAL_ADMIN_PASSWORD" )
-    .portalUrl( "PORTAL_URL" )
-    .portalPort( "PORTAL_PORT" )
+    .portalUrl( "https://my.arcgis.portal.hostname" )
+    .portalPort( 7443 )
     .arcServerAdminUsername( "ARC_GIS_SERVER_ADMIN_USERNAME" )
     .arcServerAdminPassword( "ARC_GIS_SERVER_ADMIN_PASSWORD" )
-    .arcServerUrl( "ARC_GIS_SERVER_URL" )
-    .arcServerPort( "ARC_GIS_SERVER_PORT" )
+    .arcServerUrl( "https://my.arcgis.server.hostname" )
+    .arcServerPort( 6443 )
     .build();
 ```
 
