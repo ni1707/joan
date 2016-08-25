@@ -18,9 +18,10 @@ import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
-import com.teslagov.joan.portal.user.User;
 import com.teslagov.joan.portal.user.UserFetcher;
 import com.teslagov.joan.server.token.ServerTokenFetcher;
+import com.teslagov.joan.server.user.UserAddResponse;
+import com.teslagov.joan.server.user.UserAdder;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +65,8 @@ public class ArcApi
 	private final GroupUserRemover groupUserRemover = new GroupUserRemover();
 
 	private final ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();
+
+	private final UserAdder userAdder = new UserAdder();
 
 	public ArcApi( HttpClient httpClient, ArcConfiguration arcConfiguration )
 	{
@@ -160,6 +163,11 @@ public class ArcApi
 	{
 		refreshPortalTokenIfNecessary();
 		return groupUserRemover.removeUsersFromGroup( httpClient, arcConfiguration, portalTokenResponse, group, usernames );
+	}
+
+	public UserAddResponse addUser( User user )
+	{
+		return userAdder.addUser( httpClient, arcConfiguration, user );
 	}
 
 	// TODO maybe move this to a decorator class

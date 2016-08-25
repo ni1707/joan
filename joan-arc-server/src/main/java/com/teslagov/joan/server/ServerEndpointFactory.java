@@ -11,4 +11,25 @@ public class ServerEndpointFactory
 	{
 		return arcConfiguration.getArcServerAdminApiPath() + "/generateToken";
 	}
+
+	public static class SecurityEndpointFactory
+	{
+		private static String createSecurityPath( ArcConfiguration arcConfiguration )
+		{
+			return arcConfiguration.getArcServerAdminApiPath() + "/security";
+		}
+
+		public static class UserEndpointFactory
+		{
+			private static String createUserPath( ArcConfiguration arcConfiguration )
+			{
+				return createSecurityPath( arcConfiguration ) + "/users";
+			}
+
+			public static String createAddUserPath( ArcConfiguration arcConfiguration )
+			{
+				return createUserPath( arcConfiguration ) + "/add";
+			}
+		}
+	}
 }

@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import static com.teslagov.joan.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.group.GroupBuilder.newGroup;
+import static com.teslagov.joan.User.newUser;
 
 /**
  * @author Kevin Chen
@@ -40,8 +41,22 @@ public class Main
 		HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
 
 		ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
-		arcApi.fetchUsers();
 
+//		arcApi.fetchUsers();
+
+//		createGroupExample( arcApi );
+
+		createNewUserExample( arcApi );
+	}
+
+	private static void createNewUserExample( ArcApi arcApi )
+	{
+		User newUser = newUser( "jon.snow", "Password123!" ).build();
+		arcApi.addUser( newUser );
+	}
+
+	private static void createGroupExample( ArcApi arcApi )
+	{
 		Group group = newGroup()
 			.title( "GOT 2" )
 			.description( "A test group owned by Kevin" )
@@ -64,10 +79,7 @@ public class Main
 
 		arcApi.removeUsersFromGroup( group, Arrays.asList( "david.grosso" ) );
 
-//		Thread.sleep( 1000 * 2 );
-
 //		GroupDeleteResponse groupDeleteResponse = arcApi.deleteGroup( group );
-
 //		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
 	}
 }

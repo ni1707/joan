@@ -15,7 +15,11 @@ import org.apache.http.client.methods.HttpPost;
  */
 public class ServerTokenFetcher
 {
-	public ServerTokenResponse fetchServer( HttpClient httpClient, ArcConfiguration arcConfiguration, int tokenLifeMinutes )
+	public ServerTokenResponse fetchServer(
+		HttpClient httpClient,
+		ArcConfiguration arcConfiguration,
+		int tokenLifeMinutes
+	)
 	{
 		String url = ServerEndpointFactory.createGenerateTokenEndpoint( arcConfiguration );
 		HttpPost httpPost =

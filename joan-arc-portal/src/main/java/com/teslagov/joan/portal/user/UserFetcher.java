@@ -1,6 +1,7 @@
 package com.teslagov.joan.portal.user;
 
 import com.teslagov.joan.ArcConfiguration;
+import com.teslagov.joan.User;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.portal.PortalEndpointFactory;
 import com.teslagov.joan.portal.portal.PortalResponse;
