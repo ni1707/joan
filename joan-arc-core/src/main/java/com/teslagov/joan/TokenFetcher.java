@@ -7,5 +7,5 @@ import org.apache.http.client.HttpClient;
  */
 public interface TokenFetcher
 {
-	TokenResponse fetchToken( HttpClient httpClient, ArcConfiguration arcConfiguration );
+	TokenResponse fetchToken();
 }

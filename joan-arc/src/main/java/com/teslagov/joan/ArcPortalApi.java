@@ -47,7 +47,19 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	public ArcPortalApi( HttpClient httpClient, ArcConfiguration arcConfiguration, ZoneOffset zoneOffset )
 	{
-		super( httpClient, arcConfiguration, zoneOffset, new PortalTokenFetcher(), "Portal" );
+		super(
+			httpClient,
+			arcConfiguration,
+			zoneOffset,
+			new TokenRefresher(
+				new PortalTokenFetcher(
+					httpClient,
+					arcConfiguration
+				),
+				zoneOffset
+			),
+			"Portal"
+		);
 	}
 
 	public void getPortal()

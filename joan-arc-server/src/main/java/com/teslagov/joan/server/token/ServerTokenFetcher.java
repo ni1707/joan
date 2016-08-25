@@ -17,11 +17,18 @@ import org.apache.http.client.methods.HttpPost;
  */
 public class ServerTokenFetcher implements TokenFetcher
 {
+	private final HttpClient httpClient;
+
+	private final ArcConfiguration arcConfiguration;
+
+	public ServerTokenFetcher( HttpClient httpClient, ArcConfiguration arcConfiguration )
+	{
+		this.httpClient = httpClient;
+		this.arcConfiguration = arcConfiguration;
+	}
+
 	@Override
-	public TokenResponse fetchToken(
-		HttpClient httpClient,
-		ArcConfiguration arcConfiguration
-	)
+	public TokenResponse fetchToken()
 	{
 		// TODO param for tokenLife??
 		return fetchServerToken( httpClient, arcConfiguration, 120 );
