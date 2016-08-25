@@ -5,6 +5,8 @@ repositories {
 apply from: file('gradle/maven-publish.gradle')
 apply from: file('gradle/bintray.gradle')
 
+ext.labels = rootProject.labels + ['joan-arc-core', 'common']
+
 dependencies {
     def slf4jVersion = "1.7.21"
     compile     group: 'org.slf4j',                     name: 'slf4j-api',          version: "${slf4jVersion}"
