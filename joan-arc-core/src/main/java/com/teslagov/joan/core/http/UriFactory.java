@@ -1,4 +1,4 @@
-package com.teslagov.joan.http;
+package com.teslagov.joan.core.http;
 
 import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;

@@ -1,10 +1,10 @@
 package com.teslagov.joan.portal.group.delete;
 
-import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.http.HttpExecutor;
-import com.teslagov.joan.http.HttpPostBuilder;
+import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.TokenResponse;
+import com.teslagov.joan.core.http.HttpExecutor;
+import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
-import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 
@@ -16,14 +16,14 @@ public class GroupDeleter
 	public GroupDeleteResponse deleteGroup(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
-		PortalTokenResponse portalTokenResponse,
+		TokenResponse tokenResponse,
 		String groupID
 	)
 	{
 		String path = PortalEndpointFactory.createDeleteGroupPath( arcConfiguration, groupID );
 		HttpPost httpPost =
 			new HttpPostBuilder( path )
-				.urlFormParam( "token", portalTokenResponse.getToken() )
+				.urlFormParam( "token", tokenResponse.getToken() )
 				.urlFormParam( "f", "json" )
 				.build();
 

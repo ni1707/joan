@@ -1,10 +1,11 @@
 package com.teslagov.joan.portal.user;
 
-import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.http.HttpExecutor;
+import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.TokenResponse;
+import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.portal.PortalEndpointFactory;
 import com.teslagov.joan.portal.portal.PortalResponse;
-import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
@@ -24,17 +25,17 @@ public class UserFetcher
 	public List<User> fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
-		PortalTokenResponse portalTokenResponse,
+		TokenResponse tokenResponse,
 		PortalResponse portalResponse
 	)
 	{
-		return fetchUsers( httpClient, arcConfiguration, portalTokenResponse, portalResponse, 0, 100 );
+		return fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse, 0, 100 );
 	}
 
 	public List<User> fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
-		PortalTokenResponse portalTokenResponse,
+		TokenResponse tokenResponse,
 		PortalResponse portalResponse,
 		int start,
 		int num
@@ -43,7 +44,7 @@ public class UserFetcher
 		String path = String.format(
 			"%s?token=%s&f=json&start=%s&num=%s",
 			PortalEndpointFactory.createFetchUsersPath( arcConfiguration, portalResponse.id ),
-			portalTokenResponse.getToken(),
+			tokenResponse.getToken(),
 			start + "",
 			num + ""
 		);

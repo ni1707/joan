@@ -2,7 +2,7 @@ package com.teslagov.joan.portal.group.create;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.teslagov.joan.Response;
+import com.teslagov.joan.core.Response;
 import com.teslagov.joan.portal.group.Group;
 
 /**

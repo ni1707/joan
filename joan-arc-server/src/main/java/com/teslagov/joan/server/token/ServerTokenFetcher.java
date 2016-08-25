@@ -1,8 +1,10 @@
 package com.teslagov.joan.server.token;
 
-import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.http.HttpExecutor;
-import com.teslagov.joan.http.HttpPostBuilder;
+import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.TokenFetcher;
+import com.teslagov.joan.core.TokenResponse;
+import com.teslagov.joan.core.http.HttpExecutor;
+import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.server.ServerEndpointFactory;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -13,9 +15,30 @@ import org.apache.http.client.methods.HttpPost;
  *
  * @author Kevin Chen
  */
-public class ServerTokenFetcher
+public class ServerTokenFetcher implements TokenFetcher
 {
-	public ServerTokenResponse fetchServer( HttpClient httpClient, ArcConfiguration arcConfiguration, int tokenLifeMinutes )
+	private final HttpClient httpClient;
+
+	private final ArcConfiguration arcConfiguration;
+
+	public ServerTokenFetcher( HttpClient httpClient, ArcConfiguration arcConfiguration )
+	{
+		this.httpClient = httpClient;
+		this.arcConfiguration = arcConfiguration;
+	}
+
+	@Override
+	public TokenResponse fetchToken()
+	{
+		// TODO param for tokenLife??
+		return fetchServerToken( httpClient, arcConfiguration, 120 );
+	}
+
+	private ServerTokenResponse fetchServerToken(
+		HttpClient httpClient,
+		ArcConfiguration arcConfiguration,
+		int tokenLifeMinutes
+	)
 	{
 		String url = ServerEndpointFactory.createGenerateTokenEndpoint( arcConfiguration );
 		HttpPost httpPost =

@@ -1,7 +1,7 @@
 package com.teslagov.joan.portal.group.userremove;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.teslagov.joan.Response;
+import com.teslagov.joan.core.Response;
 
 import java.util.List;
 

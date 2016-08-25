@@ -2,7 +2,7 @@ package com.teslagov.joan.portal.portal;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.teslagov.joan.Response;
+import com.teslagov.joan.core.Response;
 
 /**
  * @author Kevin Chen

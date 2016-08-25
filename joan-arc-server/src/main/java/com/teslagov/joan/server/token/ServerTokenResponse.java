@@ -1,15 +1,12 @@
 package com.teslagov.joan.server.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.teslagov.joan.Response;
+import com.teslagov.joan.core.TokenResponse;
 
 /**
  * @author Kevin Chen
  */
 @JsonInclude( JsonInclude.Include.NON_NULL )
-public class ServerTokenResponse extends Response
+public class ServerTokenResponse extends TokenResponse
 {
-	public String token;
-
-	public long expires;
 }

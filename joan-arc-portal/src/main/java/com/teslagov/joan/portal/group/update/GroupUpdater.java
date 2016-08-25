@@ -1,11 +1,11 @@
 package com.teslagov.joan.portal.group.update;
 
-import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.http.HttpExecutor;
-import com.teslagov.joan.http.HttpPostBuilder;
+import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.TokenResponse;
+import com.teslagov.joan.core.http.HttpExecutor;
+import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
 import com.teslagov.joan.portal.group.Group;
-import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -18,14 +18,14 @@ public class GroupUpdater
 	public GroupUpdateResponse updateGroup(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
-		PortalTokenResponse portalTokenResponse,
+		TokenResponse tokenResponse,
 		Group group
 	)
 	{
 		String path = PortalEndpointFactory.createUpdateGroupPath( arcConfiguration, group.id );
 		HttpPost httpPost =
 			new HttpPostBuilder( path )
-				.urlFormParam( "token", portalTokenResponse.getToken() )
+				.urlFormParam( "token", tokenResponse.getToken() )
 				.urlFormParam( "f", "json" )
 				.urlFormParam( "clearEmptyFields", Boolean.TRUE.toString() )
 				.urlFormParam( "title", group.title )

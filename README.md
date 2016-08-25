@@ -1,5 +1,5 @@
 # Joan
-[Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a Java SDK that simplifies communicating with 
+[Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a **Java 8** SDK that simplifies communicating with 
 [ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).
 
 ## Usage

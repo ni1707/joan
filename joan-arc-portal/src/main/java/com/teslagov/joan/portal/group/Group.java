@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.group;
 
-import com.teslagov.joan.SortOrder;
+import com.teslagov.joan.core.SortOrder;
 
 import java.util.List;
 

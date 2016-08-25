@@ -1,10 +1,10 @@
 package com.teslagov.joan.portal.portal;
 
-import com.teslagov.joan.ArcConfiguration;
-import com.teslagov.joan.http.HttpExecutor;
-import com.teslagov.joan.http.HttpPostBuilder;
+import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.TokenResponse;
+import com.teslagov.joan.core.http.HttpExecutor;
+import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
-import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 
@@ -13,7 +13,7 @@ import org.apache.http.client.methods.HttpPost;
  */
 public class PortalFetcher
 {
-	public PortalResponse fetchPortal( HttpClient httpClient, ArcConfiguration arcConfiguration, PortalTokenResponse portalTokenResponse )
+	public PortalResponse fetchPortal( HttpClient httpClient, ArcConfiguration arcConfiguration, TokenResponse tokenResponse )
 	{
 		String path = PortalEndpointFactory.createGetPortalIDPath( arcConfiguration );
 		HttpPost httpPost =
@@ -22,7 +22,7 @@ public class PortalFetcher
 				.urlFormParam( "username", arcConfiguration.getPortalAdminUsername() )
 				.urlFormParam( "password", arcConfiguration.getPortalAdminPassword() )
 				.urlFormParam( "referer", arcConfiguration.getPortalAdminUsername() )
-				.urlFormParam( "token", portalTokenResponse.getToken() )
+				.urlFormParam( "token", tokenResponse.getToken() )
 				.build();
 
 		return HttpExecutor.getResponse( httpClient, httpPost, PortalResponse.class );

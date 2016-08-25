@@ -1,4 +1,4 @@
-package com.teslagov.joan;
+package com.teslagov.joan.example;
 
 import com.teslagov.properties.CachingPropertySource;
 import com.teslagov.properties.CascadingPropertySource;

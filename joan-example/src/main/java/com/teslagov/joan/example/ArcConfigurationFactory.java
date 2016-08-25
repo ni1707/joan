@@ -1,5 +1,6 @@
-package com.teslagov.joan;
+package com.teslagov.joan.example;
 
+import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.properties.Properties;
 
 /**

@@ -1,4 +1,4 @@
-package com.teslagov.joan.http;
+package com.teslagov.joan.core.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
