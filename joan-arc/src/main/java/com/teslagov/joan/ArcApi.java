@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teslagov.joan.portal.group.Group;
-import com.teslagov.joan.portal.group.GroupCreator;
-import com.teslagov.joan.portal.group.GroupResponse;
+import com.teslagov.joan.portal.group.create.GroupCreator;
+import com.teslagov.joan.portal.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.group.delete.GroupDeleter;
 import com.teslagov.joan.portal.portal.PortalFetcher;
@@ -112,13 +112,13 @@ public class ArcApi
 		return userFetcher.fetchUsers( httpClient, arcConfiguration, portalTokenResponse, portalResponse, start, num );
 	}
 
-	public GroupResponse createGroup( Group group )
+	public GroupCreateResponse createGroup( Group group )
 	{
 		refreshPortalTokenIfNecessary();
-		GroupResponse groupResponse = groupCreator.createGroup( httpClient, arcConfiguration, portalTokenResponse, group );
-		logger.debug( "GROUP ACCESS = {}", groupResponse.group.access );
+		GroupCreateResponse groupCreateResponse = groupCreator.createGroup( httpClient, arcConfiguration, portalTokenResponse, group );
+		logger.debug( "GROUP ACCESS = {}", groupCreateResponse.group.access );
 
-		return groupResponse;
+		return groupCreateResponse;
 	}
 
 	public GroupDeleteResponse deleteGroup( Group group )

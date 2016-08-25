@@ -1,9 +1,10 @@
-package com.teslagov.joan.portal.group;
+package com.teslagov.joan.portal.group.create;
 
 import com.teslagov.joan.ArcConfiguration;
 import com.teslagov.joan.http.HttpExecutor;
 import com.teslagov.joan.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
+import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
@@ -14,7 +15,7 @@ import org.apache.http.client.methods.HttpPost;
  */
 public class GroupCreator
 {
-	public GroupResponse createGroup(
+	public GroupCreateResponse createGroup(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		PortalTokenResponse portalTokenResponse,
@@ -39,6 +40,6 @@ public class GroupCreator
 				.urlFormParam( "thumbnail", group.thumbnail )
 				.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, GroupResponse.class );
+		return HttpExecutor.getResponse( httpClient, httpPost, GroupCreateResponse.class );
 	}
 }
