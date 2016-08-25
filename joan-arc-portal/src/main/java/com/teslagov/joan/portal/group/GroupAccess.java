@@ -1,5 +1,9 @@
 package com.teslagov.joan.portal.group;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import java.util.Arrays;
+
 /**
  * @author Kevin Chen
  */
@@ -19,5 +23,14 @@ public enum GroupAccess
 	public String getName()
 	{
 		return name;
+	}
+
+	@JsonCreator
+	public static GroupAccess forValue( String value )
+	{
+		return Arrays.stream( GroupAccess.values() )
+			.filter( ga -> ga.getName().equals( value ) )
+			.findFirst()
+			.orElseThrow( () -> new IllegalArgumentException( "Could not find enum for name: " + value ) );
 	}
 }

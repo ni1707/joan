@@ -69,7 +69,7 @@ public class Main
 
 		GroupCreator groupCreator = new GroupCreator();
 		Group group = new Group();
-		group.title = "Kevin's Test Group";
+		group.title = "Kevin's Test Group 4";
 		group.description = "A test group owned by Kevin";
 		group.snippet = "snippet...";
 		group.tags = Arrays.asList( "tag1", "tag2" );
@@ -81,6 +81,7 @@ public class Main
 		group.isInvitationOnly = false;
 		group.thumbnail = "";
 		GroupResponse groupResponse = groupCreator.createGroup( httpClient, arcConfiguration, portalTokenResponse, group );
+		logger.info( "GROUP ACCESS = {}", groupResponse.group.access );
 
 		// FETCH TOKEN FOR SERVER ADMIN API
 //		ServerTokenFetcher serverTokenFetcher = new ServerTokenFetcher();

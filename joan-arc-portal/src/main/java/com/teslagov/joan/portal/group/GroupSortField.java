@@ -1,5 +1,9 @@
 package com.teslagov.joan.portal.group;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import java.util.Arrays;
+
 /**
  * @author Kevin Chen
  */
@@ -22,5 +26,14 @@ public enum GroupSortField
 	public String getName()
 	{
 		return name;
+	}
+
+	@JsonCreator
+	public static GroupSortField forValue( String value )
+	{
+		return Arrays.stream( GroupSortField.values() )
+			.filter( gsf -> gsf.getName().equals( value ) )
+			.findFirst()
+			.orElseThrow( () -> new IllegalArgumentException( "Could not find enum for name: " + value ) );
 	}
 }

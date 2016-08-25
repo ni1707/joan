@@ -9,6 +9,25 @@ import java.util.List;
  */
 public class Group
 {
+	// ONLY SET BY RESPONSE
+	public String id;
+
+	public String owner;
+
+	public boolean isFav;
+
+	public long created;
+
+	public long modified;
+
+	public String provider;
+
+	public String providerGroupName;
+
+	public boolean isReadOnly;
+
+	public List<String> capabilities;
+
 	/**
 	 * The group title must be unique for the username, and the character limit is 250.
 	 */
