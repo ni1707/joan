@@ -18,10 +18,10 @@ public class GroupDeleter
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		PortalTokenResponse portalTokenResponse,
-		Group group
+		String groupID
 	)
 	{
-		String path = PortalEndpointFactory.createDeleteGroupPath( arcConfiguration, group );
+		String path = PortalEndpointFactory.createDeleteGroupPath( arcConfiguration, groupID );
 		HttpPost httpPost =
 			new HttpPostBuilder( path )
 				.urlFormParam( "token", portalTokenResponse.getToken() )

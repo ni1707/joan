@@ -23,9 +23,9 @@ public class PortalEndpointFactory
 		return createCommunityPath( arcConfiguration ) + "/createGroup";
 	}
 
-	public static String createDeleteGroupPath( ArcConfiguration arcConfiguration, Group group )
+	public static String createDeleteGroupPath( ArcConfiguration arcConfiguration, String groupID )
 	{
-		return createGroupsUrl( arcConfiguration ) + "/" + group.id + "/delete";
+		return createGroupsUrl( arcConfiguration ) + "/" + groupID + "/delete";
 	}
 
 	public static String createFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )

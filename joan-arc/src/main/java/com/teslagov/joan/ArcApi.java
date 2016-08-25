@@ -119,8 +119,13 @@ public class ArcApi
 
 	public GroupDeleteResponse deleteGroup( Group group )
 	{
+		return deleteGroup( group.id );
+	}
+
+	public GroupDeleteResponse deleteGroup( String groupID )
+	{
 		refreshPortalTokenIfNecessary();
-		return groupDeleter.deleteGroup( httpClient, arcConfiguration, portalTokenResponse, group );
+		return groupDeleter.deleteGroup( httpClient, arcConfiguration, portalTokenResponse, groupID );
 	}
 
 	// TODO maybe move this to a decorator class

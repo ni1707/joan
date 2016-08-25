@@ -50,5 +50,10 @@ Group group = newGroup()
   .isInvitationOnly( false )
   .thumbnail( "" )
   .build();
-  arcApi.createGroup( group );
+
+group = arcApi.createGroup( group ).group;
+
+String groupID = group.id;
+
+arcApi.deleteGroup( groupID );
 ```
