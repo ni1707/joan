@@ -3,6 +3,7 @@ package com.teslagov.joan.api;
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenRefresher;
 import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.group.create.GroupCreator;
@@ -17,7 +18,9 @@ import com.teslagov.joan.portal.group.userremove.GroupUserRemover;
 import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
-import com.teslagov.joan.portal.user.UserFetcher;
+import com.teslagov.joan.portal.user.add.UserAddResponse;
+import com.teslagov.joan.portal.user.add.UserAdder;
+import com.teslagov.joan.portal.user.fetch.UserFetcher;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +51,8 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	private final GroupUserRemover groupUserRemover = new GroupUserRemover();
 
+	private final UserAdder userAdder = new UserAdder();
+
 	public ArcPortalApi( HttpClient httpClient, ArcConfiguration arcConfiguration, ZoneOffset zoneOffset )
 	{
 		super(
@@ -72,12 +77,12 @@ public class ArcPortalApi extends AbstractArcRestApi
 		logger.debug( "Portal ID = {}", portalResponse.id );
 	}
 
-	public List<User> fetchUsers()
+	public List<UserResponseModel> fetchUsers()
 	{
 		return fetchUsers( 0, 100 );
 	}
 
-	public List<User> fetchUsers( int start, int num )
+	public List<UserResponseModel> fetchUsers( int start, int num )
 	{
 		refreshTokenIfNecessary();
 
@@ -125,5 +130,11 @@ public class ArcPortalApi extends AbstractArcRestApi
 	{
 		refreshTokenIfNecessary();
 		return groupUserRemover.removeUsersFromGroup( httpClient, arcConfiguration, tokenResponse, group, usernames );
+	}
+
+	public UserAddResponse addUser( User user )
+	{
+		refreshTokenIfNecessary();
+		return userAdder.addUser( httpClient, arcConfiguration, tokenResponse, user );
 	}
 }

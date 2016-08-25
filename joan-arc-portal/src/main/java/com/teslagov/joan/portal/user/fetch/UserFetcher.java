@@ -1,8 +1,9 @@
-package com.teslagov.joan.portal.user;
+package com.teslagov.joan.portal.user.fetch;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.portal.PortalEndpointFactory;
 import com.teslagov.joan.portal.portal.PortalResponse;
@@ -22,7 +23,7 @@ public class UserFetcher
 {
 	private static final Logger logger = LoggerFactory.getLogger( UserFetcher.class );
 
-	public List<User> fetchUsers(
+	public List<UserResponseModel> fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
@@ -32,7 +33,7 @@ public class UserFetcher
 		return fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse, 0, 100 );
 	}
 
-	public List<User> fetchUsers(
+	public List<UserResponseModel> fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,

@@ -34,11 +34,18 @@ public interface ArcConfiguration
 	int getPortalPort();
 
 	/**
-	 * Returns the URL to the ArcGIS Portal REST API, e.g., {@code http://<host>:<port>/arcgis/sharing/rest}
+	 * Returns a {@code http://<host>:<port>/arcgis/portaladmin} URL to the ArcGIS Portal REST API.
 	 *
-	 * @return the URL to the ArcGIS Portal REST API.
+	 * @return a {@code http://<host>:<port>/arcgis/portaladmin} URL to the ArcGIS Portal REST API.
 	 */
-	String getPortalApiPath();
+	String getPortalAdminApiPath();
+
+	/**
+	 * Returns a {@code http://<host>:<port>/arcgis/sharing/rest} URL to the ArcGIS Portal REST API.
+	 *
+	 * @return a {@code http://<host>:<port>/arcgis/sharing/rest} URL to the ArcGIS Portal REST API.
+	 */
+	String getPortalSharingApiPath();
 
 	/**
 	 * Returns the username of a ArcGIS for Server admin.

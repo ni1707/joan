@@ -2,6 +2,7 @@ package com.teslagov.joan.api;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
@@ -39,12 +40,12 @@ public class ArcApi
 		arcPortalApi.getPortal();
 	}
 
-	public List<User> fetchUsers()
+	public List<UserResponseModel> fetchUsers()
 	{
 		return arcPortalApi.fetchUsers();
 	}
 
-	public List<User> fetchUsers( int start, int num )
+	public List<UserResponseModel> fetchUsers( int start, int num )
 	{
 		return arcPortalApi.fetchUsers( start, num );
 	}
@@ -79,7 +80,12 @@ public class ArcApi
 		return arcPortalApi.removeUsersFromGroup( group, usernames );
 	}
 
-	public UserAddResponse addUser( User user )
+	public com.teslagov.joan.portal.user.add.UserAddResponse addUserViaPortal( User user )
+	{
+		return arcPortalApi.addUser( user );
+	}
+
+	public UserAddResponse addUserViaServer( User user )
 	{
 		return arcServerApi.addUser( user );
 	}

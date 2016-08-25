@@ -7,9 +7,29 @@ import com.teslagov.joan.core.ArcConfiguration;
  */
 public class PortalEndpointFactory
 {
+	public static final class PortalAdmin
+	{
+		public static class Security
+		{
+			private static String security( ArcConfiguration arcConfiguration )
+			{
+				return String.format( "%s/security", arcConfiguration.getPortalAdminApiPath() );
+			}
+
+			private static String users( ArcConfiguration arcConfiguration )
+			{
+				return security( arcConfiguration ) + "/users";
+			}
+
+			public static String createCreateUserPath( ArcConfiguration arcConfiguration )
+			{
+				return users( arcConfiguration ) + "/createUser";
+			}
+		}
+	}
 	private static String createCommunityPath( ArcConfiguration arcConfiguration )
 	{
-		return String.format( "%s/community", arcConfiguration.getPortalApiPath() );
+		return String.format( "%s/community", arcConfiguration.getPortalSharingApiPath() );
 	}
 
 	private static String createGroupsUrl( ArcConfiguration arcConfiguration )
@@ -49,16 +69,16 @@ public class PortalEndpointFactory
 
 	public static String createFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )
 	{
-		return String.format( "%s/portals/%s/users", arcConfiguration.getPortalApiPath(), portalID );
+		return String.format( "%s/portals/%s/users", arcConfiguration.getPortalSharingApiPath(), portalID );
 	}
 
 	public static String createGenerateTokenPath( ArcConfiguration arcConfiguration )
 	{
-		return arcConfiguration.getPortalApiPath() + "/generateToken";
+		return arcConfiguration.getPortalSharingApiPath() + "/generateToken";
 	}
 
 	public static String createGetPortalIDPath( ArcConfiguration arcConfiguration )
 	{
-		return arcConfiguration.getPortalApiPath() + "/portals/self";
+		return arcConfiguration.getPortalSharingApiPath() + "/portals/self";
 	}
 }

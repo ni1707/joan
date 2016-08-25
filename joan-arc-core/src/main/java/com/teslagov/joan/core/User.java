@@ -2,6 +2,7 @@ package com.teslagov.joan.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 @JsonInclude( JsonInclude.Include.NON_NULL )
 @JsonIgnoreProperties( ignoreUnknown = true )
-public class User extends Response
+public class User
 {
 	private final String username;
 
@@ -21,10 +22,6 @@ public class User extends Response
 	private final String description;
 
 	private final String email;
-
-	public List<String> groups;
-
-	public String role;
 
 	private User( String username, String password, String fullname, String description, String email )
 	{

@@ -4,6 +4,7 @@ import com.teslagov.joan.api.ArcApi;
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.SortOrder;
 import com.teslagov.joan.core.User;
+import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.GroupAccess;
 import com.teslagov.joan.portal.group.GroupSortField;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static com.teslagov.joan.api.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.group.GroupBuilder.newGroup;
@@ -46,19 +48,21 @@ public class Main
 
 		ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
 
-		arcApi.fetchUsers();
+		List<UserResponseModel> users = arcApi.fetchUsers();
+		users.forEach( u -> logger.debug( "User {}", u ) );
 
 //		createGroupExample( arcApi );
 
-//		createNewUserExample( arcApi );
+		createNewUserExample( arcApi );
 
 //		removeUserExample( arcApi );
 	}
 
 	private static void createNewUserExample( ArcApi arcApi )
 	{
-		User newUser = newUser( "jon.snow", "Password123!" ).build();
-		arcApi.addUser( newUser );
+		User newUser = newUser( "jon.snow2", "Password123!" ).build();
+//		arcApi.addUserViaServer( newUser );
+		arcApi.addUserViaPortal( newUser );
 	}
 
 	private static void removeUserExample( ArcApi arcApi )

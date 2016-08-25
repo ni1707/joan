@@ -106,7 +106,13 @@ public class ArcConfigurationBuilder
 			}
 
 			@Override
-			public String getPortalApiPath()
+			public String getPortalAdminApiPath()
+			{
+				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
+			}
+
+			@Override
+			public String getPortalSharingApiPath()
 			{
 				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
 			}
