@@ -39,7 +39,7 @@ bintray {
 }
 
 // test for sanity
-task echoArcCoreProps << {
+task echoArcServerProps << {
     println "  = = = = = = = = = = = = = = = = = = = = = = = = = = = =  "
     println "  = = = = = = = = = = ROOT PROJECT PROPERTIES = = = = = =  "
     println "  = = = = = = = = = = = = = = = = = = = = = = = = = = = =  "
@@ -83,4 +83,4 @@ task echoArcCoreProps << {
     println "inceptionYear: ${inceptionYear.toString()}"
 }
 
-bintrayUpload.dependsOn echoArcCoreProps
+bintrayUpload.dependsOn echoArcServerProps

@@ -1,10 +1,14 @@
 ext.bintrayPackageName = project.name
 description = "Joan API classes for the ArcGIS Server REST API"
 version = rootProject.version
+ext.labels = rootProject.labels + [project.name]
 
 repositories {
     mavenCentral()
 }
+
+apply from: file('gradle/maven-publish.gradle')
+apply from: file('gradle/bintray.gradle')
 
 dependencies {
     compile project(':joan-arc-core')

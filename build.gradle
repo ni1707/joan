@@ -29,7 +29,7 @@ ext.bintrayRepoName = 'joan'
 ext.ossrhUser = project.property('nexusUsername')
 ext.ossrhPass = project.property('nexusPassword')
 ext.passPhrase = project.property('signing.password')
-ext.labels = ['arcgis', 'esri']
+ext.labels = ['esri', 'arcgis', 'rest', 'java', 'sdk']
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
