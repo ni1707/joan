@@ -3,7 +3,7 @@ task generateDocs(type: Javadoc) {
     source = sourceSets.main.allJava
     // Don't generate Javadocs for dependencies
     classpath = configurations.compile
-    destinationDir = reporting.file("emailr-docs")
+    destinationDir = reporting.file("${project.name}-docs")
     // javadocs should show Object instead of java.lang.Object, List instead of java.util.List
     options.noQualifiers = ['java.lang', 'java.util']
 }

@@ -1,10 +1,3 @@
-// requires com.jfrog.bintray plugin
-// for pushing to Bintray
-// Bintray will handle artifact signing for us
-// and will also push to Maven Central for us
-// no need to make a JIRA ticket, wait 2 days for approval,
-// and go through some clumsy Nexus UI
-// http://blog.bintray.com/2014/02/11/bintray-as-pain-free-gateway-to-maven-central/
 apply plugin: 'com.jfrog.bintray'
 bintray {
     // inside ~/.gradle/gradle.properties I have
@@ -16,7 +9,7 @@ bintray {
     publications = ['MyPublication']
 //    configurations = ['archives']
 
-    dryRun = false
+    dryRun = true
 
     pkg {
         repo = project.bintrayRepoName
@@ -28,7 +21,7 @@ bintray {
         publicDownloadNumbers = true
         version {
             released = new Date()
-            desc = "TeslaGov ${rootProject.name} ${rootProject.version}"
+            desc = "${rootProject.githubOrgName} ${project.name} ${rootProject.version}"
 
             gpg {
                 sign = false // Determines whether to GPG sign the files. The default is false

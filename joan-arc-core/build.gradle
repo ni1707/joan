@@ -2,14 +2,14 @@ ext.bintrayPackageName = project.name
 description = "The internal core utilities used by Joan. Not meant for public consumption."
 version = rootProject.version
 
+ext.labels = rootProject.labels + ['joan-arc-core', 'common']
+
 repositories {
     maven { url 'http://jcenter.bintray.com' }
 }
 
 apply from: file('gradle/maven-publish.gradle')
 apply from: file('gradle/bintray.gradle')
-
-ext.labels = rootProject.labels + ['joan-arc-core', 'common']
 
 dependencies {
     def slf4jVersion = "1.7.21"
