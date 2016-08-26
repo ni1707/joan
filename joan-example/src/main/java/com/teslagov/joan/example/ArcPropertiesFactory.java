@@ -1,11 +1,11 @@
 package com.teslagov.joan.example;
 
-import com.teslagov.properties.CachingPropertySource;
-import com.teslagov.properties.CascadingPropertySource;
-import com.teslagov.properties.ClasspathPropertySource;
-import com.teslagov.properties.Properties;
-import com.teslagov.properties.PropertyMapReader;
-import com.teslagov.properties.caching.SlidingWindowCache;
+import com.teslagov.props.CachingPropertySource;
+import com.teslagov.props.CascadingPropertySource;
+import com.teslagov.props.ClasspathPropertySource;
+import com.teslagov.props.PropertyMapReader;
+import com.teslagov.props.caching.SlidingWindowCache;
+import com.teslagov.props.Properties;
 
 import java.time.Clock;
 import java.time.Duration;
