@@ -5,7 +5,7 @@ plugins {
 
 group = 'com.teslagov'
 version = '0.0.1'//versionDetails().lastTag
-description = """Helper classes over ArcGIS Portal's REST API"""
+description = """A Java SDK for ArcGIS REST APIs"""
 
 repositories {
     mavenCentral()
