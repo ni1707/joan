@@ -1,3 +1,4 @@
+ext.bintrayPackageName = project.name
 description = "The internal core utilities used by Joan. Not meant for public consumption."
 version = rootProject.version
 

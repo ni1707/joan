@@ -25,7 +25,6 @@ ext.bintrayUser = project.hasProperty('bintrayUser') ? project.property('bintray
 ext.bintrayApiKey = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
 ext.bintrayOrgName = 'teslagov'
 ext.bintrayRepoName = 'joan'
-ext.bintrayPackageName = project.name
 
 ext.ossrhUser = project.property('nexusUsername')
 ext.ossrhPass = project.property('nexusPassword')

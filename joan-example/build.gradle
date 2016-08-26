@@ -1,3 +1,4 @@
+ext.bintrayPackageName = project.name
 description = "Example project using Joan"
 version = rootProject.version
 

@@ -1,3 +1,4 @@
+ext.bintrayPackageName = project.name
 description = "The Joan API classes."
 version = rootProject.version
 

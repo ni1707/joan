@@ -1,3 +1,4 @@
+ext.bintrayPackageName = project.name
 description = "Joan API classes for the Portal for ArcGIS Server REST API"
 version = rootProject.version
 
