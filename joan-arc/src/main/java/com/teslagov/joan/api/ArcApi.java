@@ -9,6 +9,7 @@ import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.group.update.GroupUpdateResponse;
 import com.teslagov.joan.portal.group.useradd.GroupUserAddResponse;
 import com.teslagov.joan.portal.group.userremove.GroupUserRemoveResponse;
+import com.teslagov.joan.portal.user.create.UserCreateResponse;
 import com.teslagov.joan.server.user.add.UserAddResponse;
 import com.teslagov.joan.server.user.remove.UserRemoveResponse;
 import org.apache.http.client.HttpClient;
@@ -80,7 +81,7 @@ public class ArcApi
 		return arcPortalApi.removeUsersFromGroup( group, usernames );
 	}
 
-	public com.teslagov.joan.portal.user.add.UserAddResponse addUserViaPortal( UserRequestModel userRequestModel )
+	public UserCreateResponse addUserViaPortal( UserRequestModel userRequestModel )
 	{
 		return arcPortalApi.addUser( userRequestModel );
 	}

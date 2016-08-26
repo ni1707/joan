@@ -1,4 +1,4 @@
-package com.teslagov.joan.portal.user.add;
+package com.teslagov.joan.portal.user.create;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Kevin Chen
  */
-public class UserAdder
+public class UserCreator
 {
-	private static final Logger logger = LoggerFactory.getLogger( UserAdder.class );
+	private static final Logger logger = LoggerFactory.getLogger( UserCreator.class );
 
-	public UserAddResponse addUser(
+	public UserCreateResponse createUser(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
@@ -42,6 +42,6 @@ public class UserAdder
 				.urlFormParam( "role", userRequestModel.getRole() )
 				.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, UserAddResponse.class );
+		return HttpExecutor.getResponse( httpClient, httpPost, UserCreateResponse.class );
 	}
 }

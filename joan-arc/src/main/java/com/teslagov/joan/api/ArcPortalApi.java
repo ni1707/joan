@@ -18,8 +18,8 @@ import com.teslagov.joan.portal.group.userremove.GroupUserRemover;
 import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.portal.PortalResponse;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
-import com.teslagov.joan.portal.user.add.UserAddResponse;
-import com.teslagov.joan.portal.user.add.UserAdder;
+import com.teslagov.joan.portal.user.create.UserCreateResponse;
+import com.teslagov.joan.portal.user.create.UserCreator;
 import com.teslagov.joan.portal.user.fetch.UserFetcher;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	private final GroupUserRemover groupUserRemover = new GroupUserRemover();
 
-	private final UserAdder userAdder = new UserAdder();
+	private final UserCreator userCreator = new UserCreator();
 
 	public ArcPortalApi( HttpClient httpClient, ArcConfiguration arcConfiguration, ZoneOffset zoneOffset )
 	{
@@ -132,9 +132,9 @@ public class ArcPortalApi extends AbstractArcRestApi
 		return groupUserRemover.removeUsersFromGroup( httpClient, arcConfiguration, tokenResponse, group, usernames );
 	}
 
-	public UserAddResponse addUser( UserRequestModel userRequestModel )
+	public UserCreateResponse addUser( UserRequestModel userRequestModel )
 	{
 		refreshTokenIfNecessary();
-		return userAdder.addUser( httpClient, arcConfiguration, tokenResponse, userRequestModel );
+		return userCreator.createUser( httpClient, arcConfiguration, tokenResponse, userRequestModel );
 	}
 }
