@@ -1,8 +1,9 @@
+description = "Joan API classes for the Portal for ArcGIS Server REST API"
+version = rootProject.version
+
 repositories {
     mavenCentral()
 }
-
-description = "Joan API classes for the Portal for ArcGIS Server REST API"
 
 dependencies {
     compile project(':joan-arc-core')

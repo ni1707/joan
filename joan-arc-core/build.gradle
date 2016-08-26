@@ -1,11 +1,12 @@
+description = "The internal core utilities used by Joan. Not meant for public consumption."
+version = rootProject.version
+
 repositories {
     maven { url 'http://jcenter.bintray.com' }
 }
 
 apply from: file('gradle/maven-publish.gradle')
 apply from: file('gradle/bintray.gradle')
-
-description = "The internal core utilities used by Joan. Not meant for public consumption."
 
 ext.labels = rootProject.labels + ['joan-arc-core', 'common']
 

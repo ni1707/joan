@@ -48,7 +48,11 @@ bintray {
 // test for sanity
 task echoProps << {
     println "               project.name: $project.name"
+    println "            project.version: $project.version"
     println "        project.description: $project.description"
+    println "           rootProject.name: ${rootProject.name}"
+    println "        rootProject.version: ${rootProject.version}"
+    println "    rootProject.description: ${rootProject.description}"
     println "      project.githubOrgName: $project.githubOrgName"
     println "     project.githubRepoName: $project.githubRepoName"
     println "        project.bintrayUser: $project.bintrayUser"
@@ -62,10 +66,6 @@ task echoProps << {
     println "                 ossrh user: $ossrhUser"
     println "                 ossrh pass: $ossrhPass"
     println "                 passphrase: $passPhrase"
-    println "           rootProject.name: ${rootProject.name}"
-    println "               project.name: ${project.name}"
-    println "            project.version: ${project.version}"
-    println "        rootProject.version: ${rootProject.version}"
     println "              inceptionYear: ${inceptionYear.toString()}"
     println "                     labels: ${labels}"
 }

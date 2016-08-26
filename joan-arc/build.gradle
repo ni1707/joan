@@ -1,8 +1,9 @@
+description = "The Joan API classes."
+version = rootProject.version
+
 repositories {
     mavenCentral()
 }
-
-description = "The Joan API classes."
 
 dependencies {
     compile project(':joan-arc-core')
