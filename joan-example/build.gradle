@@ -3,7 +3,6 @@ description = "Example project using Joan"
 version = rootProject.version
 
 repositories {
-    maven { url 'http://jcenter.bintray.com' }
     // TODO need to fix Bintray deploy so we can remove this
     maven { url 'https://dl.bintray.com/teslagov/Properties/' }
 }
