@@ -14,5 +14,7 @@ dependencies {
     def slf4jVersion = "1.7.21"
     compile     group: 'org.slf4j',                 name: 'slf4j-simple',   version: "${slf4jVersion}"
 
-    compile     group: 'com.teslagov.props',        name: 'props',     version: '2.0.1'
+    compile     group: 'com.teslagov.props',        name: 'props',          version: '2.0.1'
+    compile     group: 'org.apache.httpcomponents', name: 'httpcore',       version: '4.4.5'
+
 }

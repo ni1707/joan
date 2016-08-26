@@ -31,6 +31,8 @@ ext {
     ossrhPass = project.property('nexusPassword')
     passPhrase = project.property('signing.password')
     labels = ['esri', 'arcgis', 'rest', 'java', 'sdk']
+
+    junitVersion = '4.12'
 }
 
 task wrapper(type: Wrapper) {
