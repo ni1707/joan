@@ -17,19 +17,21 @@ subprojects {
     sourceCompatibility = 1.8
 }
 
-ext.githubOrgName = 'TeslaGov'
-ext.githubRepoName = 'joan'
-ext.inceptionYear = 2016
+ext {
+    githubOrgName = 'TeslaGov'
+    githubRepoName = 'joan'
+    inceptionYear = 2016
 
-ext.bintrayUser = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-ext.bintrayApiKey = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-ext.bintrayOrgName = 'teslagov'
-ext.bintrayRepoName = 'joan'
+    bintrayUser = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    bintrayApiKey = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    bintrayOrgName = 'teslagov'
+    bintrayRepoName = 'joan'
 
-ext.ossrhUser = project.property('nexusUsername')
-ext.ossrhPass = project.property('nexusPassword')
-ext.passPhrase = project.property('signing.password')
-ext.labels = ['esri', 'arcgis', 'rest', 'java', 'sdk']
+    ossrhUser = project.property('nexusUsername')
+    ossrhPass = project.property('nexusPassword')
+    passPhrase = project.property('signing.password')
+    labels = ['esri', 'arcgis', 'rest', 'java', 'sdk']
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
