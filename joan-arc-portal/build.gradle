@@ -2,6 +2,8 @@ repositories {
     mavenCentral()
 }
 
+description = "Joan API classes for the Portal for ArcGIS Server REST API"
+
 dependencies {
     compile project(':joan-arc-core')
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'

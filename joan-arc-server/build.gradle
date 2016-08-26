@@ -1,3 +1,5 @@
+description = "Joan API classes for the ArcGIS Server REST API"
+
 repositories {
     mavenCentral()
 }

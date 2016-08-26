@@ -2,6 +2,8 @@ repositories {
     mavenCentral()
 }
 
+description = "The Joan API classes."
+
 dependencies {
     compile project(':joan-arc-core')
     compile project(':joan-arc-portal')

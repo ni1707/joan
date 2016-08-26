@@ -47,6 +47,8 @@ bintray {
 
 // test for sanity
 task echoProps << {
+    println "               project.name: $project.name"
+    println "        project.description: $project.description"
     println "      project.githubOrgName: $project.githubOrgName"
     println "     project.githubRepoName: $project.githubRepoName"
     println "        project.bintrayUser: $project.bintrayUser"
