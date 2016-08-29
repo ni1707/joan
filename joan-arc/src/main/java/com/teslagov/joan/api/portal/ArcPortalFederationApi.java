@@ -3,7 +3,7 @@ package com.teslagov.joan.api.portal;
 import com.teslagov.joan.api.AbstractArcRestApi;
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenManager;
-import com.teslagov.joan.portal.federation.ServerRole;
+import com.teslagov.joan.portal.admin.federation.ServerRole;
 import org.apache.http.client.HttpClient;
 
 import java.time.ZoneOffset;

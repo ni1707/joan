@@ -6,10 +6,10 @@ import com.teslagov.joan.core.Role;
 import com.teslagov.joan.core.SortOrder;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
-import com.teslagov.joan.portal.community.group.Group;
-import com.teslagov.joan.portal.community.group.GroupAccess;
-import com.teslagov.joan.portal.community.group.GroupSortField;
-import com.teslagov.joan.portal.community.group.useradd.GroupUserAddResponse;
+import com.teslagov.joan.portal.sharing.community.group.Group;
+import com.teslagov.joan.portal.sharing.community.group.GroupAccess;
+import com.teslagov.joan.portal.sharing.community.group.GroupSortField;
+import com.teslagov.joan.portal.sharing.community.group.useradd.GroupUserAddResponse;
 import com.teslagov.props.Properties;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.teslagov.joan.api.ArcConfigurationBuilder.arcConfig;
-import static com.teslagov.joan.portal.community.group.GroupBuilder.newGroup;
+import static com.teslagov.joan.portal.sharing.community.group.GroupBuilder.newGroup;
 import static com.teslagov.joan.core.UserRequestModel.newUser;
 
 /**
