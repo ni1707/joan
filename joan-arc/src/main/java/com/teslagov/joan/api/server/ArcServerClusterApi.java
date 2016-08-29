@@ -8,12 +8,13 @@ import java.util.List;
 /**
  * @author Kevin Chen
  */
-public class ClusterApi
+public class ArcServerClusterApi
 {
 	private final HttpClient httpClient;
+
 	private final ArcConfiguration arcConfiguration;
 
-	public ClusterApi( HttpClient httpClient, ArcConfiguration arcConfiguration )
+	public ArcServerClusterApi( HttpClient httpClient, ArcConfiguration arcConfiguration )
 	{
 		this.httpClient = httpClient;
 		this.arcConfiguration = arcConfiguration;
