@@ -27,58 +27,82 @@ public class PortalEndpointFactory
 			}
 		}
 	}
-	private static String createCommunityPath( ArcConfiguration arcConfiguration )
+
+	public static final class SharingRest
 	{
-		return String.format( "%s/community", arcConfiguration.getPortalSharingApiPath() );
+		private static String sharingApi( ArcConfiguration arcConfiguration )
+		{
+			return arcConfiguration.getPortalSharingApiPath();
+		}
+
+		public static String makeGenerateTokenPath( ArcConfiguration arcConfiguration )
+		{
+			return sharingApi( arcConfiguration ) + "/generateToken";
+		}
+
+		public static class Portals
+		{
+			private static String portals( ArcConfiguration arcConfiguration )
+			{
+				return sharingApi( arcConfiguration ) + "/portals";
+			}
+
+			public static String makeFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )
+			{
+				return portals( arcConfiguration ) + "/" + portalID + "/users";
+			}
+
+			public static String makeGetPortalIDPath( ArcConfiguration arcConfiguration )
+			{
+				return portals( arcConfiguration ) + "/self";
+			}
+		}
+
+		public static class Community
+		{
+			private static String communityPath( ArcConfiguration arcConfiguration )
+			{
+				return sharingApi( arcConfiguration ) + "/community";
+			}
+
+			public static class Groups
+			{
+				private static String groupsUrl( ArcConfiguration arcConfiguration )
+				{
+					return communityPath( arcConfiguration ) + "/groups";
+				}
+
+				private static String groupUrl( ArcConfiguration arcConfiguration, String groupID )
+				{
+					return groupsUrl( arcConfiguration ) + "/" + groupID;
+				}
+
+				public static String makeCreateGroupPath( ArcConfiguration arcConfiguration )
+				{
+					return communityPath( arcConfiguration ) + "/createGroup";
+				}
+
+				public static String makeDeleteGroupPath( ArcConfiguration arcConfiguration, String groupID )
+				{
+					return groupUrl( arcConfiguration, groupID ) + "/delete";
+				}
+
+				public static String makeUpdateGroupPath( ArcConfiguration arcConfiguration, String groupID )
+				{
+					return groupUrl( arcConfiguration, groupID ) + "/update";
+				}
+
+				public static String makeAddUserToGroupPath( ArcConfiguration arcConfiguration, String groupID )
+				{
+					return groupUrl( arcConfiguration, groupID ) + "/addUsers";
+				}
+
+				public static String makeRemoveUserToGroupPath( ArcConfiguration arcConfiguration, String groupID )
+				{
+					return groupUrl( arcConfiguration, groupID ) + "/removeUsers";
+				}
+			}
+		}
 	}
 
-	private static String createGroupsUrl( ArcConfiguration arcConfiguration )
-	{
-		return createCommunityPath( arcConfiguration ) + "/groups";
-	}
-
-	private static String createGroupUrl( ArcConfiguration arcConfiguration, String groupID )
-	{
-		return createGroupsUrl( arcConfiguration ) + "/" + groupID;
-	}
-
-	public static String createCreateGroupPath( ArcConfiguration arcConfiguration )
-	{
-		return createCommunityPath( arcConfiguration ) + "/createGroup";
-	}
-
-	public static String createDeleteGroupPath( ArcConfiguration arcConfiguration, String groupID )
-	{
-		return createGroupUrl( arcConfiguration, groupID ) + "/delete";
-	}
-
-	public static String createUpdateGroupPath( ArcConfiguration arcConfiguration, String groupID )
-	{
-		return createGroupUrl( arcConfiguration, groupID ) + "/update";
-	}
-
-	public static String createAddUserToGroupPath( ArcConfiguration arcConfiguration, String groupID )
-	{
-		return createGroupUrl( arcConfiguration, groupID ) + "/addUsers";
-	}
-
-	public static String createRemoveUserToGroupPath( ArcConfiguration arcConfiguration, String groupID )
-	{
-		return createGroupUrl( arcConfiguration, groupID ) + "/removeUsers";
-	}
-
-	public static String createFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )
-	{
-		return String.format( "%s/portals/%s/users", arcConfiguration.getPortalSharingApiPath(), portalID );
-	}
-
-	public static String createGenerateTokenPath( ArcConfiguration arcConfiguration )
-	{
-		return arcConfiguration.getPortalSharingApiPath() + "/generateToken";
-	}
-
-	public static String createGetPortalIDPath( ArcConfiguration arcConfiguration )
-	{
-		return arcConfiguration.getPortalSharingApiPath() + "/portals/self";
-	}
 }

@@ -1,11 +1,11 @@
-package com.teslagov.joan.portal.group.useradd;
+package com.teslagov.joan.portal.community.group.useradd;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
-import com.teslagov.joan.portal.group.Group;
+import com.teslagov.joan.portal.community.group.Group;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -25,7 +25,7 @@ public class GroupUserAdder
 		List<String> usernames
 	)
 	{
-		String path = PortalEndpointFactory.createAddUserToGroupPath( arcConfiguration, group.id );
+		String path = PortalEndpointFactory.SharingRest.Community.Groups.makeAddUserToGroupPath( arcConfiguration, group.id );
 		HttpPost httpPost =
 			new HttpPostBuilder( path )
 				.urlFormParam( "token", tokenResponse.getToken() )

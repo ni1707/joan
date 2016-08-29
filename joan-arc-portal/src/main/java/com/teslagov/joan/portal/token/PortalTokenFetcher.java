@@ -27,7 +27,7 @@ public class PortalTokenFetcher implements TokenFetcher
 	@Override
 	public TokenResponse fetchToken()
 	{
-		String path = PortalEndpointFactory.createGenerateTokenPath( arcConfiguration );
+		String path = PortalEndpointFactory.SharingRest.makeGenerateTokenPath( arcConfiguration );
 		HttpPost httpPost =
 			new HttpPostBuilder( path )
 				.urlFormParam( "f", "json" )

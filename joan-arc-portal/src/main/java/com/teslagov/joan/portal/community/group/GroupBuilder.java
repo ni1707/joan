@@ -1,4 +1,4 @@
-package com.teslagov.joan.portal.group;
+package com.teslagov.joan.portal.community.group;
 
 import com.teslagov.joan.core.SortOrder;
 

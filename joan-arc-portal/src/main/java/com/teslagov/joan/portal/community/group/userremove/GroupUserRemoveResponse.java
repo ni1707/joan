@@ -1,4 +1,4 @@
-package com.teslagov.joan.portal.group.userremove;
+package com.teslagov.joan.portal.community.group.userremove;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teslagov.joan.core.Response;

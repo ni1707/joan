@@ -1,38 +1,32 @@
-package com.teslagov.joan.portal.group.userremove;
+package com.teslagov.joan.portal.community.group.delete;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
-import com.teslagov.joan.portal.group.Group;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-
-import java.util.List;
 
 /**
  * @author Kevin Chen
  */
-public class GroupUserRemover
+public class GroupDeleter
 {
-	public GroupUserRemoveResponse removeUsersFromGroup(
+	public GroupDeleteResponse deleteGroup(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
-		Group group,
-		List<String> usernames
+		String groupID
 	)
 	{
-		String path = PortalEndpointFactory.createRemoveUserToGroupPath( arcConfiguration, group.id );
+		String path = PortalEndpointFactory.SharingRest.Community.Groups.makeDeleteGroupPath( arcConfiguration, groupID );
 		HttpPost httpPost =
 			new HttpPostBuilder( path )
 				.urlFormParam( "token", tokenResponse.getToken() )
 				.urlFormParam( "f", "json" )
-				.urlFormParam( "users", StringUtils.join( usernames, "," ) )
 				.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, GroupUserRemoveResponse.class );
+		return HttpExecutor.getResponse( httpClient, httpPost, GroupDeleteResponse.class );
 	}
 }

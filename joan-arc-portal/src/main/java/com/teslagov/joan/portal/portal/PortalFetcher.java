@@ -15,7 +15,7 @@ public class PortalFetcher
 {
 	public PortalResponse fetchPortal( HttpClient httpClient, ArcConfiguration arcConfiguration, TokenResponse tokenResponse )
 	{
-		String path = PortalEndpointFactory.createGetPortalIDPath( arcConfiguration );
+		String path = PortalEndpointFactory.SharingRest.Portals.makeGetPortalIDPath( arcConfiguration );
 		HttpPost httpPost =
 			new HttpPostBuilder( path )
 				.urlFormParam( "f", "json" )

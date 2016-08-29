@@ -1,15 +1,14 @@
-package com.teslagov.joan.portal.group.delete;
+package com.teslagov.joan.portal.community.group.update;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.teslagov.joan.core.Response;
 
 /**
  * @author Kevin Chen
  */
 @JsonInclude( JsonInclude.Include.NON_NULL )
 @JsonIgnoreProperties( ignoreUnknown = true )
-public class GroupDeleteResponse extends Response
+public class GroupUpdateResponse
 {
 	public boolean success;
 

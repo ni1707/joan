@@ -43,7 +43,7 @@ public class UserFetcher
 	{
 		String path = String.format(
 			"%s?token=%s&f=json&start=%s&num=%s",
-			PortalEndpointFactory.createFetchUsersPath( arcConfiguration, portalResponse.id ),
+			PortalEndpointFactory.SharingRest.Portals.makeFetchUsersPath( arcConfiguration, portalResponse.id ),
 			tokenResponse.getToken(),
 			start + "",
 			num + ""

@@ -1,4 +1,4 @@
-package com.teslagov.joan.portal.group.useradd;
+package com.teslagov.joan.portal.community.group.useradd;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teslagov.joan.core.Response;
