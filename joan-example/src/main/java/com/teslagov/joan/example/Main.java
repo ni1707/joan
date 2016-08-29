@@ -10,7 +10,7 @@ import com.teslagov.joan.portal.group.Group;
 import com.teslagov.joan.portal.group.GroupAccess;
 import com.teslagov.joan.portal.group.GroupSortField;
 import com.teslagov.joan.portal.group.useradd.GroupUserAddResponse;
-import com.teslagov.properties.Properties;
+import com.teslagov.props.Properties;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

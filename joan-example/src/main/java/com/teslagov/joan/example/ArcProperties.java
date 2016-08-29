@@ -1,6 +1,6 @@
 package com.teslagov.joan.example;
 
-import com.teslagov.properties.PropertyEnum;
+import com.teslagov.props.PropertyEnum;
 
 /**
  * @author Kevin Chen
