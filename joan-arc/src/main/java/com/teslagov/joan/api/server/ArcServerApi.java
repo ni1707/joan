@@ -1,5 +1,6 @@
-package com.teslagov.joan.api;
+package com.teslagov.joan.api.server;
 
+import com.teslagov.joan.api.AbstractArcRestApi;
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenRefresher;
 import com.teslagov.joan.core.UserRequestModel;

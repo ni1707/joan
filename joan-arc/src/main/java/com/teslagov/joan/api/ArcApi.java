@@ -1,5 +1,7 @@
 package com.teslagov.joan.api;
 
+import com.teslagov.joan.api.portal.ArcPortalApi;
+import com.teslagov.joan.api.server.ArcServerApi;
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
