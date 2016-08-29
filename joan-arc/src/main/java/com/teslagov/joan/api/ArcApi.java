@@ -3,6 +3,8 @@ package com.teslagov.joan.api;
 import com.teslagov.joan.api.portal.ArcPortalApi;
 import com.teslagov.joan.api.server.ArcServerApi;
 import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.TokenManager;
+import com.teslagov.joan.core.TokenRefresher;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.portal.group.Group;
@@ -11,7 +13,9 @@ import com.teslagov.joan.portal.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.group.update.GroupUpdateResponse;
 import com.teslagov.joan.portal.group.useradd.GroupUserAddResponse;
 import com.teslagov.joan.portal.group.userremove.GroupUserRemoveResponse;
+import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.user.create.UserCreateResponse;
+import com.teslagov.joan.server.token.ServerTokenFetcher;
 import com.teslagov.joan.server.user.add.UserAddResponse;
 import com.teslagov.joan.server.user.remove.UserRemoveResponse;
 import org.apache.http.client.HttpClient;
@@ -34,8 +38,35 @@ public class ArcApi
 
 	public ArcApi( HttpClient httpClient, ArcConfiguration arcConfiguration )
 	{
-		this.arcPortalApi = new ArcPortalApi( httpClient, arcConfiguration, ZONE_OFFSET );
-		this.arcServerApi = new ArcServerApi( httpClient, arcConfiguration, ZONE_OFFSET );
+		this.arcPortalApi = new ArcPortalApi(
+			httpClient,
+			arcConfiguration,
+			ZONE_OFFSET,
+			new TokenManager(
+				new TokenRefresher(
+					new PortalTokenFetcher(
+						httpClient,
+						arcConfiguration
+					),
+					ZONE_OFFSET
+				)
+			)
+		);
+
+		this.arcServerApi = new ArcServerApi(
+			httpClient,
+			arcConfiguration,
+			ZONE_OFFSET,
+			new TokenManager(
+				new TokenRefresher(
+					new ServerTokenFetcher(
+						httpClient,
+						arcConfiguration
+					),
+					ZONE_OFFSET
+				)
+			)
+		);
 	}
 
 	public void getPortal()

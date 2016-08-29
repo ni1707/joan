@@ -2,9 +2,8 @@ package com.teslagov.joan.api.server;
 
 import com.teslagov.joan.api.AbstractArcRestApi;
 import com.teslagov.joan.core.ArcConfiguration;
-import com.teslagov.joan.core.TokenRefresher;
+import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.UserRequestModel;
-import com.teslagov.joan.server.token.ServerTokenFetcher;
 import com.teslagov.joan.server.user.add.UserAddResponse;
 import com.teslagov.joan.server.user.add.UserAdder;
 import com.teslagov.joan.server.user.remove.UserRemoveResponse;
@@ -22,19 +21,18 @@ public class ArcServerApi extends AbstractArcRestApi
 
 	private final UserRemover userRemover = new UserRemover();
 
-	public ArcServerApi( HttpClient httpClient, ArcConfiguration arcConfiguration, ZoneOffset zoneOffset )
+	public ArcServerApi(
+		HttpClient httpClient,
+		ArcConfiguration arcConfiguration,
+		ZoneOffset zoneOffset,
+		TokenManager tokenManager
+	)
 	{
 		super(
 			httpClient,
 			arcConfiguration,
 			zoneOffset,
-			new TokenRefresher(
-				new ServerTokenFetcher(
-					httpClient,
-					arcConfiguration
-				),
-				zoneOffset
-			),
+			tokenManager,
 			"ArcGIS Server"
 		);
 	}
@@ -42,12 +40,12 @@ public class ArcServerApi extends AbstractArcRestApi
 	public UserAddResponse addUser( UserRequestModel userRequestModel )
 	{
 		refreshTokenIfNecessary();
-		return userAdder.addUser( httpClient, arcConfiguration, tokenResponse, userRequestModel );
+		return userAdder.addUser( httpClient, arcConfiguration, tokenManager.getTokenResponse(), userRequestModel );
 	}
 
 	public UserRemoveResponse removeUser( String username )
 	{
 		refreshTokenIfNecessary();
-		return userRemover.removeUser( httpClient, arcConfiguration, tokenResponse, username );
+		return userRemover.removeUser( httpClient, arcConfiguration, tokenManager.getTokenResponse(), username );
 	}
 }

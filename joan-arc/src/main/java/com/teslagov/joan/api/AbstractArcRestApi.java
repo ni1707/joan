@@ -1,8 +1,7 @@
 package com.teslagov.joan.api;
 
 import com.teslagov.joan.core.ArcConfiguration;
-import com.teslagov.joan.core.TokenRefresher;
-import com.teslagov.joan.core.TokenResponse;
+import com.teslagov.joan.core.TokenManager;
 import org.apache.http.client.HttpClient;
 
 import java.time.ZoneOffset;
@@ -12,15 +11,13 @@ import java.time.ZoneOffset;
  */
 public abstract class AbstractArcRestApi
 {
-	protected TokenResponse tokenResponse;
-
 	protected final HttpClient httpClient;
 
 	protected final ArcConfiguration arcConfiguration;
 
 	protected final ZoneOffset zoneOffset;
 
-	protected final TokenRefresher tokenRefresher;
+	protected final TokenManager tokenManager;
 
 	protected final String apiName;
 
@@ -28,22 +25,19 @@ public abstract class AbstractArcRestApi
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		ZoneOffset zoneOffset,
-		TokenRefresher tokenRefresher,
+		TokenManager tokenManager,
 		String apiName
 	)
 	{
 		this.httpClient = httpClient;
 		this.arcConfiguration = arcConfiguration;
 		this.zoneOffset = zoneOffset;
-		this.tokenRefresher = tokenRefresher;
+		this.tokenManager = tokenManager;
 		this.apiName = apiName;
 	}
 
 	protected void refreshTokenIfNecessary()
 	{
-		if ( tokenRefresher.isTokenExpired( tokenResponse ) )
-		{
-			tokenResponse = tokenRefresher.fetchToken();
-		}
+		tokenManager.refreshTokenIfNecessary();
 	}
 }

@@ -3,7 +3,7 @@ package com.teslagov.joan.api.portal;
 import com.teslagov.joan.api.AbstractArcRestApi;
 import com.teslagov.joan.api.ArcApi;
 import com.teslagov.joan.core.ArcConfiguration;
-import com.teslagov.joan.core.TokenRefresher;
+import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
 import com.teslagov.joan.portal.group.Group;
@@ -19,7 +19,6 @@ import com.teslagov.joan.portal.group.userremove.GroupUserRemoveResponse;
 import com.teslagov.joan.portal.group.userremove.GroupUserRemover;
 import com.teslagov.joan.portal.portal.PortalFetcher;
 import com.teslagov.joan.portal.portal.PortalResponse;
-import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.user.create.UserCreateResponse;
 import com.teslagov.joan.portal.user.create.UserCreator;
 import com.teslagov.joan.portal.user.fetch.UserFetcher;
@@ -36,6 +35,9 @@ import java.util.List;
 public class ArcPortalApi extends AbstractArcRestApi
 {
 	private static final Logger logger = LoggerFactory.getLogger( ArcApi.class );
+
+	// TODO move all group-related helper classes inside this sub-api
+	private final ArcPortalGroupApi arcPortalGroupApi;
 
 	private final PortalFetcher portalFetcher = new PortalFetcher();
 
@@ -55,27 +57,27 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	private final UserCreator userCreator = new UserCreator();
 
-	public ArcPortalApi( HttpClient httpClient, ArcConfiguration arcConfiguration, ZoneOffset zoneOffset )
+	public ArcPortalApi(
+		HttpClient httpClient,
+		ArcConfiguration arcConfiguration,
+		ZoneOffset zoneOffset,
+		TokenManager tokenManager
+	)
 	{
 		super(
 			httpClient,
 			arcConfiguration,
 			zoneOffset,
-			new TokenRefresher(
-				new PortalTokenFetcher(
-					httpClient,
-					arcConfiguration
-				),
-				zoneOffset
-			),
+			tokenManager,
 			"Portal"
 		);
+		this.arcPortalGroupApi = new ArcPortalGroupApi( httpClient, arcConfiguration, zoneOffset, tokenManager, "Portal Groups" );
 	}
 
 	public void getPortal()
 	{
 		refreshTokenIfNecessary();
-		portalResponse = portalFetcher.fetchPortal( httpClient, arcConfiguration, tokenResponse );
+		portalResponse = portalFetcher.fetchPortal( httpClient, arcConfiguration, tokenManager.getTokenResponse() );
 		logger.debug( "Portal ID = {}", portalResponse.id );
 	}
 
@@ -93,13 +95,13 @@ public class ArcPortalApi extends AbstractArcRestApi
 			getPortal();
 		}
 
-		return userFetcher.fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse, start, num );
+		return userFetcher.fetchUsers( httpClient, arcConfiguration, tokenManager.getTokenResponse(), portalResponse, start, num );
 	}
 
 	public GroupCreateResponse createGroup( Group group )
 	{
 		refreshTokenIfNecessary();
-		GroupCreateResponse groupCreateResponse = groupCreator.createGroup( httpClient, arcConfiguration, tokenResponse, group );
+		GroupCreateResponse groupCreateResponse = groupCreator.createGroup( httpClient, arcConfiguration, tokenManager.getTokenResponse(), group );
 		logger.debug( "GROUP ACCESS = {}", groupCreateResponse.group.access );
 
 		return groupCreateResponse;
@@ -113,30 +115,30 @@ public class ArcPortalApi extends AbstractArcRestApi
 	public GroupDeleteResponse deleteGroup( String groupID )
 	{
 		refreshTokenIfNecessary();
-		return groupDeleter.deleteGroup( httpClient, arcConfiguration, tokenResponse, groupID );
+		return groupDeleter.deleteGroup( httpClient, arcConfiguration, tokenManager.getTokenResponse(), groupID );
 	}
 
 	public GroupUpdateResponse updateGroup( Group group )
 	{
 		refreshTokenIfNecessary();
-		return groupUpdater.updateGroup( httpClient, arcConfiguration, tokenResponse, group );
+		return groupUpdater.updateGroup( httpClient, arcConfiguration, tokenManager.getTokenResponse(), group );
 	}
 
 	public GroupUserAddResponse addUsersToGroup( Group group, List<String> usernames )
 	{
 		refreshTokenIfNecessary();
-		return groupUserAdder.addUserToGroup( httpClient, arcConfiguration, tokenResponse, group, usernames );
+		return groupUserAdder.addUserToGroup( httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames );
 	}
 
 	public GroupUserRemoveResponse removeUsersFromGroup( Group group, List<String> usernames )
 	{
 		refreshTokenIfNecessary();
-		return groupUserRemover.removeUsersFromGroup( httpClient, arcConfiguration, tokenResponse, group, usernames );
+		return groupUserRemover.removeUsersFromGroup( httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames );
 	}
 
 	public UserCreateResponse addUser( UserRequestModel userRequestModel )
 	{
 		refreshTokenIfNecessary();
-		return userCreator.createUser( httpClient, arcConfiguration, tokenResponse, userRequestModel );
+		return userCreator.createUser( httpClient, arcConfiguration, tokenManager.getTokenResponse(), userRequestModel );
 	}
 }
