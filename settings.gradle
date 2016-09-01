@@ -5,4 +5,5 @@ include 'joan-arc-server'
 include 'joan-arc-portal'
 include 'joan-example'
 include 'joan-arc'
+include 'rampart-joan-hook'
 

@@ -1,0 +1,24 @@
+ext.bintrayPackageName = project.name
+description = "The Joan hook for Rampart"
+version = rootProject.version
+ext.labels = rootProject.labels + ['rampart', 'authentication', 'hook']
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+apply from: file('gradle/maven-publish.gradle')
+apply from: file('gradle/bintray.gradle')
+
+dependencies {
+
+    // For now, compile joan-arc locally instead of pulling from Bintray
+    //compile     group: 'com.teslagov.joan-arc',         name: 'joan-arc',           version: '0.0.1'
+    compile project(':joan-arc')
+
+    compile     group: 'com.teslagov.rampart-hook',     name: 'rampart-hook',       version: '0.0.1'
+
+    compile     group: 'org.slf4j',     name: 'slf4j-api',          version: rootProject.slf4jVersion
+    testCompile group: 'junit',         name: 'junit',              version: rootProject.junitVersion
+}
