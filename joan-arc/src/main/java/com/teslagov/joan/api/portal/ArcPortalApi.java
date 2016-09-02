@@ -22,6 +22,7 @@ import com.teslagov.joan.portal.sharing.portal.PortalResponse;
 import com.teslagov.joan.portal.admin.security.user.create.UserCreateResponse;
 import com.teslagov.joan.portal.admin.security.user.create.UserCreator;
 import com.teslagov.joan.portal.sharing.user.fetch.UserFetcher;
+import com.teslagov.joan.portal.sharing.user.fetch.UserListResponse;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,12 +82,12 @@ public class ArcPortalApi extends AbstractArcRestApi
 		logger.debug( "Portal ID = {}", portalResponse.id );
 	}
 
-	public List<UserResponseModel> fetchUsers()
+	public UserListResponse fetchUsers()
 	{
 		return fetchUsers( 0, 100 );
 	}
 
-	public List<UserResponseModel> fetchUsers( int start, int num )
+	public UserListResponse fetchUsers( int start, int num )
 	{
 		refreshTokenIfNecessary();
 

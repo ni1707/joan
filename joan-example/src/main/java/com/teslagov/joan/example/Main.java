@@ -10,6 +10,7 @@ import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.GroupAccess;
 import com.teslagov.joan.portal.sharing.community.group.GroupSortField;
 import com.teslagov.joan.portal.sharing.community.group.useradd.GroupUserAddResponse;
+import com.teslagov.joan.portal.sharing.user.fetch.UserListResponse;
 import com.teslagov.props.Properties;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
@@ -49,8 +50,12 @@ public class Main
 
 		ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
 
-		List<UserResponseModel> users = arcApi.fetchUsers();
-		users.forEach( u -> logger.debug( "User {}", u ) );
+		UserListResponse userListResponse = arcApi.fetchUsers();
+		if ( userListResponse.isSuccess() )
+		{
+			List<UserResponseModel> users = userListResponse.users;
+			users.forEach( u -> logger.debug( "User {}", u ) );
+		}
 
 //		createGroupExample( arcApi );
 

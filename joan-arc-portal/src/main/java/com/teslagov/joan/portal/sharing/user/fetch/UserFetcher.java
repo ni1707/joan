@@ -22,7 +22,7 @@ public class UserFetcher
 {
 	private static final Logger logger = LoggerFactory.getLogger( UserFetcher.class );
 
-	public List<UserResponseModel> fetchUsers(
+	public UserListResponse fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
@@ -32,7 +32,7 @@ public class UserFetcher
 		return fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse, 0, 100 );
 	}
 
-	public List<UserResponseModel> fetchUsers(
+	public UserListResponse fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
@@ -54,6 +54,6 @@ public class UserFetcher
 		HttpGet httpGet = new HttpGet( path );
 
 		UserListResponse userListResponse = HttpExecutor.getResponse( httpClient, httpGet, UserListResponse.class );
-		return userListResponse.users;
+		return userListResponse;
 	}
 }

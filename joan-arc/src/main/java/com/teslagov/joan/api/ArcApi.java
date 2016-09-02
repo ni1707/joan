@@ -15,6 +15,7 @@ import com.teslagov.joan.portal.sharing.community.group.useradd.GroupUserAddResp
 import com.teslagov.joan.portal.sharing.community.group.userremove.GroupUserRemoveResponse;
 import com.teslagov.joan.portal.sharing.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.admin.security.user.create.UserCreateResponse;
+import com.teslagov.joan.portal.sharing.user.fetch.UserListResponse;
 import com.teslagov.joan.server.token.ServerTokenFetcher;
 import com.teslagov.joan.server.user.add.UserAddResponse;
 import com.teslagov.joan.server.user.remove.UserRemoveResponse;
@@ -74,12 +75,12 @@ public class ArcApi
 		arcPortalApi.getPortal();
 	}
 
-	public List<UserResponseModel> fetchUsers()
+	public UserListResponse fetchUsers()
 	{
 		return arcPortalApi.fetchUsers();
 	}
 
-	public List<UserResponseModel> fetchUsers( int start, int num )
+	public UserListResponse fetchUsers( int start, int num )
 	{
 		return arcPortalApi.fetchUsers( start, num );
 	}
