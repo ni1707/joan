@@ -20,11 +20,6 @@ public class PortalEndpointFactory
 			{
 				return security( arcConfiguration ) + "/users";
 			}
-
-			public static String createCreateUserPath( ArcConfiguration arcConfiguration )
-			{
-				return "https://john.office.teslagovernment.com:7443/arcgis/sharing/rest/community/createUser";
-			}
 		}
 	}
 
@@ -40,21 +35,17 @@ public class PortalEndpointFactory
 			return sharingApi( arcConfiguration ) + "/generateToken";
 		}
 
-		public static class Portals
-		{
-			private static String portals( ArcConfiguration arcConfiguration )
-			{
-				return sharingApi( arcConfiguration ) + "/portals";
+		public static class Portals {
+			private static String portals(ArcConfiguration arcConfiguration) {
+				return sharingApi(arcConfiguration) + "/portals";
 			}
 
-			public static String makeFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )
-			{
-				return portals( arcConfiguration ) + "/" + portalID + "/users";
+			public static String makeFetchUsersPath(ArcConfiguration arcConfiguration, String portalID) {
+				return portals(arcConfiguration) + "/" + portalID + "/users";
 			}
 
-			public static String makeGetPortalIDPath( ArcConfiguration arcConfiguration )
-			{
-				return portals( arcConfiguration ) + "/self";
+			public static String makeGetPortalIDPath(ArcConfiguration arcConfiguration) {
+				return portals(arcConfiguration) + "/self";
 			}
 		}
 
@@ -63,6 +54,11 @@ public class PortalEndpointFactory
 			private static String communityPath( ArcConfiguration arcConfiguration )
 			{
 				return sharingApi( arcConfiguration ) + "/community";
+			}
+
+			public static String makeCreateUserPath( ArcConfiguration arcConfiguration )
+			{
+				return communityPath( arcConfiguration ) + "/createUser";
 			}
 
 			public static class Groups

@@ -25,8 +25,6 @@ public class UserRequestModel
 
 	private final String accountId;
 
-	private final String provider;
-
 	private UserRequestModel(
 		String username,
 		String password,
@@ -34,8 +32,7 @@ public class UserRequestModel
 		String description,
 		String email,
 		String role,
-		String accountId,
-		String provider
+		String accountId
 	)
 	{
 		this.username = username;
@@ -44,14 +41,13 @@ public class UserRequestModel
 		this.description = description;
 		this.email = email;
 		this.role = role;
-		this.provider = provider;
 		this.accountId = accountId;
 	}
 
 	public static Builder newUser( String username, String password, String email, Role role, String accountId,
-								   String provider, String description, String fullname )
+								   String description, String fullname )
 	{
-		return new Builder( username, password, email, role, accountId, provider, description, fullname );
+		return new Builder( username, password, email, role, accountId, description, fullname );
 	}
 
 	public static class Builder
@@ -70,15 +66,12 @@ public class UserRequestModel
 
 		private String accountId;
 
-		private String provider;
-
 		public Builder(
 			String username,
 			String password,
 			String email,
 			Role role,
 			String accountId,
-			String provider,
 			String description,
 			String fullname
 		)
@@ -89,7 +82,6 @@ public class UserRequestModel
 			this.description = description;
 			this.email = email;
 			this.role = role;
-			this.provider = provider;
 			this.accountId = accountId;
 		}
 
@@ -107,8 +99,7 @@ public class UserRequestModel
 
 		public UserRequestModel build()
 		{
-			return new UserRequestModel( username, password, fullname, description, email, role.getName(), accountId,
-					provider);
+			return new UserRequestModel( username, password, fullname, description, email, role.getName(), accountId);
 		}
 	}
 
@@ -142,6 +133,8 @@ public class UserRequestModel
 		return role;
 	}
 
+	public String getAccountId() { return accountId; }
+
 	@Override
 	public String toString()
 	{
@@ -152,6 +145,7 @@ public class UserRequestModel
 			", description='" + description + '\'' +
 			", email='" + email + '\'' +
 			", role=" + role +
+			", accountId=" + accountId +
 			'}';
 	}
 }

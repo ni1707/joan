@@ -38,12 +38,12 @@ public class UserCreator
 		UserRequestModel userRequestModel
 	)
 	{
-		String url = PortalEndpointFactory.PortalAdmin.Security.createCreateUserPath( arcConfiguration );
+		String url = PortalEndpointFactory.SharingRest.Community.makeCreateUserPath( arcConfiguration );
 		logger.debug( "Hitting url {} with token {}", url, tokenResponse.getToken() );
 		logger.debug( "Adding user: {}", userRequestModel );
 
 		HttpPost httpPost =
-			new HttpPostBuilder( "https://john.office.teslagovernment.com:7443/arcgis/sharing/rest/community/createUser" )
+			new HttpPostBuilder( url )
 				.urlFormParam( "f", "pjson" )
 				.urlFormParam( "provider", arcConfiguration.getArcServerAdminUsername() )
 				.urlFormParam( "username", userRequestModel.getUsername() )
@@ -51,7 +51,7 @@ public class UserCreator
 				.urlFormParam( "fullName", userRequestModel.getFullname() )
 				.urlFormParam( "description", userRequestModel.getDescription() )
 				.urlFormParam( "email", userRequestModel.getEmail() )
-				.urlFormParam( "accountId", userRequestModel.getUsername())
+				.urlFormParam( "accountId", userRequestModel.getAccountId())
 				.urlFormParam( "role", userRequestModel.getRole() )
 				.build();
 
