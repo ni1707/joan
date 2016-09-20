@@ -37,17 +37,17 @@ public class PortalEndpointFactory
 
 		public static class Portals
 		{
-			private static String portals(ArcConfiguration arcConfiguration)
+			private static String portals( ArcConfiguration arcConfiguration )
 			{
 				return sharingApi(arcConfiguration) + "/portals";
 			}
 
-			public static String makeFetchUsersPath(ArcConfiguration arcConfiguration, String portalID)
+			public static String makeFetchUsersPath( ArcConfiguration arcConfiguration, String portalID )
 			{
 				return portals(arcConfiguration) + "/" + portalID + "/users";
 			}
 
-			public static String makeGetPortalIDPath(ArcConfiguration arcConfiguration)
+			public static String makeGetPortalIDPath( ArcConfiguration arcConfiguration )
 			{
 				return portals(arcConfiguration) + "/self";
 			}
