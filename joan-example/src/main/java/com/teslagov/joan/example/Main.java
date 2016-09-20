@@ -6,6 +6,7 @@ import com.teslagov.joan.core.Role;
 import com.teslagov.joan.core.SortOrder;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
+import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.GroupAccess;
 import com.teslagov.joan.portal.sharing.community.group.GroupSortField;
@@ -16,6 +17,7 @@ import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,8 +61,9 @@ public class Main
 
 //		createGroupExample( arcApi );
 
-
 		createNewUserExample( arcApi );
+
+		uploadItemExample( arcApi );
 
 		removeUserExample( arcApi );
 	}
@@ -79,6 +82,16 @@ public class Main
 	private static void removeUserExample( ArcApi arcApi )
 	{
 		arcApi.removeUser( "jon.snow3" );
+	}
+
+	private static void uploadItemExample( ArcApi arcApi )
+	{
+		File file = new File("example.csv");
+		ItemUploadModel itemUploadModel = new ItemUploadModel(file, null, "Text", null, "Title", null, null, null, null,
+				null, "Description", "Tags", "Snippet", "License", "Culture", null, "Extent", "Callback", "Id", null,
+				null, null, null, null, "Categories", "Industries", "Langs", null, null, null, null, null, null,
+				null, "pjson");
+		arcApi.uploadItem(itemUploadModel, "jon.snow3");
 	}
 
 	private static void createGroupExample( ArcApi arcApi )

@@ -7,6 +7,8 @@ import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.TokenRefresher;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleteResponse;
+import com.teslagov.joan.portal.content.upload.UploadItemResponse;
+import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.sharing.community.group.delete.GroupDeleteResponse;
@@ -124,8 +126,13 @@ public class ArcApi
 		return arcServerApi.addUser( userRequestModel );
 	}
 
-	public UserDeleteResponse removeUser(String username )
+	public UserDeleteResponse removeUser( String username )
 	{
 		return arcPortalApi.deleteUser( username );
+	}
+
+	public UploadItemResponse uploadItem( ItemUploadModel itemUploadModel, String username )
+	{
+		return arcPortalApi.uploadItem( itemUploadModel, username );
 	}
 }

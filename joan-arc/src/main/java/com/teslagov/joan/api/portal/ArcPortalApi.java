@@ -7,6 +7,9 @@ import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleteResponse;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleter;
+import com.teslagov.joan.portal.content.upload.UploadItem;
+import com.teslagov.joan.portal.content.upload.UploadItemResponse;
+import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreator;
@@ -61,6 +64,7 @@ public class ArcPortalApi extends AbstractArcRestApi
 
 	private final UserDeleter userDeleter = new UserDeleter();
 
+	private final UploadItem uploadItem = new UploadItem();
 	public ArcPortalApi(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
@@ -150,5 +154,11 @@ public class ArcPortalApi extends AbstractArcRestApi
 	{
 		refreshTokenIfNecessary();
 		return userDeleter.deleteUser( httpClient, arcConfiguration, tokenManager.getTokenResponse(), username );
+	}
+
+	public UploadItemResponse uploadItem( ItemUploadModel itemUploadModel, String username )
+	{
+		refreshTokenIfNecessary();
+		return uploadItem.uploadItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), itemUploadModel, username);
 	}
 }

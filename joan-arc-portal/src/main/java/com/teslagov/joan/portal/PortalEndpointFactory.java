@@ -21,6 +21,19 @@ public class PortalEndpointFactory
 				return security( arcConfiguration ) + "/users";
 			}
 		}
+
+		public static class Uploads
+		{
+			private static String uploads( ArcConfiguration arcConfiguration )
+			{
+				return String.format( "%s/uploads", arcConfiguration.getPortalAdminApiPath() );
+			}
+
+			public static String makeUploadPath( ArcConfiguration arcConfiguration )
+			{
+				return uploads( arcConfiguration ) + "/upload";
+			}
+		}
 	}
 
 	public static final class SharingRest
@@ -106,6 +119,19 @@ public class PortalEndpointFactory
 				{
 					return groupUrl( arcConfiguration, groupID ) + "/removeUsers";
 				}
+			}
+		}
+
+		public static class Content
+		{
+			private static String contentPath( ArcConfiguration arcConfiguration )
+			{
+				return sharingApi( arcConfiguration ) + "/content";
+			}
+
+			public static String makeUploadItemPath( ArcConfiguration arcConfiguration, String username )
+			{
+				return contentPath( arcConfiguration ) + "/users/" + username + "/addItem";
 			}
 		}
 	}
