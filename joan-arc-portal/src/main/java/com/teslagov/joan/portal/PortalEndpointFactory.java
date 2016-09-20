@@ -133,6 +133,11 @@ public class PortalEndpointFactory
 			{
 				return contentPath( arcConfiguration ) + "/users/" + username + "/addItem";
 			}
+
+			public static String makePublishItemPath( ArcConfiguration arcConfiguration, String username)
+			{
+				return contentPath( arcConfiguration ) + "/users/" + username + "publish";
+			}
 		}
 	}
 

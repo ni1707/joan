@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * Created by joncrain on 9/20/16.
  */
-public class ItemUploadModel
+public class UploadItemModel
 {
     private File file;
     private String url;
@@ -43,12 +43,12 @@ public class ItemUploadModel
     private String listingProperties;
     private String f;
 
-    public ItemUploadModel()
+    public UploadItemModel()
     {
 
     }
 
-    public ItemUploadModel(File file, String url, String text, String dataUrl, String title, File thumbnail,
+    public UploadItemModel(File file, String url, String text, String dataUrl, String title, File thumbnail,
                            String thumbnailUrl, String type, String typeKeywords, String description, String tags,
                            String snippet, String licenseInfo, String culture, String properties, String extent,
                            String callbackHtml, String originItemId, String destinationItemId, String relationshipType,
@@ -236,7 +236,7 @@ public class ItemUploadModel
 
     @Override
     public String toString() {
-        return "ItemUploadModel{" +
+        return "UploadItemModel{" +
                 "file=" + file +
                 ", url='" + url + '\'' +
                 ", text='" + text + '\'' +

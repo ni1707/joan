@@ -6,7 +6,8 @@ import com.teslagov.joan.core.Role;
 import com.teslagov.joan.core.SortOrder;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
-import com.teslagov.joan.portal.models.ItemUploadModel;
+import com.teslagov.joan.portal.models.PublishItemModel;
+import com.teslagov.joan.portal.models.UploadItemModel;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.GroupAccess;
 import com.teslagov.joan.portal.sharing.community.group.GroupSortField;
@@ -59,11 +60,13 @@ public class Main
 			users.forEach( u -> logger.debug( "User {}", u ) );
 		}
 
-//		createGroupExample( arcApi );
+//		createGroupExample( arcApi )
 
 		createNewUserExample( arcApi );
 
-		uploadItemExample( arcApi );
+		String id = uploadItemExample( arcApi );
+
+		publishItemExample( arcApi, id );
 
 		removeUserExample( arcApi );
 	}
@@ -84,14 +87,20 @@ public class Main
 		arcApi.removeUser( "jon.snow3" );
 	}
 
-	private static void uploadItemExample( ArcApi arcApi )
+	private static String uploadItemExample( ArcApi arcApi )
 	{
-		File file = new File("example.csv");
-		ItemUploadModel itemUploadModel = new ItemUploadModel(file, null, "Text", null, "Title", null, null, null, null,
+		File file = new File("example2.csv");
+		UploadItemModel uploadItemModel = new UploadItemModel(file, null, "Text", null, "Title", null, null, null, null,
 				null, "Description", "Tags", "Snippet", "License", "Culture", null, "Extent", "Callback", "Id", null,
 				null, null, null, null, "Categories", "Industries", "Langs", null, null, null, null, null, null,
 				null, "pjson");
-		arcApi.uploadItem(itemUploadModel, "jon.snow3");
+		return arcApi.uploadItem(uploadItemModel, "jon.snow3").id;
+	}
+
+	private static void publishItemExample( ArcApi arcApi, String id )
+	{
+		PublishItemModel publishItemModel = new PublishItemModel(id);
+		arcApi.publishItem( publishItemModel, "jon.snow3" );
 	}
 
 	private static void createGroupExample( ArcApi arcApi )

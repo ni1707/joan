@@ -7,9 +7,12 @@ import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleteResponse;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleter;
+import com.teslagov.joan.portal.content.publish.PublishItem;
+import com.teslagov.joan.portal.content.publish.PublishItemResponse;
 import com.teslagov.joan.portal.content.upload.UploadItem;
 import com.teslagov.joan.portal.content.upload.UploadItemResponse;
-import com.teslagov.joan.portal.models.ItemUploadModel;
+import com.teslagov.joan.portal.models.PublishItemModel;
+import com.teslagov.joan.portal.models.UploadItemModel;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreator;
@@ -65,6 +68,9 @@ public class ArcPortalApi extends AbstractArcRestApi
 	private final UserDeleter userDeleter = new UserDeleter();
 
 	private final UploadItem uploadItem = new UploadItem();
+
+	private final PublishItem publishItem = new PublishItem();
+
 	public ArcPortalApi(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
@@ -156,9 +162,15 @@ public class ArcPortalApi extends AbstractArcRestApi
 		return userDeleter.deleteUser( httpClient, arcConfiguration, tokenManager.getTokenResponse(), username );
 	}
 
-	public UploadItemResponse uploadItem( ItemUploadModel itemUploadModel, String username )
+	public UploadItemResponse uploadItem( UploadItemModel uploadItemModel, String username )
 	{
 		refreshTokenIfNecessary();
-		return uploadItem.uploadItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), itemUploadModel, username);
+		return uploadItem.uploadItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), uploadItemModel, username);
+	}
+
+	public PublishItemResponse publishItem( PublishItemModel publishItemModel, String username )
+	{
+		refreshTokenIfNecessary();
+		return publishItem.publishItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), publishItemModel, username);
 	}
 }
