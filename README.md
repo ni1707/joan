@@ -44,11 +44,13 @@ List<User> users = arcApi.fetchUsers( 100, 50 );
 ```
 
 #### Create User
+```java
 UserRequestModel newUserRequestModel = newUser( "Username", "Password123!", "example@example.com",
 				Role.ORG_USER, "Account ID", Description", "Full Name" )
 				.build();
 
 arcApi.addUserViaPortal( newUserRequestModel );
+```
 
 ### Groups API
 #### Create Group
