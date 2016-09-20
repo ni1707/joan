@@ -62,7 +62,12 @@ public class PortalEndpointFactory
 
 			public static String makeCreateUserPath( ArcConfiguration arcConfiguration )
 			{
-				return communityPath( arcConfiguration ) + "/createUser";
+				return communityPath(arcConfiguration) + "/createUser";
+			}
+
+			public static String makeDeleteUserPath( ArcConfiguration arcConfiguration, String username )
+			{
+				return communityPath(arcConfiguration) + "/users/" + username + "/delete";
 			}
 
 			public static class Groups

@@ -6,7 +6,7 @@ import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.TokenRefresher;
 import com.teslagov.joan.core.UserRequestModel;
-import com.teslagov.joan.core.UserResponseModel;
+import com.teslagov.joan.portal.admin.security.user.delete.UserDeleteResponse;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.sharing.community.group.delete.GroupDeleteResponse;
@@ -18,7 +18,6 @@ import com.teslagov.joan.portal.admin.security.user.create.UserCreateResponse;
 import com.teslagov.joan.portal.sharing.user.fetch.UserListResponse;
 import com.teslagov.joan.server.token.ServerTokenFetcher;
 import com.teslagov.joan.server.user.add.UserAddResponse;
-import com.teslagov.joan.server.user.remove.UserRemoveResponse;
 import org.apache.http.client.HttpClient;
 
 import java.time.ZoneOffset;
@@ -125,8 +124,8 @@ public class ArcApi
 		return arcServerApi.addUser( userRequestModel );
 	}
 
-	public UserRemoveResponse removeUser( String username )
+	public UserDeleteResponse removeUser(String username )
 	{
-		return arcServerApi.removeUser( username );
+		return arcPortalApi.deleteUser( username );
 	}
 }
