@@ -45,11 +45,19 @@ List<User> users = arcApi.fetchUsers( 100, 50 );
 
 #### Create User
 ```java
+// create a user object
 UserRequestModel newUserRequestModel = newUser( "Username", "Password123!", "example@example.com",
 				Role.ORG_USER, "Account ID", Description", "Full Name" )
 				.build();
 
+// add user to ArcGIS portal
 arcApi.addUserViaPortal( newUserRequestModel );
+```
+
+#### Delete User
+```java
+// delete user from the ArcGIS portal
+arcApi.removeUser( "UserToDelete" );
 ```
 
 ### Groups API

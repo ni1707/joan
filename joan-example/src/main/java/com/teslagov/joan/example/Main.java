@@ -62,7 +62,7 @@ public class Main
 
 		createNewUserExample( arcApi );
 
-//		removeUserExample( arcApi );
+		removeUserExample( arcApi );
 	}
 
 	private static void createNewUserExample( ArcApi arcApi )
@@ -78,7 +78,7 @@ public class Main
 
 	private static void removeUserExample( ArcApi arcApi )
 	{
-		arcApi.removeUser( "jack.bauer" );
+		arcApi.removeUser( "jon.snow3" );
 	}
 
 	private static void createGroupExample( ArcApi arcApi )

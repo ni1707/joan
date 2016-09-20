@@ -5,7 +5,8 @@ import com.teslagov.joan.api.ArcApi;
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.UserRequestModel;
-import com.teslagov.joan.core.UserResponseModel;
+import com.teslagov.joan.portal.admin.security.user.delete.UserDeleteResponse;
+import com.teslagov.joan.portal.admin.security.user.delete.UserDeleter;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreator;
@@ -57,6 +58,8 @@ public class ArcPortalApi extends AbstractArcRestApi
 	private final GroupUserRemover groupUserRemover = new GroupUserRemover();
 
 	private final UserCreator userCreator = new UserCreator();
+
+	private final UserDeleter userDeleter = new UserDeleter();
 
 	public ArcPortalApi(
 		HttpClient httpClient,
@@ -141,5 +144,11 @@ public class ArcPortalApi extends AbstractArcRestApi
 	{
 		refreshTokenIfNecessary();
 		return userCreator.createUser( httpClient, arcConfiguration, tokenManager.getTokenResponse(), userRequestModel );
+	}
+
+	public UserDeleteResponse deleteUser( String username )
+	{
+		refreshTokenIfNecessary();
+		return userDeleter.deleteUser( httpClient, arcConfiguration, tokenManager.getTokenResponse(), username );
 	}
 }
