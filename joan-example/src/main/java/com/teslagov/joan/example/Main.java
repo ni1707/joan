@@ -6,13 +6,19 @@ import com.teslagov.joan.core.Role;
 import com.teslagov.joan.core.SortOrder;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
+import com.teslagov.joan.core.http.HttpExecutor;
+import com.teslagov.joan.core.http.HttpPostBuilder;
+import com.teslagov.joan.portal.admin.security.user.create.UserCreateResponse;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.GroupAccess;
 import com.teslagov.joan.portal.sharing.community.group.GroupSortField;
 import com.teslagov.joan.portal.sharing.community.group.useradd.GroupUserAddResponse;
+import com.teslagov.joan.portal.sharing.token.PortalTokenResponse;
 import com.teslagov.joan.portal.sharing.user.fetch.UserListResponse;
 import com.teslagov.props.Properties;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +65,7 @@ public class Main
 
 //		createGroupExample( arcApi );
 
+
 		createNewUserExample( arcApi );
 
 //		removeUserExample( arcApi );
@@ -68,8 +75,9 @@ public class Main
 	{
 		// EMAIL must be supplied!
 		String username = "jon.snow2";
-		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@gmail.com", Role.ORG_USER )
-			.build();
+		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@gmail.com",
+				Role.ORG_USER, username, "Provider", "Description", "Full Name" )
+				.build();
 //		arcApi.addUserViaServer( newUser );
 		arcApi.addUserViaPortal( newUserRequestModel );
 	}

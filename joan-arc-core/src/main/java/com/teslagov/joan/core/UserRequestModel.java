@@ -2,6 +2,7 @@ package com.teslagov.joan.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * @author Kevin Chen
@@ -22,13 +23,19 @@ public class UserRequestModel
 
 	private final String role;
 
+	private final String accountId;
+
+	private final String provider;
+
 	private UserRequestModel(
 		String username,
 		String password,
 		String fullname,
 		String description,
 		String email,
-		String role
+		String role,
+		String accountId,
+		String provider
 	)
 	{
 		this.username = username;
@@ -37,11 +44,14 @@ public class UserRequestModel
 		this.description = description;
 		this.email = email;
 		this.role = role;
+		this.provider = provider;
+		this.accountId = accountId;
 	}
 
-	public static Builder newUser( String username, String password, String email, Role role )
+	public static Builder newUser( String username, String password, String email, Role role, String accountId,
+								   String provider, String description, String fullname )
 	{
-		return new Builder( username, password, email, role );
+		return new Builder( username, password, email, role, accountId, provider, description, fullname );
 	}
 
 	public static class Builder
@@ -58,17 +68,29 @@ public class UserRequestModel
 
 		private String description;
 
+		private String accountId;
+
+		private String provider;
+
 		public Builder(
 			String username,
 			String password,
 			String email,
-			Role role
+			Role role,
+			String accountId,
+			String provider,
+			String description,
+			String fullname
 		)
 		{
 			this.username = username;
 			this.password = password;
+			this.fullname = fullname;
+			this.description = description;
 			this.email = email;
 			this.role = role;
+			this.provider = provider;
+			this.accountId = accountId;
 		}
 
 		public Builder fullname( String fullname )
@@ -85,7 +107,8 @@ public class UserRequestModel
 
 		public UserRequestModel build()
 		{
-			return new UserRequestModel( username, password, fullname, description, email, role.getName() );
+			return new UserRequestModel( username, password, fullname, description, email, role.getName(), accountId,
+					provider);
 		}
 	}
 

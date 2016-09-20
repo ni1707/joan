@@ -23,7 +23,7 @@ public class PortalEndpointFactory
 
 			public static String createCreateUserPath( ArcConfiguration arcConfiguration )
 			{
-				return users( arcConfiguration ) + "/createUser";
+				return "https://john.office.teslagovernment.com:7443/arcgis/sharing/rest/community/createUser";
 			}
 		}
 	}
