@@ -59,6 +59,7 @@ public class Main
 
 //		createGroupExample( arcApi );
 
+
 		createNewUserExample( arcApi );
 
 //		removeUserExample( arcApi );
@@ -67,9 +68,10 @@ public class Main
 	private static void createNewUserExample( ArcApi arcApi )
 	{
 		// EMAIL must be supplied!
-		String username = "jon.snow2";
-		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@gmail.com", Role.ORG_USER )
-			.build();
+		String username = "jon.snow3";
+		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@gmail.com",
+				Role.ORG_USER, "Account ID", "Description", "Full Name" )
+				.build();
 //		arcApi.addUserViaServer( newUser );
 		arcApi.addUserViaPortal( newUserRequestModel );
 	}

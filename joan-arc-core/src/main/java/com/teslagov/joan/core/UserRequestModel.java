@@ -22,13 +22,16 @@ public class UserRequestModel
 
 	private final String role;
 
+	private final String accountId;
+
 	private UserRequestModel(
 		String username,
 		String password,
 		String fullname,
 		String description,
 		String email,
-		String role
+		String role,
+		String accountId
 	)
 	{
 		this.username = username;
@@ -37,11 +40,13 @@ public class UserRequestModel
 		this.description = description;
 		this.email = email;
 		this.role = role;
+		this.accountId = accountId;
 	}
 
-	public static Builder newUser( String username, String password, String email, Role role )
+	public static Builder newUser( String username, String password, String email, Role role, String accountId,
+								   String description, String fullname )
 	{
-		return new Builder( username, password, email, role );
+		return new Builder( username, password, email, role, accountId, description, fullname );
 	}
 
 	public static class Builder
@@ -58,17 +63,25 @@ public class UserRequestModel
 
 		private String description;
 
+		private String accountId;
+
 		public Builder(
 			String username,
 			String password,
 			String email,
-			Role role
+			Role role,
+			String accountId,
+			String description,
+			String fullname
 		)
 		{
 			this.username = username;
 			this.password = password;
+			this.fullname = fullname;
+			this.description = description;
 			this.email = email;
 			this.role = role;
+			this.accountId = accountId;
 		}
 
 		public Builder fullname( String fullname )
@@ -85,7 +98,7 @@ public class UserRequestModel
 
 		public UserRequestModel build()
 		{
-			return new UserRequestModel( username, password, fullname, description, email, role.getName() );
+			return new UserRequestModel( username, password, fullname, description, email, role.getName(), accountId);
 		}
 	}
 
@@ -119,6 +132,8 @@ public class UserRequestModel
 		return role;
 	}
 
+	public String getAccountId() { return accountId; }
+
 	@Override
 	public String toString()
 	{
@@ -129,6 +144,7 @@ public class UserRequestModel
 			", description='" + description + '\'' +
 			", email='" + email + '\'' +
 			", role=" + role +
+			", accountId=" + accountId +
 			'}';
 	}
 }
