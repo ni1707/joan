@@ -1,43 +1,41 @@
-package com.teslagov.joan.portal.content.publish;
+package com.teslagov.joan.portal.content.delete;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
-import com.teslagov.joan.portal.models.PublishItemModel;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by joncrain on 9/20/16.
+ * Created by joncrain on 9/21/16.
  */
-public class PublishItem
+public class DeleteItem
 {
-    private static final Logger logger = LoggerFactory.getLogger( PublishItem.class );
+    private static final Logger logger = LoggerFactory.getLogger( DeleteItem.class );
 
-    public PublishItemResponse publishItem(
+    public DeleteItemResponse deleteItem(
             HttpClient httpClient,
             ArcConfiguration arcConfiguration,
             TokenResponse tokenResponse,
-            PublishItemModel publishItemModel,
+            String id,
             String username
     )
     {
-        String url = PortalEndpointFactory.SharingRest.Content.makePublishItemPath( arcConfiguration, username );
+        String url = PortalEndpointFactory.SharingRest.Content.makeDeleteItemPath( arcConfiguration, id, username );
         logger.debug( "Hitting url {} with token {}", url, tokenResponse.getToken() );
-        logger.debug( "Publishing: {}", publishItemModel);
+        logger.debug( "Deleting Item: {}", id);
 
         HttpPost httpPost =
                 new HttpPostBuilder( url )
                         .urlFormParam( "f", "pjson" )
-                        .urlFormParam( "itemID", publishItemModel.getId() )
                         .build();
 
         httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
-        return HttpExecutor.getResponse(httpClient, httpPost, PublishItemResponse.class);
+        return HttpExecutor.getResponse(httpClient, httpPost, DeleteItemResponse.class);
     }
 }

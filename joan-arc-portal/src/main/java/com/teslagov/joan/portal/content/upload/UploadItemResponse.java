@@ -7,13 +7,17 @@ import com.teslagov.joan.core.Response;
  */
 public class UploadItemResponse extends Response
 {
+    public Boolean success;
     public String id;
+    public String folder;
 
     @Override
     public String toString()
     {
-        return "PublishItemResponse{" +
-                "id='" + id + '\'' +
+        return "UploadItemResponse{" +
+                "success=" + success +
+                ", id='" + id + '\'' +
+                ", folder='" + folder + '\'' +
                 '}';
     }
 }

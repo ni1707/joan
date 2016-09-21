@@ -7,6 +7,7 @@ import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.TokenRefresher;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleteResponse;
+import com.teslagov.joan.portal.content.delete.DeleteItemResponse;
 import com.teslagov.joan.portal.content.publish.PublishItemResponse;
 import com.teslagov.joan.portal.content.upload.UploadItemResponse;
 import com.teslagov.joan.portal.models.PublishItemModel;
@@ -141,5 +142,10 @@ public class ArcApi
 	public PublishItemResponse publishItem(PublishItemModel publishItemModel, String username )
 	{
 		return arcPortalApi.publishItem(publishItemModel, username);
+	}
+
+	public DeleteItemResponse deleteItem(String username, String id)
+	{
+		return arcPortalApi.deleteItem(username, id);
 	}
 }

@@ -131,12 +131,17 @@ public class PortalEndpointFactory
 
 			public static String makeUploadItemPath( ArcConfiguration arcConfiguration, String username )
 			{
-				return contentPath( arcConfiguration ) + "/users/" + username + "/addItem";
+				return contentPath( arcConfiguration ) + "/users/" + username + "/addItem?f=pjson";
 			}
 
 			public static String makePublishItemPath( ArcConfiguration arcConfiguration, String username)
 			{
-				return contentPath( arcConfiguration ) + "/users/" + username + "publish";
+				return contentPath( arcConfiguration ) + "/users/" + username + "/publish";
+			}
+
+			public static String makeDeleteItemPath( ArcConfiguration arcConfiguration, String id, String username)
+			{
+				return contentPath( arcConfiguration ) + "/users/" + username + "/items/" + id + "/delete";
 			}
 		}
 	}

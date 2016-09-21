@@ -5,7 +5,6 @@ import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
-import com.teslagov.joan.portal.admin.security.user.create.UserCreator;
 import com.teslagov.joan.portal.models.UploadItemModel;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UploadItem
 {
-    private static final Logger logger = LoggerFactory.getLogger( UserCreator.class );
+    private static final Logger logger = LoggerFactory.getLogger( UploadItem.class );
 
     public UploadItemResponse uploadItem(
             HttpClient httpClient,
@@ -35,8 +34,8 @@ public class UploadItem
 
         HttpPost httpPost =
                 new HttpPostBuilder( url )
-                        .urlFormParam( "f", "json" )
-                        .urlFormParam( "description", uploadItemModel.getDescription() )
+                        .urlFormParam( "f", "pjson" )
+                        .urlFormParam( "type", uploadItemModel.getType())
                         .build();
 
         HttpEntity httpEntity = MultipartEntityBuilder.create().addBinaryBody( "file",
@@ -46,6 +45,7 @@ public class UploadItem
 
         httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
-        return HttpExecutor.getResponse(httpClient, httpPost, UploadItemResponse.class);
+        UploadItemResponse uploadItemResponse = HttpExecutor.getResponse(httpClient, httpPost, UploadItemResponse.class);
+        return uploadItemResponse;
     }
 }

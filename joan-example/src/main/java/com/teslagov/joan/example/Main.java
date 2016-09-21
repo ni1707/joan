@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static com.teslagov.joan.api.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.sharing.community.group.GroupBuilder.newGroup;
@@ -62,19 +63,24 @@ public class Main
 
 //		createGroupExample( arcApi )
 
-		createNewUserExample( arcApi );
+		String username = UUID.randomUUID().toString();
 
-		String id = uploadItemExample( arcApi );
+		createNewUserExample( arcApi, username );
 
-		publishItemExample( arcApi, id );
+		String id = uploadItemExample( arcApi, username );
 
-		removeUserExample( arcApi );
+		logger.debug("Id of uploaded item {}", id);
+
+		publishItemExample( arcApi, id, username );
+
+		deleteItemExample( arcApi, id, username );
+
+		removeUserExample( arcApi, username );
 	}
 
-	private static void createNewUserExample( ArcApi arcApi )
+	private static void createNewUserExample( ArcApi arcApi, String username )
 	{
 		// EMAIL must be supplied!
-		String username = "jon.snow3";
 		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@gmail.com",
 				Role.ORG_USER, "Account ID", "Description", "Full Name" )
 				.build();
@@ -82,25 +88,27 @@ public class Main
 		arcApi.addUserViaPortal( newUserRequestModel );
 	}
 
-	private static void removeUserExample( ArcApi arcApi )
+	private static void removeUserExample( ArcApi arcApi, String username )
 	{
-		arcApi.removeUser( "jon.snow3" );
+		arcApi.removeUser( username );
 	}
 
-	private static String uploadItemExample( ArcApi arcApi )
+	private static String uploadItemExample( ArcApi arcApi, String username )
 	{
-		File file = new File("example2.csv");
-		UploadItemModel uploadItemModel = new UploadItemModel(file, null, "Text", null, "Title", null, null, null, null,
-				null, "Description", "Tags", "Snippet", "License", "Culture", null, "Extent", "Callback", "Id", null,
-				null, null, null, null, "Categories", "Industries", "Langs", null, null, null, null, null, null,
-				null, "pjson");
-		return arcApi.uploadItem(uploadItemModel, "jon.snow3").id;
+		File file = new File("example.csv");
+		UploadItemModel uploadItemModel = new UploadItemModel(file);
+		return arcApi.uploadItem(uploadItemModel, username).id;
 	}
 
-	private static void publishItemExample( ArcApi arcApi, String id )
+	private static void publishItemExample( ArcApi arcApi, String id, String username )
 	{
 		PublishItemModel publishItemModel = new PublishItemModel(id);
-		arcApi.publishItem( publishItemModel, "jon.snow3" );
+		arcApi.publishItem( publishItemModel, username );
+	}
+
+	private static void deleteItemExample( ArcApi arcApi, String id, String username )
+	{
+		arcApi.deleteItem( id, username );
 	}
 
 	private static void createGroupExample( ArcApi arcApi )

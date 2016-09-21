@@ -130,3 +130,22 @@ response.allUsersRemoved() == true
 response.notRemoved.size() == 1
 response.notRemoved.contains( "stark.impostor" ) == true
 ```
+
+### Items API
+#### Upload Item
+```java
+    File file = new File("example.csv");
+	UploadItemModel uploadItemModel = new UploadItemModel(file);
+	arcApi.uploadItem(uploadItemModel, username)
+```
+
+#### Publish Item
+```java
+    PublishItemModel publishItemModel = new PublishItemModel(id);
+    arcApi.publishItem( publishItemModel, username );
+```
+
+#### Delete Item
+```java
+    arcApi.deleteItem( id, username );
+```

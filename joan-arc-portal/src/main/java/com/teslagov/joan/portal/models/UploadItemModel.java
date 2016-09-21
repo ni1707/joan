@@ -1,5 +1,7 @@
 package com.teslagov.joan.portal.models;
 
+import com.teslagov.joan.portal.content.upload.UploadItem;
+
 import java.io.File;
 
 /**
@@ -46,6 +48,12 @@ public class UploadItemModel
     public UploadItemModel()
     {
 
+    }
+
+    public UploadItemModel(File file)
+    {
+        this.file = file;
+        this.type = "csv";
     }
 
     public UploadItemModel(File file, String url, String text, String dataUrl, String title, File thumbnail,
