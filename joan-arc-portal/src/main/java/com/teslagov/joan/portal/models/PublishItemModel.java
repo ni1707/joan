@@ -6,16 +6,24 @@ package com.teslagov.joan.portal.models;
 public class PublishItemModel
 {
     private String id;
+    private String type;
+    private String publishParameters;
 
-    public PublishItemModel(String id)
+    public PublishItemModel(String id, String type, String publishParameters)
     {
         this.id = id;
+        this.type = type;
+        this.publishParameters = publishParameters;
     }
 
     public String getId()
     {
         return id;
     }
+
+    public String getType() { return type; }
+
+    public String getPublishParameters() { return publishParameters; }
 
     @Override
     public String toString()

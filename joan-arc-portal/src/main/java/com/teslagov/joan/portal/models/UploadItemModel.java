@@ -53,7 +53,13 @@ public class UploadItemModel
     public UploadItemModel(File file)
     {
         this.file = file;
-        this.type = "csv";
+
+        String[] parts = file.getName().split("\\.");
+
+        if (parts.length > 1)
+        {
+            this.type = parts[1].toUpperCase();
+        }
     }
 
     public UploadItemModel(File file, String url, String text, String dataUrl, String title, File thumbnail,

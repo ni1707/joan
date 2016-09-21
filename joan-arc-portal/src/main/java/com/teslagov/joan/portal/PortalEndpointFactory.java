@@ -136,7 +136,7 @@ public class PortalEndpointFactory
 
 			public static String makePublishItemPath( ArcConfiguration arcConfiguration, String username)
 			{
-				return contentPath( arcConfiguration ) + "/users/" + username + "/publish";
+				return contentPath( arcConfiguration ) + "/users/" + username + "/publish?f=pjson";
 			}
 
 			public static String makeDeleteItemPath( ArcConfiguration arcConfiguration, String id, String username)

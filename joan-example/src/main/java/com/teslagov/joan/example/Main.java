@@ -69,11 +69,13 @@ public class Main
 
 		String id = uploadItemExample( arcApi, username );
 
-		logger.debug("Id of uploaded item {}", id);
+		//Publishing creates a new published item
 
-		publishItemExample( arcApi, id, username );
+		String publishedId = publishItemExample( arcApi, id, username );
 
 		deleteItemExample( arcApi, id, username );
+
+		deleteItemExample( arcApi, publishedId, username );
 
 		removeUserExample( arcApi, username );
 	}
@@ -95,15 +97,29 @@ public class Main
 
 	private static String uploadItemExample( ArcApi arcApi, String username )
 	{
-		File file = new File("example.csv");
-		UploadItemModel uploadItemModel = new UploadItemModel(file);
+		//Upload item can be used with simply a file, or with an extensive list of parameters
+		//We trust the file type that they give us
+
+		//Simple Example
+		//File file = new File("example.csv");
+		//UploadItemModel uploadItemModel = new UploadItemModel(file);
+
+		//Complex Example
+		File csv = new File("example.csv");
+
+		UploadItemModel uploadItemModel = new UploadItemModel(
+				csv, null, "File Text", null, "File Title", null, null, "CSV", "CSV", "File Description", "file, tags",
+				"File Snippet", "File License Info", "File Culture", "File Properties", "File Extent", null, null,
+				"File Destination Id", null, null, null, null, null, null, "File Industries", "File Languages",
+				null, null, null, null, null, null, null, "json");
+
 		return arcApi.uploadItem(uploadItemModel, username).id;
 	}
 
-	private static void publishItemExample( ArcApi arcApi, String id, String username )
+	private static String publishItemExample( ArcApi arcApi, String id, String username )
 	{
-		PublishItemModel publishItemModel = new PublishItemModel(id);
-		arcApi.publishItem( publishItemModel, username );
+		PublishItemModel publishItemModel = new PublishItemModel(id, "CSV", "{\"name\":\"" + id + "\"}");
+		return arcApi.publishItem( publishItemModel, username ).services.get(0).serviceItemId;
 	}
 
 	private static void deleteItemExample( ArcApi arcApi, String id, String username )
