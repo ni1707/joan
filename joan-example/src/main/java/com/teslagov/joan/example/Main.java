@@ -82,7 +82,7 @@ public class Main
 	{
 		// EMAIL must be supplied!
 		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@gmail.com",
-				Role.ORG_USER, "Account ID", "Description", "Full Name" )
+				Role.ORG_PUBLISHER, "Account ID", "Description", "Full Name" )
 				.build();
 //		arcApi.addUserViaServer( newUser );
 		arcApi.addUserViaPortal( newUserRequestModel );

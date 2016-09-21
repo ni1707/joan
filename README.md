@@ -141,6 +141,7 @@ response.notRemoved.contains( "stark.impostor" ) == true
 
 #### Publish Item
 ```java
+    //This requires publisher or admin role
     PublishItemModel publishItemModel = new PublishItemModel(id);
     arcApi.publishItem( publishItemModel, username );
 ```
@@ -149,3 +150,4 @@ response.notRemoved.contains( "stark.impostor" ) == true
 ```java
     arcApi.deleteItem( id, username );
 ```
+

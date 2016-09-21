@@ -32,8 +32,10 @@ public class PublishItem
 
         HttpPost httpPost =
                 new HttpPostBuilder( url )
-                        .urlFormParam( "f", "pjson" )
-                        .urlFormParam( "itemID", publishItemModel.getId() )
+                        .urlFormParam( "f", "json" )
+                        .urlFormParam( "itemid", publishItemModel.getId() )
+                        .urlFormParam( "filetype", "csv" )
+                        .urlFormParam( "publishParameters", "{\"name\":\"" + publishItemModel.getId() + "\"}" )
                         .build();
 
         httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());

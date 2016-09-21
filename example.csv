@@ -1,2 +1,12 @@
-"id","description"
-"1","An Example"
+ID,Name,Country,Lat,Lon
+1,Maiduguri,Nigeria,11.8311,13.151
+2,Yola,Nigeria,9.2035,12.4954
+3,Kano,Nigeria,12.0022,8.592
+4,Abuja,Nigeria,9.0765,7.3986
+5,Jos,Nigeria,9.8965,8.8583
+6,Katsina,Nigeria,12.5139,7.6114
+7,Maroua,Cameroon,10.5925,14.321
+8,Garoua,Cameroon,9.3226,13.3934
+9,Ngaounere,Cameroon,7.3381,13.5668
+10,Mao,Chad,14.131,15.319
+11,Diffa,Niger,13.6769,12.7135
