@@ -70,7 +70,7 @@ public class Group
 	public SortOrder sortOrder;
 
 	/**
-	 * Allows the group owner or admin to createUser view-only groups where members are not able to share items. If members try to share, view-only groups
+	 * Allows the group owner or admin to create view-only groups where members are not able to share items. If members try to share, view-only groups
 	 * are returned in the notshared response property. false is the default.
 	 */
 	public boolean isViewOnly;
