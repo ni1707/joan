@@ -44,6 +44,9 @@ public class PortalEndpointFactoryTest
         assertEquals( PortalEndpointFactory.SharingRest.Content.makeDeleteItemPath( testConfiguration, "Item123", "User123" ),
                 "https://www.example.com:7443/arcgis/sharing/rest/content/users/User123/items/Item123/delete");
 
+        assertEquals( PortalEndpointFactory.SharingRest.Content.makeShareItemPath( testConfiguration, "Item123", "User123" ),
+                "https://www.example.com:7443/arcgis/sharing/rest/content/users/User123/items/Item123/share");
+
         assertEquals( PortalEndpointFactory.SharingRest.Content.makeUploadItemPath( testConfiguration, "User123" ),
                 "https://www.example.com:7443/arcgis/sharing/rest/content/users/User123/addItem?f=pjson");
 

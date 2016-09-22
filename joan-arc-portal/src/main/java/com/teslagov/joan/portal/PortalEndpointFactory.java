@@ -1,6 +1,7 @@
 package com.teslagov.joan.portal;
 
 import com.teslagov.joan.core.ArcConfiguration;
+import javafx.scene.shape.Arc;
 
 /**
  * @author Kevin Chen
@@ -142,6 +143,11 @@ public class PortalEndpointFactory
 			public static String makeDeleteItemPath( ArcConfiguration arcConfiguration, String id, String username)
 			{
 				return contentPath( arcConfiguration ) + "/users/" + username + "/items/" + id + "/delete";
+			}
+
+			public static String makeShareItemPath( ArcConfiguration arcConfiguration, String id, String username )
+			{
+				return contentPath( arcConfiguration ) + "/users/" + username + "/items/" + id + "/share";
 			}
 		}
 	}

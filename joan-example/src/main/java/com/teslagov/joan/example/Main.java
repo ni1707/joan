@@ -6,6 +6,7 @@ import com.teslagov.joan.core.Role;
 import com.teslagov.joan.core.SortOrder;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.UserResponseModel;
+import com.teslagov.joan.portal.community.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
 import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.community.group.Group;
@@ -19,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -61,7 +63,7 @@ public class Main
 			users.forEach( u -> logger.debug( "User {}", u ) );
 		}
 
-//		createGroupExample( arcApi )
+		String groupId = createGroupExample( arcApi );
 
 		String username = UUID.randomUUID().toString();
 
@@ -69,15 +71,17 @@ public class Main
 
 		String id = uploadItemExample( arcApi, username );
 
-		//Publishing creates a new published item
-
 		String publishedId = publishItemExample( arcApi, id, username );
+
+		shareItemExample( arcApi, publishedId, username, groupId );
 
 		deleteItemExample( arcApi, id, username );
 
 		deleteItemExample( arcApi, publishedId, username );
 
 		removeUserExample( arcApi, username );
+
+		deleteGroupExample( arcApi, groupId );
 	}
 
 	private static void createNewUserExample( ArcApi arcApi, String username )
@@ -125,12 +129,19 @@ public class Main
 		return arcApi.publishItem(itemPublishModel, username ).services.get(0).serviceItemId;
 	}
 
+	public static void shareItemExample( ArcApi arcApi, String id, String username, String groupId )
+	{
+		//ids is a comma seperated list of item ids, groups is a comma seperated list of groups to share with
+		//in the example it's just one item for one group
+		arcApi.shareItem( id, username, groupId );
+	}
+
 	private static void deleteItemExample( ArcApi arcApi, String id, String username )
 	{
 		arcApi.deleteItem( id, username );
 	}
 
-	private static void createGroupExample( ArcApi arcApi )
+	private static String createGroupExample( ArcApi arcApi )
 	{
 		Group group = newGroup()
 			.title( "GOT 2" )
@@ -154,7 +165,12 @@ public class Main
 
 		arcApi.removeUsersFromGroup( group, Arrays.asList( "david.grosso" ) );
 
-//		GroupDeleteResponse groupDeleteResponse = arcApi.deleteGroup( group );
-//		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
+		return group.id;
+	}
+
+	private static void deleteGroupExample( ArcApi arcApi, String id )
+	{
+		GroupDeleteResponse groupDeleteResponse = arcApi.deleteGroup( id );
+		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
 	}
 }
