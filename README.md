@@ -157,7 +157,7 @@ response.notRemoved.contains( "stark.impostor" ) == true
 
     return arcApi.uploadItem(itemUploadModel, username).id;
 ```
-  
+
 #### Publish Item
 ```java
     //This requires publisher or admin role

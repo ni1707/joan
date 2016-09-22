@@ -13,6 +13,5 @@ apply from: file('gradle/bintray.gradle')
 dependencies {
     compile project(':joan-arc-core')
     compile project(':joan-arc-portal')
-    compile project(':joan-arc-server')
     testCompile group: 'junit', name: 'junit', version: rootProject.junitVersion
 }
