@@ -1,11 +1,11 @@
 package com.teslagov.joan.rampart;
 
-import com.teslagov.joan.portal.sharing.community.group.Group;
+import com.teslagov.joan.portal.community.group.Group;
 import com.teslagov.rampart.hook.RampartHookBase;
 
 import java.util.UUID;
 
-import static com.teslagov.joan.portal.sharing.community.group.GroupBuilder.newGroup;
+import static com.teslagov.joan.portal.community.group.GroupBuilder.newGroup;
 
 /**
  * @author Kevin Chen

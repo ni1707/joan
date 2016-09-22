@@ -9,7 +9,7 @@ public class ServerEndpointFactory
 {
 	public static String createGenerateTokenEndpoint( ArcConfiguration arcConfiguration )
 	{
-		return arcConfiguration.getArcServerAdminApiPath() + "/generateToken";
+		return arcConfiguration.getArcServerAdminApiPath() + "/token";
 	}
 
 	public static class SecurityEndpointFactory

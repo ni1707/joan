@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * {}/sharing/rest/content/users/{id}/addItem
  * Created by joncrain on 9/20/16.
  */
 public class ItemUploader
