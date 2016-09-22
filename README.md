@@ -135,15 +135,34 @@ response.notRemoved.contains( "stark.impostor" ) == true
 #### Upload Item
 ```java
     File file = new File("example.csv");
-	UploadItemModel uploadItemModel = new UploadItemModel(file);
-	arcApi.uploadItem(uploadItemModel, username)
+
+    //Required parameters are either File and Type or URL and Type
+    //Any others are optional
+    UploadItemModel itemUploadModel = new UploadItemModel(file, "CSV")
+            .text("This is an example file")
+            .title("An example file")
+            .typeKeywords("csv, map")
+            .description("This example file is some cities")
+            .tags("csv, cities, file")
+            .snippet("A snippet about the file")
+            .licenseInfo("Apache 2.0")
+            .culture("US")
+            .properties("some=properties")
+            .extent("North America")
+            .destinationItemId("Destination ID")
+            .appCategories("mapping, points, interest")
+            .industries("Tech")
+            .languages("EN")
+            .format("json");
+
+    return arcApi.uploadItem(itemUploadModel, username).id;
 ```
 
 #### Publish Item
 ```java
     //This requires publisher or admin role
-    PublishItemModel publishItemModel = new PublishItemModel(id);
-    arcApi.publishItem( publishItemModel, username );
+    PublishItemModel itemPublishModel = new PublishItemModel(id);
+    arcApi.publishItem( itemPublishModel, username );
 ```
 
 #### Delete Item

@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by joncrain on 9/21/16.
  */
-public class DeleteItem
+public class ItemDeleter
 {
-    private static final Logger logger = LoggerFactory.getLogger( DeleteItem.class );
+    private static final Logger logger = LoggerFactory.getLogger( ItemDeleter.class );
 
-    public DeleteItemResponse deleteItem(
+    public ItemDeleteResponse deleteItem(
             HttpClient httpClient,
             ArcConfiguration arcConfiguration,
             TokenResponse tokenResponse,
@@ -36,6 +36,6 @@ public class DeleteItem
 
         httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
-        return HttpExecutor.getResponse(httpClient, httpPost, DeleteItemResponse.class);
+        return HttpExecutor.getResponse(httpClient, httpPost, ItemDeleteResponse.class);
     }
 }

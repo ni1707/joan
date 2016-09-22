@@ -3,13 +3,13 @@ package com.teslagov.joan.portal.models;
 /**
  * Created by joncrain on 9/20/16.
  */
-public class PublishItemModel
+public class ItemPublishModel
 {
     private String id;
     private String type;
     private String publishParameters;
 
-    public PublishItemModel(String id, String type, String publishParameters)
+    public ItemPublishModel(String id, String type, String publishParameters)
     {
         this.id = id;
         this.type = type;
@@ -28,7 +28,7 @@ public class PublishItemModel
     @Override
     public String toString()
     {
-        return "PublishItemModel{" +
+        return "ItemPublishModel{" +
                 "id='" + id + '\'' +
                 '}';
     }

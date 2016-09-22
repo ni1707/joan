@@ -7,11 +7,11 @@ import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.TokenRefresher;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleteResponse;
-import com.teslagov.joan.portal.content.delete.DeleteItemResponse;
-import com.teslagov.joan.portal.content.publish.PublishItemResponse;
-import com.teslagov.joan.portal.content.upload.UploadItemResponse;
-import com.teslagov.joan.portal.models.PublishItemModel;
-import com.teslagov.joan.portal.models.UploadItemModel;
+import com.teslagov.joan.portal.content.delete.ItemDeleteResponse;
+import com.teslagov.joan.portal.content.publish.ItemPublishResponse;
+import com.teslagov.joan.portal.content.upload.ItemUploadResponse;
+import com.teslagov.joan.portal.models.ItemPublishModel;
+import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.sharing.community.group.delete.GroupDeleteResponse;
@@ -134,17 +134,17 @@ public class ArcApi
 		return arcPortalApi.deleteUser( username );
 	}
 
-	public UploadItemResponse uploadItem(UploadItemModel uploadItemModel, String username )
+	public ItemUploadResponse uploadItem(ItemUploadModel itemUploadModel, String username )
 	{
-		return arcPortalApi.uploadItem(uploadItemModel, username );
+		return arcPortalApi.uploadItem(itemUploadModel, username );
 	}
 
-	public PublishItemResponse publishItem(PublishItemModel publishItemModel, String username )
+	public ItemPublishResponse publishItem(ItemPublishModel itemPublishModel, String username )
 	{
-		return arcPortalApi.publishItem(publishItemModel, username);
+		return arcPortalApi.publishItem(itemPublishModel, username);
 	}
 
-	public DeleteItemResponse deleteItem(String username, String id)
+	public ItemDeleteResponse deleteItem(String username, String id)
 	{
 		return arcPortalApi.deleteItem(username, id);
 	}

@@ -3,7 +3,7 @@ package com.teslagov.joan.portal.content.delete;
 /**
  * Created by joncrain on 9/21/16.
  */
-public class DeleteItemResponse
+public class ItemDeleteResponse
 {
     public Boolean success;
     public String itemId;
@@ -11,7 +11,7 @@ public class DeleteItemResponse
     @Override
     public String toString()
     {
-        return "DeleteItemResponse{" +
+        return "ItemDeleteResponse{" +
                 "success=" + success +
                 ", itemId='" + itemId + '\'' +
                 '}';
