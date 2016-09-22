@@ -11,6 +11,8 @@ import com.teslagov.joan.portal.content.delete.ItemDeleteResponse;
 import com.teslagov.joan.portal.content.delete.ItemDeleter;
 import com.teslagov.joan.portal.content.publish.ItemPublisher;
 import com.teslagov.joan.portal.content.publish.ItemPublishResponse;
+import com.teslagov.joan.portal.content.share.ItemSharer;
+import com.teslagov.joan.portal.content.share.ItemShareResponse;
 import com.teslagov.joan.portal.content.upload.ItemUploader;
 import com.teslagov.joan.portal.content.upload.ItemUploadResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
@@ -74,6 +76,8 @@ public class ArcPortalApi extends AbstractArcRestApi
 	private final ItemPublisher itemPublisher = new ItemPublisher();
 
 	private final ItemDeleter itemDeleter = new ItemDeleter();
+
+	private final ItemSharer itemSharer = new ItemSharer();
 
 	public ArcPortalApi(
 		HttpClient httpClient,
@@ -182,5 +186,11 @@ public class ArcPortalApi extends AbstractArcRestApi
 	{
 		refreshTokenIfNecessary();
 		return itemDeleter.deleteItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), id, username);
+	}
+
+	public ItemShareResponse shareItem(String id, String username, String groups)
+	{
+		refreshTokenIfNecessary();
+		return itemSharer.shareItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), id, username, groups);
 	}
 }

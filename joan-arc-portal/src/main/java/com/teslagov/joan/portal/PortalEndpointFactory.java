@@ -143,6 +143,11 @@ public class PortalEndpointFactory
 			{
 				return contentPath( arcConfiguration ) + "/users/" + username + "/items/" + id + "/delete";
 			}
+
+			public static String makeShareItemPath( ArcConfiguration arcConfiguration, String id, String username )
+			{
+				return contentPath( arcConfiguration ) + "/users/" + username + "/items/" + id + "/share";
+			}
 		}
 	}
 

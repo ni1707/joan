@@ -11,7 +11,7 @@ public class ItemDeleteResponse
     @Override
     public String toString()
     {
-        return "ItemDeleteResponse{" +
+        return "ItemShareResponse{" +
                 "success=" + success +
                 ", itemId='" + itemId + '\'' +
                 '}';

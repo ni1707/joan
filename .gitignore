@@ -10,3 +10,4 @@ build
 .gradle
 out
 *.secret
+*DS_Store

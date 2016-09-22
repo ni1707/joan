@@ -32,14 +32,14 @@ public class UserCreator
 
 		HttpPost httpPost =
 			new HttpPostBuilder( url )
-				.urlFormParam( "f", "pjson" )
-				.urlFormParam( "provider", arcConfiguration.getArcServerAdminUsername() )
+				.urlFormParam( "f", "json" )
+				.urlFormParam( "provider", "arcgis" )
 				.urlFormParam( "username", userRequestModel.getUsername() )
 				.urlFormParam( "password", userRequestModel.getPassword() )
-				.urlFormParam( "fullName", userRequestModel.getFullname() )
+				.urlFormParam( "fullname", userRequestModel.getFullname() )
 				.urlFormParam( "description", userRequestModel.getDescription() )
 				.urlFormParam( "email", userRequestModel.getEmail() )
-				.urlFormParam( "accountId", userRequestModel.getAccountId())
+				.urlFormParam( "accountId", userRequestModel.getUsername() )
 				.urlFormParam( "role", userRequestModel.getRole() )
 				.build();
 
