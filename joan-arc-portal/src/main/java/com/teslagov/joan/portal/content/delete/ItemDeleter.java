@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * {}/sharing/rest/content/users/{id}/items/{id}/delete
  * Created by joncrain on 9/21/16.
  */
 public class ItemDeleter
