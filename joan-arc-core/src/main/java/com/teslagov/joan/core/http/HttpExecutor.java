@@ -48,13 +48,13 @@ public class HttpExecutor
 		if ( response != null )
 		{
 			int status = response.getStatusLine().getStatusCode();
-			if ( status != 200 )
+			if ( status >= 400 )
 			{
-				logger.warn( "Non-200 status: {}", status );
+				logger.warn( "Error status: {}", status );
 			}
 			else
 			{
-				logger.debug( "200 OK" );
+				logger.debug( "Success: {}", status );
 			}
 			HttpEntity httpEntity = response.getEntity();
 			String responseString = null;

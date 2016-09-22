@@ -7,6 +7,14 @@ import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleteResponse;
 import com.teslagov.joan.portal.admin.security.user.delete.UserDeleter;
+import com.teslagov.joan.portal.content.delete.ItemDeleteResponse;
+import com.teslagov.joan.portal.content.delete.ItemDeleter;
+import com.teslagov.joan.portal.content.publish.ItemPublisher;
+import com.teslagov.joan.portal.content.publish.ItemPublishResponse;
+import com.teslagov.joan.portal.content.upload.ItemUploader;
+import com.teslagov.joan.portal.content.upload.ItemUploadResponse;
+import com.teslagov.joan.portal.models.ItemPublishModel;
+import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.sharing.community.group.Group;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.sharing.community.group.create.GroupCreator;
@@ -60,6 +68,12 @@ public class ArcPortalApi extends AbstractArcRestApi
 	private final UserCreator userCreator = new UserCreator();
 
 	private final UserDeleter userDeleter = new UserDeleter();
+
+	private final ItemUploader itemUploader = new ItemUploader();
+
+	private final ItemPublisher itemPublisher = new ItemPublisher();
+
+	private final ItemDeleter itemDeleter = new ItemDeleter();
 
 	public ArcPortalApi(
 		HttpClient httpClient,
@@ -150,5 +164,23 @@ public class ArcPortalApi extends AbstractArcRestApi
 	{
 		refreshTokenIfNecessary();
 		return userDeleter.deleteUser( httpClient, arcConfiguration, tokenManager.getTokenResponse(), username );
+	}
+
+	public ItemUploadResponse uploadItem(ItemUploadModel itemUploadModel, String username )
+	{
+		refreshTokenIfNecessary();
+		return itemUploader.uploadItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), itemUploadModel, username);
+	}
+
+	public ItemPublishResponse publishItem(ItemPublishModel itemPublishModel, String username )
+	{
+		refreshTokenIfNecessary();
+		return itemPublisher.publishItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), itemPublishModel, username);
+	}
+
+	public ItemDeleteResponse deleteItem(String id, String username )
+	{
+		refreshTokenIfNecessary();
+		return itemDeleter.deleteItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), id, username);
 	}
 }
