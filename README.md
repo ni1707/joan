@@ -157,12 +157,19 @@ response.notRemoved.contains( "stark.impostor" ) == true
 
     return arcApi.uploadItem(itemUploadModel, username).id;
 ```
-
+  
 #### Publish Item
 ```java
     //This requires publisher or admin role
     PublishItemModel itemPublishModel = new PublishItemModel(id);
     arcApi.publishItem( itemPublishModel, username );
+```
+
+#### Share Item
+```java
+    //ids is a comma seperated list of item ids, groups is a comma seperated list of groups to share with
+	//in the example it's just one item for one group
+	arcApi.shareItem( id, username, groupId );
 ```
 
 #### Delete Item
