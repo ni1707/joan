@@ -83,8 +83,8 @@ public class Main
 	private static void createNewUserExample( ArcApi arcApi, String username )
 	{
 		// EMAIL must be supplied!
-		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@gmail.com",
-				Role.ORG_PUBLISHER, "Account ID", "Description", "Full Name" )
+		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@example.com",
+				Role.ORG_PUBLISHER, username, "Description", "Full Name" )
 				.build();
 //		arcApi.addUserViaServer( newUser );
 		arcApi.addUserViaPortal( newUserRequestModel );
