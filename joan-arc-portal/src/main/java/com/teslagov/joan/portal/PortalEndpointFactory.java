@@ -1,7 +1,6 @@
 package com.teslagov.joan.portal;
 
 import com.teslagov.joan.core.ArcConfiguration;
-import javafx.scene.shape.Arc;
 
 /**
  * @author Kevin Chen
