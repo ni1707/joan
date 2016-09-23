@@ -148,7 +148,7 @@ public class Main
 	private static String createGroupExample( ArcPortalApi arcPortalApi )
 	{
 		Group group = newGroup()
-			.title( "GOT 2" )
+			.title( UUID.randomUUID().toString() )
 			.description( "A test group owned by Kevin" )
 			.snippet( "snippet..." )
 			.tag( "tag1" ).tag( "tag2" ).tag( "tag3" )
