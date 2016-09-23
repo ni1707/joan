@@ -7,4 +7,6 @@ import com.teslagov.joan.core.Response;
  */
 public class UserCreateResponse extends Response
 {
+    public boolean success;
+    public String username;
 }
