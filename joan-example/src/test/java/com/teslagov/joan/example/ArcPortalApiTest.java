@@ -2,6 +2,8 @@ package com.teslagov.joan.example;
 
 import com.teslagov.joan.api.ArcPortalApi;
 import com.teslagov.joan.core.*;
+import com.teslagov.joan.core.http.HttpExecutor;
+import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.community.group.Group;
 import com.teslagov.joan.portal.community.group.GroupAccess;
 import com.teslagov.joan.portal.community.group.GroupSortField;
@@ -12,10 +14,14 @@ import com.teslagov.joan.portal.content.upload.ItemUploadResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
 import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
+import com.teslagov.joan.portal.token.PortalTokenResponse;
 import com.teslagov.props.Properties;
 
 import org.apache.http.client.HttpClient;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,6 +42,8 @@ public class ArcPortalApiTest
 {
     private ArcConfiguration arcConfiguration;
     private ArcPortalApi arcPortalApi;
+    private HttpClient httpClient;
+    private TokenManager tokenManager;
 
     @Before
     public void setup()
@@ -55,7 +63,7 @@ public class ArcPortalApiTest
                         .arcServerPort( properties.getInteger( ArcProperties.ARC_GIS_SERVER_PORT ) )
                         .build();
 
-        HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
+        httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
 
         arcPortalApi = new ArcPortalApi( httpClient, arcConfiguration, ZoneOffset.UTC,
                 new TokenManager(
@@ -138,6 +146,44 @@ public class ArcPortalApiTest
         arcPortalApi.groupApi.deleteGroup(group.group.id);
     }
 
+    @Test
+    public void sharedItemAccessTest()
+    {
+        UserCreateResponse user = createUser();
+        ItemUploadResponse item = uploadItem(user.username);
+        GroupCreateResponse group = createGroup();
+        UserCreateResponse userWithoutAccess = createUser();
+        GroupCreateResponse anotherGroup = createGroup();
+        UserCreateResponse userWithAccess = createUser();
+
+        arcPortalApi.groupApi.addUsersToGroup(group.group, Arrays.asList(user.username, userWithAccess.username));
+        arcPortalApi.groupApi.addUsersToGroup(anotherGroup.group, Arrays.asList(userWithoutAccess.username));
+        arcPortalApi.itemApi.shareItem(item.id, user.username, group.group.id);
+
+        //We should be able to access the item with the user in the group
+        HttpGet httpGet = new HttpGet(arcConfiguration.getPortalUrl() + "/arcgis/sharing/rest/content/items/" + item.id + "?f=pjson");
+        httpGet.addHeader("cookie", "agwtoken=" + getToken(userWithAccess.username, "Password123!") );
+
+        Response response = HttpExecutor.getResponse(httpClient, httpGet, Response.class);
+
+        assertNull(response.getError());
+
+        //See if we can access this item with the wrong user
+        httpGet = new HttpGet(arcConfiguration.getPortalUrl() + "/arcgis/sharing/rest/content/items/" + item.id + "?f=pjson");
+        httpGet.addHeader("cookie", "agwtoken=" + getToken(userWithoutAccess.username, "Password123!") );
+
+        response = HttpExecutor.getResponse(httpClient, httpGet, Response.class);
+
+        assertNotNull(response.getError());
+
+        arcPortalApi.itemApi.deleteItem(item.id, user.username);
+        arcPortalApi.userApi.deleteUser(userWithoutAccess.username);
+        arcPortalApi.userApi.deleteUser(user.username);
+        arcPortalApi.userApi.deleteUser(userWithAccess.username);
+        arcPortalApi.groupApi.deleteGroup(anotherGroup.group.id);
+        arcPortalApi.groupApi.deleteGroup(group.group.id);
+    }
+
     private UserCreateResponse createUser()
     {
         String username = UUID.randomUUID().toString();
@@ -210,4 +256,17 @@ public class ArcPortalApiTest
         return itemUploadResponse;
     }
 
+    private String getToken(String username, String password)
+    {
+        HttpPost httpPost = new HttpPostBuilder(arcConfiguration.getPortalUrl() + "/arcgis/sharing/rest/generateToken")
+                .urlFormParam( "f", "json" )
+                .urlFormParam("username", username)
+                .urlFormParam("password", password)
+                .urlFormParam( "referer", "referer" )
+                .build();
+
+        PortalTokenResponse tokenResponse = HttpExecutor.getResponse( httpClient, httpPost, PortalTokenResponse.class);
+
+        return tokenResponse.getToken();
+    }
 }
