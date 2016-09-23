@@ -1,11 +1,8 @@
 package com.teslagov.joan.example;
 
-import com.teslagov.joan.api.ArcApi;
-import com.teslagov.joan.core.ArcConfiguration;
-import com.teslagov.joan.core.Role;
-import com.teslagov.joan.core.SortOrder;
-import com.teslagov.joan.core.UserRequestModel;
-import com.teslagov.joan.core.UserResponseModel;
+import com.teslagov.joan.api.ArcPortalApi;
+import com.teslagov.joan.api.ArcPortalApi;
+import com.teslagov.joan.core.*;
 import com.teslagov.joan.portal.community.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
 import com.teslagov.joan.portal.models.ItemUploadModel;
@@ -14,13 +11,14 @@ import com.teslagov.joan.portal.community.group.GroupAccess;
 import com.teslagov.joan.portal.community.group.GroupSortField;
 import com.teslagov.joan.portal.community.group.useradd.GroupUserAddResponse;
 import com.teslagov.joan.portal.community.user.fetch.UserListResponse;
+import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.props.Properties;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -54,52 +52,58 @@ public class Main
 
 		HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
 
-		ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
+		ArcPortalApi arcPortalApi = new ArcPortalApi( httpClient, arcConfiguration, ZoneOffset.UTC,
+                new TokenManager(
+                        new TokenRefresher(
+                                new PortalTokenFetcher(httpClient, arcConfiguration), ZoneOffset.UTC
+                        )
+                )
+        );
 
-		UserListResponse userListResponse = arcApi.fetchUsers();
+		UserListResponse userListResponse = arcPortalApi.userApi.fetchUsers();
 		if ( userListResponse.isSuccess() )
 		{
 			List<UserResponseModel> users = userListResponse.users;
 			users.forEach( u -> logger.debug( "User {}", u ) );
 		}
 
-		String groupId = createGroupExample( arcApi );
+		String groupId = createGroupExample( arcPortalApi );
 
 		String username = UUID.randomUUID().toString();
 
-		createNewUserExample( arcApi, username );
+		createNewUserExample( arcPortalApi, username );
 
-		String id = uploadItemExample( arcApi, username );
+		String id = uploadItemExample( arcPortalApi, username );
 
-		String publishedId = publishItemExample( arcApi, id, username );
+		String publishedId = publishItemExample( arcPortalApi, id, username );
 
-		shareItemExample( arcApi, publishedId, username, groupId );
+		shareItemExample( arcPortalApi, publishedId, username, groupId );
 
-		deleteItemExample( arcApi, id, username );
+		deleteItemExample( arcPortalApi, id, username );
 
-		deleteItemExample( arcApi, publishedId, username );
+		deleteItemExample( arcPortalApi, publishedId, username );
 
-		removeUserExample( arcApi, username );
+		removeUserExample( arcPortalApi, username );
 
-		deleteGroupExample( arcApi, groupId );
+		deleteGroupExample( arcPortalApi, groupId );
 	}
 
-	private static void createNewUserExample( ArcApi arcApi, String username )
+	private static void createNewUserExample( ArcPortalApi arcPortalApi, String username )
 	{
 		// EMAIL must be supplied!
 		UserRequestModel newUserRequestModel = newUser( username, "Password123!", username + "@example.com",
 				Role.ORG_PUBLISHER, username, "Description", "Full Name" )
 				.build();
-//		arcApi.addUserViaServer( newUser );
-		arcApi.addUserViaPortal( newUserRequestModel );
+
+		arcPortalApi.userApi.addUser( newUserRequestModel );
 	}
 
-	private static void removeUserExample( ArcApi arcApi, String username )
+	private static void removeUserExample( ArcPortalApi arcPortalApi, String username )
 	{
-		arcApi.removeUser( username );
+		arcPortalApi.userApi.deleteUser( username );
 	}
 
-	private static String uploadItemExample( ArcApi arcApi, String username )
+	private static String uploadItemExample( ArcPortalApi arcPortalApi, String username )
 	{
 		File file = new File(Main.class.getClassLoader().getResource("example.csv").getFile());
 
@@ -120,28 +124,28 @@ public class Main
 				.languages("EN")
 				.format("json");
 
-		return arcApi.uploadItem(itemUploadModel, username).id;
+		return arcPortalApi.itemApi.uploadItem(itemUploadModel, username).id;
 	}
 
-	private static String publishItemExample( ArcApi arcApi, String id, String username )
+	private static String publishItemExample( ArcPortalApi arcPortalApi, String id, String username )
 	{
 		ItemPublishModel itemPublishModel = new ItemPublishModel(id, "CSV", "{\"name\":\"" + id + "\"}");
-		return arcApi.publishItem(itemPublishModel, username ).services.get(0).serviceItemId;
+		return arcPortalApi.itemApi.publishItem(itemPublishModel, username ).services.get(0).serviceItemId;
 	}
 
-	public static void shareItemExample( ArcApi arcApi, String id, String username, String groupId )
+	public static void shareItemExample( ArcPortalApi arcPortalApi, String id, String username, String groupId )
 	{
 		//ids is a comma seperated list of item ids, groups is a comma seperated list of groups to share with
 		//in the example it's just one item for one group
-		arcApi.shareItem( id, username, groupId );
+		arcPortalApi.itemApi.shareItem( id, username, groupId );
 	}
 
-	private static void deleteItemExample( ArcApi arcApi, String id, String username )
+	private static void deleteItemExample( ArcPortalApi arcPortalApi, String id, String username )
 	{
-		arcApi.deleteItem( id, username );
+		arcPortalApi.itemApi.deleteItem( id, username );
 	}
 
-	private static String createGroupExample( ArcApi arcApi )
+	private static String createGroupExample( ArcPortalApi arcPortalApi )
 	{
 		Group group = newGroup()
 			.title( "GOT 2" )
@@ -157,20 +161,20 @@ public class Main
 			.thumbnail( "" )
 			.build();
 
-		group = arcApi.createGroup( group ).group;
+		group = arcPortalApi.groupApi.createGroup( group ).group;
 
 		logger.info( "Created Group {}", group.id );
 
-		GroupUserAddResponse groupUserAddResponse = arcApi.addUsersToGroup( group, Arrays.asList( "david.grosso", "modibo" ) );
+		GroupUserAddResponse groupUserAddResponse = arcPortalApi.groupApi.addUsersToGroup( group, Arrays.asList( "david.grosso", "modibo" ) );
 
-		arcApi.removeUsersFromGroup( group, Arrays.asList( "david.grosso" ) );
+		arcPortalApi.groupApi.removeUsersFromGroup( group, Arrays.asList( "david.grosso" ) );
 
 		return group.id;
 	}
 
-	private static void deleteGroupExample( ArcApi arcApi, String id )
+	private static void deleteGroupExample( ArcPortalApi arcPortalApi, String id )
 	{
-		GroupDeleteResponse groupDeleteResponse = arcApi.deleteGroup( id );
+		GroupDeleteResponse groupDeleteResponse = arcPortalApi.groupApi.deleteGroup( id );
 		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
 	}
 }
