@@ -47,3 +47,11 @@ ext {
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
 }
+
+task printGitGradleVersion << {
+    println project.version
+}
+
+task bintrayUploadAllArtifacts(dependsOn: [':joan-arc:bintrayUpload', ':joan-arc-core:bintrayUpload', ':joan-arc-portal:bintrayUpload']) << {
+    println "Done uploading all artifacts to Bintray..."
+}
