@@ -85,13 +85,9 @@ public class Main
 
 			id = uploadItemExample(arcPortalApi, username);
 
-			String analyzeResponse = arcPortalApi.itemApi.analyzeResponse(id);
+			String analyzeResponse = arcPortalApi.itemApi.analyzeItem(id);
 
-			String publishParams = getPublishParams(analyzeResponse);
-
-			logger.debug("Publish Params {}", publishParams);
-
-			publishedId = publishItemExample(arcPortalApi, id, username, publishParams);
+			publishedId = publishItemExample(arcPortalApi, id, username, analyzeResponse);
 
 			shareItemExample(arcPortalApi, publishedId, username, groupId);
 
@@ -216,37 +212,5 @@ public class Main
 	{
 		GroupDeleteResponse groupDeleteResponse = arcPortalApi.groupApi.deleteGroup( id );
 		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
-	}
-
-	/**
-	 * Helper method to get the raw json
-	 * TODO: find a more elegant way to pull part of a json object
-	 */
-	private static String getPublishParams(String analyzeResponse)
-	{
-		logger.debug("Analyzing {}", analyzeResponse);
-		String jsonObject = "\"publishParameters\":";
-		int start = analyzeResponse.indexOf(jsonObject) + jsonObject.length();
-		int bracketCount = 0;
-		int end = start;
-
-		for (int i = start; i < analyzeResponse.length(); i++)
-		{
-			if (analyzeResponse.charAt(i) == '{')
-			{
-				bracketCount++;
-			}
-			else if (analyzeResponse.charAt(i) == '}')
-			{
-				bracketCount--;
-			}
-
-			if (bracketCount == 0)
-			{
-				end = i + 1;
-				break;
-			}
-		}
-		return analyzeResponse.substring(start, end);
 	}
 }

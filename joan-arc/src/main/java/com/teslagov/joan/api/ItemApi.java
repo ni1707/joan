@@ -89,7 +89,7 @@ public class ItemApi extends AbstractArcRestApi
         return itemSharer.shareItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), id, username, groups);
     }
 
-    public String analyzeResponse(String id)
+    public String analyzeItem(String id)
     {
         refreshTokenIfNecessary();
         return itemAnalyzer.analyzeItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), id );

@@ -39,6 +39,32 @@ public class ItemAnalyzer
 
         httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
-        return HttpExecutor.getStringResponse(httpClient, httpPost);
+        String analyzeResponse = HttpExecutor.getStringResponse(httpClient, httpPost);
+
+        //TODO: find more elegant way to grab JSON response for this object
+        String jsonObject = "\"publishParameters\":";
+        int start = analyzeResponse.indexOf(jsonObject) + jsonObject.length();
+        int bracketCount = 0;
+        int end = start;
+
+        for (int i = start; i < analyzeResponse.length(); i++)
+        {
+            if (analyzeResponse.charAt(i) == '{')
+            {
+                bracketCount++;
+            }
+            else if (analyzeResponse.charAt(i) == '}')
+            {
+                bracketCount--;
+            }
+
+            if (bracketCount == 0)
+            {
+                end = i + 1;
+                break;
+            }
+        }
+
+        return analyzeResponse.substring(start, end);
     }
 }
