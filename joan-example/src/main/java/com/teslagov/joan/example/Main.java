@@ -1,13 +1,8 @@
 package com.teslagov.joan.example;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.teslagov.joan.api.ArcPortalApi;
 import com.teslagov.joan.api.ArcPortalApi;
 import com.teslagov.joan.core.*;
 import com.teslagov.joan.portal.community.group.delete.GroupDeleteResponse;
-import com.teslagov.joan.portal.content.analyze.ItemAnalyzeResponse;
-import com.teslagov.joan.portal.content.fetch.ItemFetchResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
 import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.community.group.Group;
@@ -30,7 +25,6 @@ import java.util.UUID;
 import static com.teslagov.joan.api.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.community.group.GroupBuilder.newGroup;
 import static com.teslagov.joan.core.UserRequestModel.newUser;
-import static java.lang.Thread.sleep;
 
 /**
  * @author Kevin Chen
