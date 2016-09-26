@@ -13,8 +13,12 @@ import com.teslagov.joan.portal.community.group.useradd.GroupUserAddResponse;
 import com.teslagov.joan.portal.community.group.useradd.GroupUserAdder;
 import com.teslagov.joan.portal.community.group.userremove.GroupUserRemoveResponse;
 import com.teslagov.joan.portal.community.group.userremove.GroupUserRemover;
+import com.teslagov.joan.portal.content.analyze.ItemAnalyzeResponse;
+import com.teslagov.joan.portal.content.analyze.ItemAnalyzer;
 import com.teslagov.joan.portal.content.delete.ItemDeleteResponse;
 import com.teslagov.joan.portal.content.delete.ItemDeleter;
+import com.teslagov.joan.portal.content.fetch.ItemFetchResponse;
+import com.teslagov.joan.portal.content.fetch.ItemFetcher;
 import com.teslagov.joan.portal.content.publish.ItemPublishResponse;
 import com.teslagov.joan.portal.content.publish.ItemPublisher;
 import com.teslagov.joan.portal.content.share.ItemShareResponse;
@@ -46,6 +50,10 @@ public class ItemApi extends AbstractArcRestApi
     private final ItemDeleter itemDeleter = new ItemDeleter();
 
     private final ItemSharer itemSharer = new ItemSharer();
+
+    private final ItemAnalyzer itemAnalyzer = new ItemAnalyzer();
+
+    private final ItemFetcher itemFetcher = new ItemFetcher();
 
     public ItemApi(
             HttpClient httpClient,
@@ -79,5 +87,17 @@ public class ItemApi extends AbstractArcRestApi
     {
         refreshTokenIfNecessary();
         return itemSharer.shareItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), id, username, groups);
+    }
+
+    public ItemAnalyzeResponse analyzeResponse(String id)
+    {
+        refreshTokenIfNecessary();
+        return itemAnalyzer.analyzeItem( httpClient, arcConfiguration, tokenManager.getTokenResponse(), id );
+    }
+
+    public ItemFetchResponse fetchItems(String username)
+    {
+        refreshTokenIfNecessary();
+        return itemFetcher.fetchItems( httpClient, arcConfiguration, tokenManager.getTokenResponse(), username);
     }
 }

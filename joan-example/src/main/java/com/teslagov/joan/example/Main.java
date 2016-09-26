@@ -1,9 +1,13 @@
 package com.teslagov.joan.example;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.teslagov.joan.api.ArcPortalApi;
 import com.teslagov.joan.api.ArcPortalApi;
 import com.teslagov.joan.core.*;
 import com.teslagov.joan.portal.community.group.delete.GroupDeleteResponse;
+import com.teslagov.joan.portal.content.analyze.ItemAnalyzeResponse;
+import com.teslagov.joan.portal.content.fetch.ItemFetchResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
 import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.community.group.Group;
@@ -26,6 +30,7 @@ import java.util.UUID;
 import static com.teslagov.joan.api.ArcConfigurationBuilder.arcConfig;
 import static com.teslagov.joan.portal.community.group.GroupBuilder.newGroup;
 import static com.teslagov.joan.core.UserRequestModel.newUser;
+import static java.lang.Thread.sleep;
 
 /**
  * @author Kevin Chen
@@ -34,7 +39,7 @@ public class Main
 {
 	private static final Logger logger = LoggerFactory.getLogger( Main.class );
 
-	public static void main( String[] args ) throws InterruptedException
+	public static void main( String[] args ) throws Exception
 	{
 		Properties properties = ArcPropertiesFactory.createArcProperties();
 
@@ -67,25 +72,68 @@ public class Main
 			users.forEach( u -> logger.debug( "User {}", u ) );
 		}
 
-		String groupId = createGroupExample( arcPortalApi );
-
 		String username = UUID.randomUUID().toString();
+		String id = null;
+		String publishedId = null;
+		String groupId = null;
 
-		createNewUserExample( arcPortalApi, username );
+		try
+		{
+			groupId = createGroupExample(arcPortalApi);
 
-		String id = uploadItemExample( arcPortalApi, username );
+			createNewUserExample(arcPortalApi, username);
 
-		String publishedId = publishItemExample( arcPortalApi, id, username );
+			id = uploadItemExample(arcPortalApi, username);
 
-		shareItemExample( arcPortalApi, publishedId, username, groupId );
+			ItemAnalyzeResponse itemAnalyzeResponse = arcPortalApi.itemApi.analyzeResponse(id);
 
-		deleteItemExample( arcPortalApi, id, username );
+			publishedId = publishItemExample(arcPortalApi, id, username, itemAnalyzeResponse.getPublishParameters().toString());
 
-		deleteItemExample( arcPortalApi, publishedId, username );
+			shareItemExample(arcPortalApi, publishedId, username, groupId);
 
-		removeUserExample( arcPortalApi, username );
+			deleteItemExample(arcPortalApi, id, username);
 
-		deleteGroupExample( arcPortalApi, groupId );
+			deleteItemExample(arcPortalApi, publishedId, username);
+
+			removeUserExample(arcPortalApi, username);
+
+			deleteGroupExample(arcPortalApi, groupId);
+		}
+		catch (Exception e)
+		{
+			if (id != null)
+			{
+				arcPortalApi.itemApi.deleteItem(id, username);
+			}
+
+			if (publishedId != null)
+			{
+				arcPortalApi.itemApi.deleteItem(publishedId, username);
+			}
+
+			if (groupId != null)
+			{
+				arcPortalApi.groupApi.deleteGroup(groupId);
+			}
+
+			arcPortalApi.userApi.deleteUser(username);
+
+			logger.debug("Exception occured {}", e.getMessage());
+
+			
+			//Clean up if process doesn't finish
+//			ItemFetchResponse itemFetchResponse = arcPortalApi.itemApi.fetchItems(username);
+//
+//			logger.debug("Items {}", itemFetchResponse.items);
+//
+//			for (Object item : itemFetchResponse.items)
+//			{
+//				String id = getValue(item, "id");
+//				arcPortalApi.itemApi.deleteItem(id, username);
+//			}
+//
+//			arcPortalApi.userApi.deleteUser(username);
+		}
 	}
 
 	private static void createNewUserExample( ArcPortalApi arcPortalApi, String username )
@@ -110,6 +158,7 @@ public class Main
 		ItemUploadModel itemUploadModel = new ItemUploadModel(file, "CSV")
 				.text("This is an example file")
 				.title("An example file")
+				.url("www.example.com")
 				.typeKeywords("csv, map")
 				.description("This example file is some cities")
 				.tags("csv, cities, file")
@@ -127,9 +176,10 @@ public class Main
 		return arcPortalApi.itemApi.uploadItem(itemUploadModel, username).id;
 	}
 
-	private static String publishItemExample( ArcPortalApi arcPortalApi, String id, String username )
+	private static String publishItemExample( ArcPortalApi arcPortalApi, String id, String username,
+											  String publishParameters )
 	{
-		ItemPublishModel itemPublishModel = new ItemPublishModel(id, "CSV", "{\"name\":\"" + id + "\"}");
+		ItemPublishModel itemPublishModel = new ItemPublishModel(id, "CSV", publishParameters);
 		return arcPortalApi.itemApi.publishItem(itemPublishModel, username ).services.get(0).serviceItemId;
 	}
 
@@ -176,5 +226,27 @@ public class Main
 	{
 		GroupDeleteResponse groupDeleteResponse = arcPortalApi.groupApi.deleteGroup( id );
 		logger.info( "Deleted Group {}", groupDeleteResponse.groupId );
+	}
+
+	/**
+	 * Helper method to get the value of a field in a generic object which should be a JSON response
+	 */
+	private static String getValue(Object object, String field)
+	{
+		String string = object.toString();
+
+		int start = string.indexOf(field + "=") + field.length() + 1;
+		int end = start;
+
+		for (int i = start; i < string.length(); i++)
+		{
+			if (string.charAt(i) == ',')
+			{
+				end = i;
+				break;
+			}
+		}
+
+		return string.substring(start, end);
 	}
 }
