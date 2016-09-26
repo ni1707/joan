@@ -53,13 +53,13 @@ public class PortalEndpointFactoryTest
         assertEquals( "https://www.example.com:7443/arcgis/sharing/rest/content/users/User123/publish?f=pjson",
                 PortalEndpointFactory.SharingRest.Content.makePublishItemPath( testConfiguration, "User123" ) );
 
+        assertEquals( "https://www.example.com:7443/arcgis/sharing/rest/content/features/analyze",
+                PortalEndpointFactory.SharingRest.Content.makeAnalyzeItemPath( testConfiguration ) );
+
         assertEquals( "https://www.example.com:7443/arcgis/sharing/rest/portals/self",
                 PortalEndpointFactory.SharingRest.Portals.makeGetPortalIDPath( testConfiguration ) );
 
         assertEquals( "https://www.example.com:7443/arcgis/sharing/rest/portals/Portal123/users",
                 PortalEndpointFactory.SharingRest.Portals.makeFetchUsersPath( testConfiguration, "Portal123" ) );
-
-
-
     }
 }

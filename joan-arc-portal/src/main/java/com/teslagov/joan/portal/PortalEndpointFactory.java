@@ -148,6 +148,16 @@ public class PortalEndpointFactory
 			{
 				return contentPath( arcConfiguration ) + "/users/" + username + "/items/" + id + "/share";
 			}
+
+			public static String makeAnalyzeItemPath( ArcConfiguration arcConfiguration )
+			{
+				return contentPath( arcConfiguration ) + "/features/analyze";
+			}
+
+			public static String makeFetchItemPath( ArcConfiguration arcConfiguration, String username )
+			{
+				return contentPath( arcConfiguration ) + "/users/" + username + "?f=pjson";
+			}
 		}
 	}
 

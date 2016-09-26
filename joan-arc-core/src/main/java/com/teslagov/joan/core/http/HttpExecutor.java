@@ -34,7 +34,7 @@ public class HttpExecutor
 		}
 	}
 
-	private static String getStringResponse( HttpClient httpClient, HttpRequestBase httpRequestBase )
+	public static String getStringResponse( HttpClient httpClient, HttpRequestBase httpRequestBase )
 	{
 		HttpResponse response = null;
 		try

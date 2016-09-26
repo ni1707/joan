@@ -29,7 +29,7 @@ public class ItemPublisher
     {
         String url = PortalEndpointFactory.SharingRest.Content.makePublishItemPath( arcConfiguration, username );
         logger.debug( "Hitting url {} with token {}", url, tokenResponse.getToken() );
-        logger.debug( "Publishing: {}", itemPublishModel);
+        logger.debug( "Publishing: {}", itemPublishModel );
 
         HttpPost httpPost =
                 new HttpPostBuilder( url )

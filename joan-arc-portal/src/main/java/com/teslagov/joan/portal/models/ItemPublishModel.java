@@ -26,10 +26,11 @@ public class ItemPublishModel
     public String getPublishParameters() { return publishParameters; }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ItemPublishModel{" +
                 "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", publishParameters='" + publishParameters + '\'' +
                 '}';
     }
 }

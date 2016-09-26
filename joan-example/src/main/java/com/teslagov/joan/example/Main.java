@@ -1,7 +1,6 @@
 package com.teslagov.joan.example;
 
 import com.teslagov.joan.api.ArcPortalApi;
-import com.teslagov.joan.api.ArcPortalApi;
 import com.teslagov.joan.core.*;
 import com.teslagov.joan.portal.community.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
@@ -34,7 +33,7 @@ public class Main
 {
 	private static final Logger logger = LoggerFactory.getLogger( Main.class );
 
-	public static void main( String[] args ) throws InterruptedException
+	public static void main( String[] args ) throws Exception
 	{
 		Properties properties = ArcPropertiesFactory.createArcProperties();
 
@@ -67,25 +66,54 @@ public class Main
 			users.forEach( u -> logger.debug( "User {}", u ) );
 		}
 
-		String groupId = createGroupExample( arcPortalApi );
-
 		String username = UUID.randomUUID().toString();
+		String id = null;
+		String publishedId = null;
+		String groupId = null;
 
-		createNewUserExample( arcPortalApi, username );
+		try
+		{
+			groupId = createGroupExample(arcPortalApi);
 
-		String id = uploadItemExample( arcPortalApi, username );
+			createNewUserExample(arcPortalApi, username);
 
-		String publishedId = publishItemExample( arcPortalApi, id, username );
+			id = uploadItemExample(arcPortalApi, username);
 
-		shareItemExample( arcPortalApi, publishedId, username, groupId );
+			String analyzeResponse = arcPortalApi.itemApi.analyzeItem(id);
 
-		deleteItemExample( arcPortalApi, id, username );
+			publishedId = publishItemExample(arcPortalApi, id, username, analyzeResponse);
 
-		deleteItemExample( arcPortalApi, publishedId, username );
+			shareItemExample(arcPortalApi, publishedId, username, groupId);
 
-		removeUserExample( arcPortalApi, username );
+			deleteItemExample(arcPortalApi, id, username);
 
-		deleteGroupExample( arcPortalApi, groupId );
+			deleteItemExample(arcPortalApi, publishedId, username);
+
+			removeUserExample(arcPortalApi, username);
+
+			deleteGroupExample(arcPortalApi, groupId);
+		}
+		catch (Exception e)
+		{
+			if (id != null)
+			{
+				arcPortalApi.itemApi.deleteItem(id, username);
+			}
+
+			if (publishedId != null)
+			{
+				arcPortalApi.itemApi.deleteItem(publishedId, username);
+			}
+
+			if (groupId != null)
+			{
+				arcPortalApi.groupApi.deleteGroup(groupId);
+			}
+
+			arcPortalApi.userApi.deleteUser(username);
+
+			logger.debug("Exception occured {}", e.getMessage());
+		}
 	}
 
 	private static void createNewUserExample( ArcPortalApi arcPortalApi, String username )
@@ -109,7 +137,8 @@ public class Main
 
 		ItemUploadModel itemUploadModel = new ItemUploadModel(file, "CSV")
 				.text("This is an example file")
-				.title("An example file")
+				.title(UUID.randomUUID().toString().replace("-", ""))
+				.url("www.example.com")
 				.typeKeywords("csv, map")
 				.description("This example file is some cities")
 				.tags("csv, cities, file")
@@ -127,9 +156,10 @@ public class Main
 		return arcPortalApi.itemApi.uploadItem(itemUploadModel, username).id;
 	}
 
-	private static String publishItemExample( ArcPortalApi arcPortalApi, String id, String username )
+	private static String publishItemExample( ArcPortalApi arcPortalApi, String id, String username,
+											  String publishParameters )
 	{
-		ItemPublishModel itemPublishModel = new ItemPublishModel(id, "CSV", "{\"name\":\"" + id + "\"}");
+		ItemPublishModel itemPublishModel = new ItemPublishModel(id, "CSV", publishParameters);
 		return arcPortalApi.itemApi.publishItem(itemPublishModel, username ).services.get(0).serviceItemId;
 	}
 

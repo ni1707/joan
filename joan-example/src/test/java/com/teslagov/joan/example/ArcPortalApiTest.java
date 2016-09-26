@@ -21,7 +21,6 @@ import org.apache.http.client.HttpClient;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -120,6 +119,27 @@ public class ArcPortalApiTest
         ItemUploadResponse item = uploadItem(user.username);
 
         ItemPublishModel itemPublishModel = new ItemPublishModel(item.id, "CSV", "{\"name\":\"" + item.id + "\"}");
+        ItemPublishResponse itemPublishResponse = arcPortalApi.itemApi.publishItem(itemPublishModel, user.username);
+
+        assertNotNull(itemPublishResponse);
+        assertNotEquals(0, itemPublishResponse.services.size());
+
+        String publishedId = itemPublishResponse.services.get(0).serviceItemId;
+
+        arcPortalApi.itemApi.deleteItem(item.id, user.username);
+        arcPortalApi.itemApi.deleteItem(publishedId, user.username);
+        arcPortalApi.userApi.deleteUser(user.username);
+    }
+
+    @Test
+    public void analyzeAndShareItemTest()
+    {
+        UserCreateResponse user = createUser();
+        ItemUploadResponse item = uploadItem(user.username);
+
+        String analyzeResponse = arcPortalApi.itemApi.analyzeItem(item.id);
+
+        ItemPublishModel itemPublishModel = new ItemPublishModel(item.id, "CSV", analyzeResponse);
         ItemPublishResponse itemPublishResponse = arcPortalApi.itemApi.publishItem(itemPublishModel, user.username);
 
         assertNotNull(itemPublishResponse);
@@ -235,7 +255,7 @@ public class ArcPortalApiTest
 
         ItemUploadModel itemUploadModel = new ItemUploadModel(file, "CSV")
                 .text("This is an example file")
-                .title("An example file")
+                .title(UUID.randomUUID().toString().replace("-", ""))
                 .typeKeywords("csv, map")
                 .description("This example file is some cities")
                 .tags("csv, cities, file")
