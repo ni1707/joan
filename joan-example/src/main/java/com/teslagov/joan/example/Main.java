@@ -85,9 +85,13 @@ public class Main
 
 			id = uploadItemExample(arcPortalApi, username);
 
-			ItemAnalyzeResponse itemAnalyzeResponse = arcPortalApi.itemApi.analyzeResponse(id);
+			String analyzeResponse = arcPortalApi.itemApi.analyzeResponse(id);
 
-			publishedId = publishItemExample(arcPortalApi, id, username, itemAnalyzeResponse.getPublishParameters().toString());
+			String publishParams = getPublishParams(analyzeResponse);
+
+			logger.debug("Publish Params {}", publishParams);
+
+			publishedId = publishItemExample(arcPortalApi, id, username, publishParams);
 
 			shareItemExample(arcPortalApi, publishedId, username, groupId);
 
@@ -119,20 +123,6 @@ public class Main
 			arcPortalApi.userApi.deleteUser(username);
 
 			logger.debug("Exception occured {}", e.getMessage());
-
-			
-			//Clean up if process doesn't finish
-//			ItemFetchResponse itemFetchResponse = arcPortalApi.itemApi.fetchItems(username);
-//
-//			logger.debug("Items {}", itemFetchResponse.items);
-//
-//			for (Object item : itemFetchResponse.items)
-//			{
-//				String id = getValue(item, "id");
-//				arcPortalApi.itemApi.deleteItem(id, username);
-//			}
-//
-//			arcPortalApi.userApi.deleteUser(username);
 		}
 	}
 
@@ -157,7 +147,7 @@ public class Main
 
 		ItemUploadModel itemUploadModel = new ItemUploadModel(file, "CSV")
 				.text("This is an example file")
-				.title("An example file")
+				.title(UUID.randomUUID().toString().replace("-", ""))
 				.url("www.example.com")
 				.typeKeywords("csv, map")
 				.description("This example file is some cities")
@@ -229,24 +219,34 @@ public class Main
 	}
 
 	/**
-	 * Helper method to get the value of a field in a generic object which should be a JSON response
+	 * Helper method to get the raw json
+	 * TODO: find a more elegant way to pull part of a json object
 	 */
-	private static String getValue(Object object, String field)
+	private static String getPublishParams(String analyzeResponse)
 	{
-		String string = object.toString();
-
-		int start = string.indexOf(field + "=") + field.length() + 1;
+		logger.debug("Analyzing {}", analyzeResponse);
+		String jsonObject = "\"publishParameters\":";
+		int start = analyzeResponse.indexOf(jsonObject) + jsonObject.length();
+		int bracketCount = 0;
 		int end = start;
 
-		for (int i = start; i < string.length(); i++)
+		for (int i = start; i < analyzeResponse.length(); i++)
 		{
-			if (string.charAt(i) == ',')
+			if (analyzeResponse.charAt(i) == '{')
 			{
-				end = i;
+				bracketCount++;
+			}
+			else if (analyzeResponse.charAt(i) == '}')
+			{
+				bracketCount--;
+			}
+
+			if (bracketCount == 0)
+			{
+				end = i + 1;
 				break;
 			}
 		}
-
-		return string.substring(start, end);
+		return analyzeResponse.substring(start, end);
 	}
 }

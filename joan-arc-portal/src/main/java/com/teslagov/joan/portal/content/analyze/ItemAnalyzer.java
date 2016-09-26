@@ -18,7 +18,8 @@ public class ItemAnalyzer
 {
     private static final Logger logger = LoggerFactory.getLogger( ItemAnalyzer.class );
 
-    public ItemAnalyzeResponse analyzeItem(
+    //We return a string because we need publish params to pass back to analyze in unaltered JSON format
+    public String analyzeItem(
             HttpClient httpClient,
             ArcConfiguration arcConfiguration,
             TokenResponse tokenResponse,
@@ -38,6 +39,6 @@ public class ItemAnalyzer
 
         httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
-        return HttpExecutor.getResponse(httpClient, httpPost, ItemAnalyzeResponse.class);
+        return HttpExecutor.getStringResponse(httpClient, httpPost);
     }
 }
