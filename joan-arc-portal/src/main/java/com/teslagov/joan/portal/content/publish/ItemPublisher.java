@@ -1,6 +1,5 @@
 package com.teslagov.joan.portal.content.publish;
 
-import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;

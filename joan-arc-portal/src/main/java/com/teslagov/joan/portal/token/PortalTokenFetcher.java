@@ -1,6 +1,5 @@
 package com.teslagov.joan.portal.token;
 
-import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenFetcher;
 import com.teslagov.joan.core.TokenResponse;
