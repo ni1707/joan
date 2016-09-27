@@ -28,6 +28,16 @@ public enum ArcProperties implements PropertyEnum
 	PORTAL_PORT( "portalPort" ),
 
 	/**
+	 * The context path for Portal, if it's not being hit via its WebAdaptor.
+	 */
+	PORTAL_CONTEXT_PATH( "portalContextPath" ),
+
+	/**
+	 * Whether Portal REST APIs should be hit via WebAdaptor or directly.
+	 */
+	PORTAL_IS_USING_WEB_ADAPTOR( "portalIsUsingWebAdaptor"),
+
+	/**
 	 * The username of a ArcGIS Server admin.
 	 */
 	ARC_GIS_SERVER_ADMIN_USERNAME( "serverAdminUsername" ),
@@ -45,7 +55,17 @@ public enum ArcProperties implements PropertyEnum
 	/**
 	 * The port for ArcGIS Server.
 	 */
-	ARC_GIS_SERVER_PORT( "serverPort" );
+	ARC_GIS_SERVER_PORT( "serverPort" ),
+
+	/**
+	 * The context path for ArcGIS Server, if it's not being hit via its WebAdaptor.
+	 */
+	ARC_GIS_SERVER_CONTEXT_PATH( "serverContextPath" ),
+
+	/**
+	 * Whether ArcGIS Server REST APIs should be hit via WebAdaptor or directly.
+	 */
+	ARC_GIS_SERVER_IS_USING_WEB_ADAPTOR( "serverIsUsingWebAdaptor" );
 
 	private final String propertyName;
 
