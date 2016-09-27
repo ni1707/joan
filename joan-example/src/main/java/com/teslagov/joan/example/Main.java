@@ -53,10 +53,12 @@ public class Main {
 
 		HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration);
 
-		ArcPortalApi arcPortalApi = new ArcPortalApi(httpClient, arcConfiguration, ZoneOffset.UTC,
+		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
+
+		ArcPortalApi arcPortalApi = new ArcPortalApi(httpClient, arcPortalConfiguration, ZoneOffset.UTC,
 			new TokenManager(
 				new TokenRefresher(
-					new PortalTokenFetcher(httpClient, arcConfiguration), ZoneOffset.UTC
+					new PortalTokenFetcher(httpClient, arcPortalConfiguration), ZoneOffset.UTC
 				)
 			)
 		);

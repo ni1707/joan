@@ -1,6 +1,6 @@
 package com.teslagov.joan.api;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenManager;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.portal.community.user.create.UserCreateResponse;
@@ -36,7 +36,7 @@ public class UserApi extends AbstractArcRestApi {
 
 	public UserApi(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		ZoneOffset zoneOffset,
 		TokenManager tokenManager
 	) {

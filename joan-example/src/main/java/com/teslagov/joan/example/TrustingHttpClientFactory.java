@@ -1,6 +1,7 @@
 package com.teslagov.joan.example;
 
 import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.RegistryBuilder;
@@ -39,7 +40,8 @@ public class TrustingHttpClientFactory {
 	private static final int CONNECTION_REQUEST_TIMEOUT = 30000;
 
 	public static HttpClient createVeryUnsafePortalHttpClient(ArcConfiguration arcConfiguration) {
-		int portNumber = arcConfiguration.getPortalPort();
+		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
+		int portNumber = arcPortalConfiguration.getPortalPort();
 		return createVeryUnsafeHttpClient(portNumber);
 	}
 

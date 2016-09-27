@@ -62,12 +62,14 @@ public class ArcPortalApiTest {
 				.arcServerIsUsingWebAdaptor(properties.getBoolean(ArcProperties.ARC_GIS_SERVER_IS_USING_WEB_ADAPTOR))
 				.build();
 
+		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
+
 		httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration);
 
-		arcPortalApi = new ArcPortalApi(httpClient, arcConfiguration, ZoneOffset.UTC,
+		arcPortalApi = new ArcPortalApi(httpClient, arcPortalConfiguration, ZoneOffset.UTC,
 			new TokenManager(
 				new TokenRefresher(
-					new PortalTokenFetcher(httpClient, arcConfiguration), ZoneOffset.UTC
+					new PortalTokenFetcher(httpClient, arcPortalConfiguration), ZoneOffset.UTC
 				)
 			)
 		);
@@ -172,8 +174,11 @@ public class ArcPortalApiTest {
 		arcPortalApi.groupApi.addUsersToGroup(anotherGroup.group, Arrays.asList(userWithoutAccess.username));
 		arcPortalApi.itemApi.shareItem(item.id, user.username, group.group.id);
 
+		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
+		String portalUrl = arcPortalConfiguration.getPortalUrl();
+
 		//We should be able to access the item with the user in the group
-		HttpGet httpGet = new HttpGet(arcConfiguration.getPortalUrl() + "/arcgis/sharing/rest/content/items/" + item.id + "?f=pjson");
+		HttpGet httpGet = new HttpGet(portalUrl + "/arcgis/sharing/rest/content/items/" + item.id + "?f=pjson");
 		httpGet.addHeader("cookie", "agwtoken=" + getToken(userWithAccess.username, "Password123!"));
 
 		Response response = HttpExecutor.getResponse(httpClient, httpGet, Response.class);
@@ -181,7 +186,7 @@ public class ArcPortalApiTest {
 		assertNull(response.getError());
 
 		//See if we can access this item with the wrong user
-		httpGet = new HttpGet(arcConfiguration.getPortalUrl() + "/arcgis/sharing/rest/content/items/" + item.id + "?f=pjson");
+		httpGet = new HttpGet(portalUrl + "/arcgis/sharing/rest/content/items/" + item.id + "?f=pjson");
 		httpGet.addHeader("cookie", "agwtoken=" + getToken(userWithoutAccess.username, "Password123!"));
 
 		response = HttpExecutor.getResponse(httpClient, httpGet, Response.class);
@@ -268,7 +273,8 @@ public class ArcPortalApiTest {
 	}
 
 	private String getToken(String username, String password) {
-		HttpPost httpPost = new HttpPostBuilder(arcConfiguration.getPortalUrl() + "/arcgis/sharing/rest/generateToken")
+		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
+		HttpPost httpPost = new HttpPostBuilder(arcPortalConfiguration.getPortalUrl() + "/arcgis/sharing/rest/generateToken")
 			.urlFormParam("f", "json")
 			.urlFormParam("username", username)
 			.urlFormParam("password", password)

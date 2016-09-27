@@ -1,6 +1,8 @@
 package com.teslagov.joan.api;
 
 import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
+import com.teslagov.joan.core.ArcServerConfiguration;
 
 /**
  * @author Kevin Chen
@@ -109,90 +111,99 @@ public class ArcConfigurationBuilder {
 	public ArcConfiguration build() {
 		assertNothingNull();
 
-		// TODO throw exception if any are null
 		return new ArcConfiguration() {
 			@Override
-			public String getPortalAdminUsername() {
-				return portalAdminUsername;
+			public ArcServerConfiguration getArcServerConfiguration() {
+				return new ArcServerConfiguration() {
+					@Override
+					public String getArcServerAdminUsername() {
+						return arcServerAdminUsername;
+					}
+
+					@Override
+					public String getArcServerAdminPassword() {
+						return arcServerAdminPassword;
+					}
+
+					@Override
+					public String getArcServerUrl() {
+						return arcServerUrl;
+					}
+
+					@Override
+					public String getArcServerContextPath() {
+						return arcServerContextPath;
+					}
+
+					@Override
+					public int getArcServerPort() {
+						return arcServerPort;
+					}
+
+					@Override
+					public boolean isArcServerUsingWebAdaptor() {
+						return arcServerUsingWebAdaptor;
+					}
+
+					@Override
+					public String getArcServerAdminApiPath() {
+						if (!isArcServerUsingWebAdaptor()) {
+							return getArcServerUrl() + ":" + getArcServerPort() + "/arcgis/admin";
+						}
+						return getArcServerUrl() + "/" + getArcServerContextPath() + "/admin";
+					}
+				};
 			}
 
 			@Override
-			public String getPortalAdminPassword() {
-				return portalAdminPassword;
-			}
+			public ArcPortalConfiguration getArcPortalConfiguration() {
+				return new ArcPortalConfiguration() {
+					@Override
+					public String getPortalAdminUsername() {
+						return portalAdminUsername;
+					}
 
-			@Override
-			public String getPortalUrl() {
-				return portalUrl;
-			}
+					@Override
+					public String getPortalAdminPassword() {
+						return portalAdminPassword;
+					}
 
-			@Override
-			public String getPortalContextPath() {
-				return portalContextPath;
-			}
+					@Override
+					public String getPortalUrl() {
+						return portalUrl;
+					}
 
-			@Override
-			public int getPortalPort() {
-				return portalPort;
-			}
+					@Override
+					public String getPortalContextPath() {
+						return portalContextPath;
+					}
 
-			@Override
-			public boolean isPortalUsingWebAdaptor() {
-				return portalUsingWebAdaptor;
-			}
+					@Override
+					public int getPortalPort() {
+						return portalPort;
+					}
 
-			@Override
-			public String getPortalAdminApiPath() {
-				if (!isPortalUsingWebAdaptor()) {
-					return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
-				}
-				return getPortalUrl() + "/" + getPortalContextPath() + "/portaladmin";
-			}
+					@Override
+					public boolean isPortalUsingWebAdaptor() {
+						return portalUsingWebAdaptor;
+					}
 
-			@Override
-			public String getPortalSharingApiPath() {
-				if (!isPortalUsingWebAdaptor()) {
-					return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
-				}
-				return getPortalUrl() + "/" + getPortalContextPath() + "/sharing/rest";
-			}
+					@Override
+					public String getPortalAdminApiPath() {
+						if (!isPortalUsingWebAdaptor()) {
+							return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
+						}
+						return getPortalUrl() + "/" + getPortalContextPath() + "/portaladmin";
+					}
 
-			@Override
-			public String getArcServerAdminUsername() {
-				return arcServerAdminUsername;
-			}
-
-			@Override
-			public String getArcServerAdminPassword() {
-				return arcServerAdminPassword;
-			}
-
-			@Override
-			public String getArcServerUrl() {
-				return arcServerUrl;
-			}
-
-			@Override
-			public String getArcServerContextPath() {
-				return arcServerContextPath;
-			}
-
-			@Override
-			public int getArcServerPort() {
-				return arcServerPort;
-			}
-
-			@Override
-			public boolean isArcServerUsingWebAdaptor() {
-				return arcServerUsingWebAdaptor;
-			}
-
-			@Override
-			public String getArcServerAdminApiPath() {
-				if (!isArcServerUsingWebAdaptor()) {
-					return getArcServerUrl() + ":" + getArcServerPort() + "/arcgis/admin";
-				}
-				return getArcServerUrl() + "/" + getArcServerContextPath() + "/admin";
+					@Override
+					public String getPortalSharingApiPath() {
+						if (!isPortalUsingWebAdaptor()) {
+							return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
+						}
+						return getPortalUrl() + "/" + getPortalContextPath() + "/sharing/rest";
+					}
+				};
 			}
 		};
 	}

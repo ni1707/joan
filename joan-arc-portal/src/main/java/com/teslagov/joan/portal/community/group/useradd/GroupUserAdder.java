@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.community.group.useradd;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
@@ -20,7 +20,7 @@ import java.util.List;
 public class GroupUserAdder {
 	public GroupUserAddResponse addUserToGroup(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		Group group,
 		List<String> usernames

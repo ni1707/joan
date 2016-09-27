@@ -1,11 +1,11 @@
 package com.teslagov.joan.portal;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 
 /**
  * Created by joncrain on 9/22/16.
  */
-public class TestArcConfiguration implements ArcConfiguration {
+public class TestArcConfiguration implements ArcPortalConfiguration {
 
 	@Override
 	public String getPortalAdminUsername() {
@@ -45,40 +45,5 @@ public class TestArcConfiguration implements ArcConfiguration {
 	@Override
 	public String getPortalSharingApiPath() {
 		return String.format("https://www.example.com:%d/%s/sharing/rest", getPortalPort(), getPortalContextPath());
-	}
-
-	@Override
-	public String getArcServerAdminUsername() {
-		return "admin";
-	}
-
-	@Override
-	public String getArcServerAdminPassword() {
-		return "password";
-	}
-
-	@Override
-	public String getArcServerUrl() {
-		return "https://www.example.com/" + getArcServerContextPath();
-	}
-
-	@Override
-	public String getArcServerContextPath() {
-		return "arcgis";
-	}
-
-	@Override
-	public boolean isArcServerUsingWebAdaptor() {
-		return false;
-	}
-
-	@Override
-	public int getArcServerPort() {
-		return 6443;
-	}
-
-	@Override
-	public String getArcServerAdminApiPath() {
-		return String.format("https://www.example.com:%d/%s/admin", getArcServerPort(), getArcServerContextPath());
 	}
 }
