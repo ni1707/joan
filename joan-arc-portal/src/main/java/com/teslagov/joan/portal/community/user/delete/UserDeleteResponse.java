@@ -5,6 +5,5 @@ import com.teslagov.joan.core.Response;
 /**
  * @author Jon Crain
  */
-public class UserDeleteResponse extends Response
-{
+public class UserDeleteResponse extends Response {
 }

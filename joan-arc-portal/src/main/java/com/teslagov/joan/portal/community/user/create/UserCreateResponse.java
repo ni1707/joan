@@ -5,8 +5,7 @@ import com.teslagov.joan.core.Response;
 /**
  * @author Kevin Chen
  */
-public class UserCreateResponse extends Response
-{
-    public boolean success;
-    public String username;
+public class UserCreateResponse extends Response {
+	public boolean success;
+	public String username;
 }

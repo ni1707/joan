@@ -8,13 +8,11 @@ import java.util.List;
 /**
  * @author Kevin Chen
  */
-public class GroupUserRemoveResponse extends Response
-{
+public class GroupUserRemoveResponse extends Response {
 	public List<String> notRemoved;
 
 	@JsonIgnore
-	public boolean allUsersRemoved()
-	{
+	public boolean allUsersRemoved() {
 		return notRemoved != null && !notRemoved.isEmpty();
 	}
 }

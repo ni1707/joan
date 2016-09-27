@@ -13,20 +13,19 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to retrieve a single page of users.
  * {}/sharing/rest/community/users
+ *
  * @author Kevin Chen
  */
-public class UserFetcher
-{
-	private static final Logger logger = LoggerFactory.getLogger( UserFetcher.class );
+public class UserFetcher {
+	private static final Logger logger = LoggerFactory.getLogger(UserFetcher.class);
 
 	public UserListResponse fetchUsers(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		PortalResponse portalResponse
-	)
-	{
-		return fetchUsers( httpClient, arcConfiguration, tokenResponse, portalResponse, 0, 100 );
+	) {
+		return fetchUsers(httpClient, arcConfiguration, tokenResponse, portalResponse, 0, 100);
 	}
 
 	public UserListResponse fetchUsers(
@@ -36,21 +35,20 @@ public class UserFetcher
 		PortalResponse portalResponse,
 		int start,
 		int num
-	)
-	{
+	) {
 		String path = String.format(
 			"%s?token=%s&f=json&start=%s&num=%s",
-			PortalEndpointFactory.SharingRest.Portals.makeFetchUsersPath( arcConfiguration, portalResponse.id ),
+			PortalEndpointFactory.SharingRest.Portals.makeFetchUsersPath(arcConfiguration, portalResponse.id),
 			tokenResponse.getToken(),
 			start + "",
 			num + ""
 		);
 
-		logger.debug( "Hitting path: {}", path );
+		logger.debug("Hitting path: {}", path);
 
-		HttpGet httpGet = new HttpGet( path );
+		HttpGet httpGet = new HttpGet(path);
 
-		UserListResponse userListResponse = HttpExecutor.getResponse( httpClient, httpGet, UserListResponse.class );
+		UserListResponse userListResponse = HttpExecutor.getResponse(httpClient, httpGet, UserListResponse.class);
 		return userListResponse;
 	}
 }

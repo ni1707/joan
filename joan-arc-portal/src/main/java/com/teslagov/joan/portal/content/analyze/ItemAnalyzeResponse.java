@@ -6,18 +6,15 @@ import com.teslagov.joan.core.Response;
 /**
  * Created by joncrain on 9/23/16.
  */
-public class ItemAnalyzeResponse extends Response
-{
-    private Object publishParameters;
+public class ItemAnalyzeResponse extends Response {
+	private Object publishParameters;
 
-    @JsonRawValue
-    public Object getPublishParameters()
-    {
-        return publishParameters;
-    }
+	@JsonRawValue
+	public Object getPublishParameters() {
+		return publishParameters;
+	}
 
-    public void setPublishParameters(Object publishParameters)
-    {
-        this.publishParameters = publishParameters;
-    }
+	public void setPublishParameters(Object publishParameters) {
+		this.publishParameters = publishParameters;
+	}
 }

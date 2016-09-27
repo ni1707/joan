@@ -14,29 +14,27 @@ import org.slf4j.LoggerFactory;
  * {}/sharing/rest/content/users/{id}/items/{id}/delete
  * Created by joncrain on 9/21/16.
  */
-public class ItemDeleter
-{
-    private static final Logger logger = LoggerFactory.getLogger( ItemDeleter.class );
+public class ItemDeleter {
+	private static final Logger logger = LoggerFactory.getLogger(ItemDeleter.class);
 
-    public ItemDeleteResponse deleteItem(
-            HttpClient httpClient,
-            ArcConfiguration arcConfiguration,
-            TokenResponse tokenResponse,
-            String id,
-            String username
-    )
-    {
-        String url = PortalEndpointFactory.SharingRest.Content.makeDeleteItemPath( arcConfiguration, id, username );
-        logger.debug( "Hitting url {} with token {}", url, tokenResponse.getToken() );
-        logger.debug( "Deleting Item: {}", id);
+	public ItemDeleteResponse deleteItem(
+		HttpClient httpClient,
+		ArcConfiguration arcConfiguration,
+		TokenResponse tokenResponse,
+		String id,
+		String username
+	) {
+		String url = PortalEndpointFactory.SharingRest.Content.makeDeleteItemPath(arcConfiguration, id, username);
+		logger.debug("Hitting url {} with token {}", url, tokenResponse.getToken());
+		logger.debug("Deleting Item: {}", id);
 
-        HttpPost httpPost =
-                new HttpPostBuilder( url )
-                        .urlFormParam( "f", "pjson" )
-                        .build();
+		HttpPost httpPost =
+			new HttpPostBuilder(url)
+				.urlFormParam("f", "pjson")
+				.build();
 
-        httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
+		httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
-        return HttpExecutor.getResponse(httpClient, httpPost, ItemDeleteResponse.class);
-    }
+		return HttpExecutor.getResponse(httpClient, httpPost, ItemDeleteResponse.class);
+	}
 }

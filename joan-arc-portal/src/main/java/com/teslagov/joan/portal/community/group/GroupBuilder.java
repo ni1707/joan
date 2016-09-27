@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * @author Kevin Chen
  */
-public class GroupBuilder
-{
+public class GroupBuilder {
 	private String title;
 
 	private String description;
@@ -32,83 +31,69 @@ public class GroupBuilder
 
 	private String thumbnail;
 
-	public static GroupBuilder newGroup()
-	{
+	public static GroupBuilder newGroup() {
 		return new GroupBuilder();
 	}
 
-	public GroupBuilder title( String title )
-	{
+	public GroupBuilder title(String title) {
 		this.title = title;
 		return this;
 	}
 
-	public GroupBuilder description( String description )
-	{
+	public GroupBuilder description(String description) {
 		this.description = description;
 		return this;
 	}
 
-	public GroupBuilder snippet( String snippet )
-	{
+	public GroupBuilder snippet(String snippet) {
 		this.snippet = snippet;
 		return this;
 	}
 
-	public GroupBuilder tag( String tag )
-	{
-		if ( tags == null )
-		{
+	public GroupBuilder tag(String tag) {
+		if (tags == null) {
 			tags = new ArrayList<>();
 		}
-		tags.add( tag );
+		tags.add(tag);
 		return this;
 	}
 
-	public GroupBuilder phone( String phone )
-	{
+	public GroupBuilder phone(String phone) {
 		this.phone = phone;
 		return this;
 	}
 
-	public GroupBuilder access( GroupAccess access )
-	{
+	public GroupBuilder access(GroupAccess access) {
 		this.access = access;
 		return this;
 	}
 
-	public GroupBuilder sortField( GroupSortField sortField )
-	{
+	public GroupBuilder sortField(GroupSortField sortField) {
 		this.sortField = sortField;
 		return this;
 	}
 
-	public GroupBuilder sortOrder( SortOrder sortOrder )
-	{
+	public GroupBuilder sortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;
 		return this;
 	}
 
-	public GroupBuilder isViewOnly( boolean isViewOnly )
-	{
+	public GroupBuilder isViewOnly(boolean isViewOnly) {
 		this.isViewOnly = isViewOnly;
 		return this;
 	}
 
-	public GroupBuilder isInvitationOnly( boolean isInvitationOnly )
-	{
+	public GroupBuilder isInvitationOnly(boolean isInvitationOnly) {
 		this.isInvitationOnly = isInvitationOnly;
 		return this;
 	}
 
-	public GroupBuilder thumbnail( String thumbnail )
-	{
+	public GroupBuilder thumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
 		return this;
 	}
 
-	public Group build()
-	{
+	public Group build() {
 		Group group = new Group();
 
 		group.title = title;

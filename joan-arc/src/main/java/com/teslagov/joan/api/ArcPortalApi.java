@@ -10,11 +10,11 @@ import java.time.ZoneOffset;
 
 /**
  * Parent API
+ *
  * @author Kevin Chen
  */
-public class ArcPortalApi extends AbstractArcRestApi
-{
-	private static final Logger logger = LoggerFactory.getLogger( ArcPortalApi.class );
+public class ArcPortalApi extends AbstractArcRestApi {
+	private static final Logger logger = LoggerFactory.getLogger(ArcPortalApi.class);
 
 	public final UserApi userApi;
 
@@ -27,9 +27,8 @@ public class ArcPortalApi extends AbstractArcRestApi
 		ArcConfiguration arcConfiguration,
 		ZoneOffset zoneOffset,
 		TokenManager tokenManager
-	)
-	{
-		super (httpClient, arcConfiguration, zoneOffset, tokenManager, "Portal Api");
+	) {
+		super(httpClient, arcConfiguration, zoneOffset, tokenManager, "Portal Api");
 
 		//Initialize all sub apis
 		userApi = new UserApi(httpClient, arcConfiguration, zoneOffset, tokenManager);

@@ -12,25 +12,24 @@ import org.slf4j.LoggerFactory;
 
 /**
  * {}/sharing/rest/community/users/{id}/delete
+ *
  * @author Jon Crain
  */
-public class UserDeleter
-{
-	private static final Logger logger = LoggerFactory.getLogger( UserDeleter.class );
+public class UserDeleter {
+	private static final Logger logger = LoggerFactory.getLogger(UserDeleter.class);
 
 	public UserDeleteResponse deleteUser(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		String username
-	)
-	{
-		String url = PortalEndpointFactory.SharingRest.Community.makeDeleteUserPath( arcConfiguration, username );
-		logger.debug( "Hitting url {} with token {}", url, tokenResponse.getToken() );
+	) {
+		String url = PortalEndpointFactory.SharingRest.Community.makeDeleteUserPath(arcConfiguration, username);
+		logger.debug("Hitting url {} with token {}", url, tokenResponse.getToken());
 		HttpPost httpPost =
-				new HttpPostBuilder( url )
-						.urlFormParam( "f", "pjson" )
-						.build();
+			new HttpPostBuilder(url)
+				.urlFormParam("f", "pjson")
+				.build();
 
 		httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 

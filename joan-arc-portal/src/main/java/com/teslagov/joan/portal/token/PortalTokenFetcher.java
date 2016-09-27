@@ -11,32 +11,30 @@ import org.apache.http.client.methods.HttpPost;
 
 /**
  * {}/sharing/rest/generateToken
+ *
  * @author Kevin Chen
  */
-public class PortalTokenFetcher implements TokenFetcher
-{
+public class PortalTokenFetcher implements TokenFetcher {
 	private final HttpClient httpClient;
 
 	private final ArcConfiguration arcConfiguration;
 
-	public PortalTokenFetcher( HttpClient httpClient, ArcConfiguration arcConfiguration )
-	{
+	public PortalTokenFetcher(HttpClient httpClient, ArcConfiguration arcConfiguration) {
 		this.httpClient = httpClient;
 		this.arcConfiguration = arcConfiguration;
 	}
 
 	@Override
-	public TokenResponse fetchToken()
-	{
-		String path = PortalEndpointFactory.SharingRest.makeGenerateTokenPath( arcConfiguration );
+	public TokenResponse fetchToken() {
+		String path = PortalEndpointFactory.SharingRest.makeGenerateTokenPath(arcConfiguration);
 		HttpPost httpPost =
-			new HttpPostBuilder( path )
-				.urlFormParam( "f", "json" )
-				.urlFormParam( "username", arcConfiguration.getPortalAdminUsername() )
-				.urlFormParam( "password", arcConfiguration.getPortalAdminPassword() )
-				.urlFormParam( "referer", arcConfiguration.getPortalAdminUsername() )
+			new HttpPostBuilder(path)
+				.urlFormParam("f", "json")
+				.urlFormParam("username", arcConfiguration.getPortalAdminUsername())
+				.urlFormParam("password", arcConfiguration.getPortalAdminPassword())
+				.urlFormParam("referer", arcConfiguration.getPortalAdminUsername())
 				.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, PortalTokenResponse.class );
+		return HttpExecutor.getResponse(httpClient, httpPost, PortalTokenResponse.class);
 	}
 }

@@ -7,8 +7,7 @@ import java.util.List;
 /**
  * @author Kevin Chen
  */
-public class Group
-{
+public class Group {
 	// ONLY SET BY RESPONSE
 	public String id;
 

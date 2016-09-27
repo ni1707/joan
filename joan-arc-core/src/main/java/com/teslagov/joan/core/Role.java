@@ -1,45 +1,37 @@
 package com.teslagov.joan.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import java.util.Arrays;
 
 /**
  * The roles in Portal and ArcGIS Server.
  *
  * @author Kevin Chen
  */
-public enum Role
-{
+public enum Role {
 	// TODO cannot get custom enum serialization working
-	@JsonProperty( "org_user" )
-	ORG_USER( "org_user", "User (built-in)" ),
+	@JsonProperty("org_user")
+	ORG_USER("org_user", "User (built-in)"),
 
-	@JsonProperty( "org_publisher" )
-	ORG_PUBLISHER( "org_publisher", "Publisher (built-in)" ),
+	@JsonProperty("org_publisher")
+	ORG_PUBLISHER("org_publisher", "Publisher (built-in)"),
 
-	@JsonProperty( "org_admin" )
-	ORG_ADMIN( "org_admin", "Admin (built-in)" );
+	@JsonProperty("org_admin")
+	ORG_ADMIN("org_admin", "Admin (built-in)");
 
 	private final String name;
 
 	private final String description;
 
-	Role( String name, String description )
-	{
+	Role(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 

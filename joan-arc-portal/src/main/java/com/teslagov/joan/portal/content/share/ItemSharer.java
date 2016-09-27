@@ -14,34 +14,32 @@ import org.slf4j.LoggerFactory;
  * {}/sharing/rest/content/users/{id}/items/{id}/delete
  * Created by joncrain on 9/21/16.
  */
-public class ItemSharer
-{
-    private static final Logger logger = LoggerFactory.getLogger( ItemSharer.class );
+public class ItemSharer {
+	private static final Logger logger = LoggerFactory.getLogger(ItemSharer.class);
 
-    public ItemShareResponse shareItem(
-            HttpClient httpClient,
-            ArcConfiguration arcConfiguration,
-            TokenResponse tokenResponse,
-            String id,
-            String username,
-            String groups
-    )
-    {
-        String url = PortalEndpointFactory.SharingRest.Content.makeShareItemPath( arcConfiguration, id, username );
-        logger.debug( "Hitting url {} with token {}", url, tokenResponse.getToken() );
-        logger.debug( "Sharing Item: {}", id);
+	public ItemShareResponse shareItem(
+		HttpClient httpClient,
+		ArcConfiguration arcConfiguration,
+		TokenResponse tokenResponse,
+		String id,
+		String username,
+		String groups
+	) {
+		String url = PortalEndpointFactory.SharingRest.Content.makeShareItemPath(arcConfiguration, id, username);
+		logger.debug("Hitting url {} with token {}", url, tokenResponse.getToken());
+		logger.debug("Sharing Item: {}", id);
 
-        HttpPost httpPost =
-                new HttpPostBuilder( url )
-                        .urlFormParam( "f", "json" )
-                        .urlFormParam( "everyone", false )
-                        .urlFormParam( "org", false )
-                        .urlFormParam( "groups", groups)
-                        .urlFormParam( "confirmItemControl", false )
-                        .build();
+		HttpPost httpPost =
+			new HttpPostBuilder(url)
+				.urlFormParam("f", "json")
+				.urlFormParam("everyone", false)
+				.urlFormParam("org", false)
+				.urlFormParam("groups", groups)
+				.urlFormParam("confirmItemControl", false)
+				.build();
 
-        httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
+		httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
-        return HttpExecutor.getResponse(httpClient, httpPost, ItemShareResponse.class);
-    }
+		return HttpExecutor.getResponse(httpClient, httpPost, ItemShareResponse.class);
+	}
 }

@@ -8,10 +8,9 @@ import com.teslagov.joan.portal.community.group.Group;
 /**
  * @author Kevin Chen
  */
-@JsonInclude( JsonInclude.Include.NON_NULL )
-@JsonIgnoreProperties( ignoreUnknown = true )
-public class GroupCreateResponse extends Response
-{
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class GroupCreateResponse extends Response {
 	public Group group;
 
 	public boolean success;

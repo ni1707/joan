@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Created by joncrain on 9/20/16.
  */
-public class ItemPublishResponse extends Response
-{
-    public List<ItemPublishServiceResponse> services;
+public class ItemPublishResponse extends Response {
+	public List<ItemPublishServiceResponse> services;
 }

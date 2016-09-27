@@ -14,62 +14,46 @@ import java.io.IOException;
 /**
  * @author Kevin Chen
  */
-public class HttpExecutor
-{
-	private static final Logger logger = LoggerFactory.getLogger( HttpExecutor.class );
+public class HttpExecutor {
+	private static final Logger logger = LoggerFactory.getLogger(HttpExecutor.class);
 
-	public static <T> T getResponse( HttpClient httpClient, HttpRequestBase httpRequestBase, Class<T> clazz )
-	{
-		String response = getStringResponse( httpClient, httpRequestBase );
+	public static <T> T getResponse(HttpClient httpClient, HttpRequestBase httpRequestBase, Class<T> clazz) {
+		String response = getStringResponse(httpClient, httpRequestBase);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		try
-		{
-			return objectMapper.readValue( response, clazz );
-		}
-		catch ( IOException e )
-		{
-			throw new RuntimeException( "Could not deserialize response... ", e );
+		try {
+			return objectMapper.readValue(response, clazz);
+		} catch (IOException e) {
+			throw new RuntimeException("Could not deserialize response... ", e);
 		}
 	}
 
-	public static String getStringResponse( HttpClient httpClient, HttpRequestBase httpRequestBase )
-	{
+	public static String getStringResponse(HttpClient httpClient, HttpRequestBase httpRequestBase) {
 		HttpResponse response = null;
-		try
-		{
-			response = httpClient.execute( httpRequestBase );
+		try {
+			response = httpClient.execute(httpRequestBase);
+		} catch (IOException e) {
+			throw new RuntimeException("Could not execute http request... ", e);
 		}
-		catch ( IOException e )
-		{
-			throw new RuntimeException( "Could not execute http request... ", e );
-		}
-		if ( response != null )
-		{
+		if (response != null) {
 			int status = response.getStatusLine().getStatusCode();
-			if ( status >= 400 )
-			{
-				logger.warn( "Error status: {}", status );
-			}
-			else
-			{
-				logger.debug( "Success: {}", status );
+			if (status >= 400) {
+				logger.warn("Error status: {}", status);
+			} else {
+				logger.debug("Success: {}", status);
 			}
 			HttpEntity httpEntity = response.getEntity();
 			String responseString = null;
-			try
-			{
-				responseString = EntityUtils.toString( httpEntity );
+			try {
+				responseString = EntityUtils.toString(httpEntity);
+			} catch (IOException e) {
+				throw new RuntimeException("Could not convert HttpEntity to string... ", e);
 			}
-			catch ( IOException e )
-			{
-				throw new RuntimeException( "Could not convert HttpEntity to string... ", e );
-			}
-			logger.debug( "{}", responseString );
+			logger.debug("{}", responseString);
 			return responseString;
 		}
 
-		throw new RuntimeException( "No response found... " );
+		throw new RuntimeException("No response found... ");
 	}
 }
