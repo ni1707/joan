@@ -167,13 +167,19 @@ public class ArcConfigurationBuilder
 			@Override
 			public String getPortalAdminApiPath()
 			{
-				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
+				if (!isPortalUsingWebAdaptor()) {
+					return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
+				}
+				return getPortalUrl() + "/" + getPortalContextPath() + "/portaladmin";
 			}
 
 			@Override
 			public String getPortalSharingApiPath()
 			{
-				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
+				if (!isPortalUsingWebAdaptor()) {
+					return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
+				}
+				return getPortalUrl() + "/" + getPortalContextPath() + "/sharing/rest";
 			}
 
 			@Override
@@ -213,7 +219,10 @@ public class ArcConfigurationBuilder
 			@Override
 			public String getArcServerAdminApiPath()
 			{
-				return getArcServerUrl() + ":" + getArcServerPort() + "/arcgis/admin";
+				if (!isArcServerUsingWebAdaptor()) {
+					return getArcServerUrl() + ":" + getArcServerPort() + "/arcgis/admin";
+				}
+				return getArcServerUrl() + "/" + getArcServerContextPath() + "/admin";
 			}
 		};
 	}
