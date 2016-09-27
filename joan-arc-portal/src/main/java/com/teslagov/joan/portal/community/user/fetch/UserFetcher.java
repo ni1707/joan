@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.community.user.fetch;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.portal.PortalEndpointFactory;
@@ -21,7 +21,7 @@ public class UserFetcher {
 
 	public UserListResponse fetchUsers(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		PortalResponse portalResponse
 	) {
@@ -30,7 +30,7 @@ public class UserFetcher {
 
 	public UserListResponse fetchUsers(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		PortalResponse portalResponse,
 		int start,

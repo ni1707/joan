@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.community.group.update;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
@@ -18,7 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 public class GroupUpdater {
 	public GroupUpdateResponse updateGroup(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		Group group
 	) {

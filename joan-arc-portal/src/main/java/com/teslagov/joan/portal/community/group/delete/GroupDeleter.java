@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.community.group.delete;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
@@ -16,7 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 public class GroupDeleter {
 	public GroupDeleteResponse deleteGroup(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		String groupID
 	) {

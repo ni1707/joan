@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.content.upload;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
@@ -20,7 +20,7 @@ public class ItemUploader {
 
 	public ItemUploadResponse uploadItem(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		ItemUploadModel itemUploadModel,
 		String username
@@ -36,10 +36,5 @@ public class ItemUploader {
 		httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
 		return HttpExecutor.getResponse(httpClient, httpPost, ItemUploadResponse.class);
-	}
-
-	private String nullToEmpty(String s) {
-		if (s == null) return "";
-		return s;
 	}
 }

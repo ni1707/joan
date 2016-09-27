@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.portal.self;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
@@ -14,7 +14,7 @@ import org.apache.http.client.methods.HttpPost;
  * @author Kevin Chen
  */
 public class PortalFetcher {
-	public PortalResponse fetchPortal(HttpClient httpClient, ArcConfiguration arcConfiguration, TokenResponse tokenResponse) {
+	public PortalResponse fetchPortal(HttpClient httpClient, ArcPortalConfiguration arcConfiguration, TokenResponse tokenResponse) {
 		String path = PortalEndpointFactory.SharingRest.Portals.makeGetPortalIDPath(arcConfiguration);
 		HttpPost httpPost =
 			new HttpPostBuilder(path)

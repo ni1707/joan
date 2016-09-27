@@ -1,6 +1,7 @@
 package com.teslagov.joan.portal.token;
 
 import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenFetcher;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
@@ -17,9 +18,9 @@ import org.apache.http.client.methods.HttpPost;
 public class PortalTokenFetcher implements TokenFetcher {
 	private final HttpClient httpClient;
 
-	private final ArcConfiguration arcConfiguration;
+	private final ArcPortalConfiguration arcConfiguration;
 
-	public PortalTokenFetcher(HttpClient httpClient, ArcConfiguration arcConfiguration) {
+	public PortalTokenFetcher(HttpClient httpClient, ArcPortalConfiguration arcConfiguration) {
 		this.httpClient = httpClient;
 		this.arcConfiguration = arcConfiguration;
 	}

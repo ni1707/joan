@@ -1,15 +1,15 @@
 package com.teslagov.joan.example;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.props.Properties;
 
 /**
  * @author Kevin Chen
  */
-public class ArcConfigurationFactory {
-	public static ArcConfiguration createArcConfiguration() {
+public class ArcPortalConfigurationFactory {
+	public static ArcPortalConfiguration createArcConfiguration() {
 		Properties properties = ArcPropertiesFactory.createArcProperties();
-		return new ArcConfiguration() {
+		return new ArcPortalConfiguration() {
 			@Override
 			public String getPortalAdminUsername() {
 				return properties.getString(ArcProperties.PORTAL_ADMIN_USERNAME);
@@ -48,41 +48,6 @@ public class ArcConfigurationFactory {
 			@Override
 			public String getPortalSharingApiPath() {
 				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
-			}
-
-			@Override
-			public String getArcServerAdminUsername() {
-				return properties.getString(ArcProperties.ARC_GIS_SERVER_ADMIN_USERNAME);
-			}
-
-			@Override
-			public String getArcServerAdminPassword() {
-				return properties.getString(ArcProperties.ARC_GIS_SERVER_ADMIN_PASSWORD);
-			}
-
-			@Override
-			public String getArcServerUrl() {
-				return properties.getString(ArcProperties.ARC_GIS_SERVER_URL);
-			}
-
-			@Override
-			public int getArcServerPort() {
-				return properties.getInteger(ArcProperties.ARC_GIS_SERVER_PORT);
-			}
-
-			@Override
-			public String getArcServerContextPath() {
-				return properties.getString(ArcProperties.ARC_GIS_SERVER_CONTEXT_PATH);
-			}
-
-			@Override
-			public boolean isArcServerUsingWebAdaptor() {
-				return properties.getBoolean(ArcProperties.ARC_GIS_SERVER_IS_USING_WEB_ADAPTOR);
-			}
-
-			@Override
-			public String getArcServerAdminApiPath() {
-				return getArcServerUrl() + ":" + getArcServerPort() + "/arcgis/admin";
 			}
 		};
 	}

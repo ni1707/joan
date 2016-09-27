@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.content.fetch;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.portal.PortalEndpointFactory;
@@ -18,7 +18,7 @@ public class ItemFetcher {
 
 	public ItemFetchResponse fetchItems(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		String username
 	) {

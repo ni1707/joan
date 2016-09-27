@@ -1,6 +1,6 @@
 package com.teslagov.joan.portal.community.user.create;
 
-import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import com.teslagov.joan.core.TokenResponse;
 import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.http.HttpExecutor;
@@ -21,7 +21,7 @@ public class UserCreator {
 
 	public UserCreateResponse createUser(
 		HttpClient httpClient,
-		ArcConfiguration arcConfiguration,
+		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		UserRequestModel userRequestModel
 	) {

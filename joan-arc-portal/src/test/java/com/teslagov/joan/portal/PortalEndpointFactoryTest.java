@@ -1,6 +1,7 @@
 package com.teslagov.joan.portal;
 
 import com.teslagov.joan.core.ArcConfiguration;
+import com.teslagov.joan.core.ArcPortalConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class PortalEndpointFactoryTest
     @Test
     public void testPortalEndpointFactoryUnitTest()
     {
-        ArcConfiguration testConfiguration = new TestArcConfiguration();
+        ArcPortalConfiguration testConfiguration = new TestArcConfiguration();
 
         assertEquals( "https://www.example.com:7443/arcgis/sharing/rest/community/createUser",
                 PortalEndpointFactory.SharingRest.Community.makeCreateUserPath( testConfiguration ) );
