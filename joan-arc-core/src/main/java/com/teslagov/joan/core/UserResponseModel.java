@@ -5,8 +5,7 @@ import java.util.List;
 /**
  * @author Kevin Chen
  */
-public class UserResponseModel extends Response
-{
+public class UserResponseModel extends Response {
 	public String username;
 
 	public String fullName;
@@ -20,8 +19,7 @@ public class UserResponseModel extends Response
 	public String role;
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "UserResponseModel{" +
 			"username='" + username + '\'' +
 			", fullName='" + fullName + '\'' +

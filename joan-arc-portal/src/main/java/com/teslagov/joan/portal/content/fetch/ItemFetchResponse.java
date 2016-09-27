@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Created by joncrain on 9/21/16.
  */
-public class ItemFetchResponse extends Response
-{
-    public List<Object> items;
+public class ItemFetchResponse extends Response {
+	public List<Object> items;
 }

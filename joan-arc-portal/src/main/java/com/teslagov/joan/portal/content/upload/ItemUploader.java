@@ -15,34 +15,31 @@ import org.slf4j.LoggerFactory;
  * {}/sharing/rest/content/users/{id}/addItem
  * Created by joncrain on 9/20/16.
  */
-public class ItemUploader
-{
-    private static final Logger logger = LoggerFactory.getLogger( ItemUploader.class );
+public class ItemUploader {
+	private static final Logger logger = LoggerFactory.getLogger(ItemUploader.class);
 
-    public ItemUploadResponse uploadItem(
-            HttpClient httpClient,
-            ArcConfiguration arcConfiguration,
-            TokenResponse tokenResponse,
-            ItemUploadModel itemUploadModel,
-            String username
-    )
-    {
-        String url = PortalEndpointFactory.SharingRest.Content.makeUploadItemPath( arcConfiguration, username );
-        logger.debug( "Hitting url {} with token {}", url, tokenResponse.getToken() );
-        logger.debug( "Uploading: {}", itemUploadModel);
+	public ItemUploadResponse uploadItem(
+		HttpClient httpClient,
+		ArcConfiguration arcConfiguration,
+		TokenResponse tokenResponse,
+		ItemUploadModel itemUploadModel,
+		String username
+	) {
+		String url = PortalEndpointFactory.SharingRest.Content.makeUploadItemPath(arcConfiguration, username);
+		logger.debug("Hitting url {} with token {}", url, tokenResponse.getToken());
+		logger.debug("Uploading: {}", itemUploadModel);
 
-        HttpPost httpPost = new HttpPostBuilder( url ).build();
+		HttpPost httpPost = new HttpPostBuilder(url).build();
 
-        httpPost.setEntity(itemUploadModel.getHttpEntity());
+		httpPost.setEntity(itemUploadModel.getHttpEntity());
 
-        httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
+		httpPost.setHeader("cookie", "agwtoken=" + tokenResponse.getToken());
 
-        return HttpExecutor.getResponse(httpClient, httpPost, ItemUploadResponse.class);
-    }
+		return HttpExecutor.getResponse(httpClient, httpPost, ItemUploadResponse.class);
+	}
 
-    private String nullToEmpty(String s)
-    {
-        if (s == null) return "";
-        return s;
-    }
+	private String nullToEmpty(String s) {
+		if (s == null) return "";
+		return s;
+	}
 }

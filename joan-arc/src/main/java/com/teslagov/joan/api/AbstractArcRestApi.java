@@ -9,8 +9,7 @@ import java.time.ZoneOffset;
 /**
  * @author Kevin Chen
  */
-public abstract class AbstractArcRestApi
-{
+public abstract class AbstractArcRestApi {
 	protected final HttpClient httpClient;
 
 	protected final ArcConfiguration arcConfiguration;
@@ -27,8 +26,7 @@ public abstract class AbstractArcRestApi
 		ZoneOffset zoneOffset,
 		TokenManager tokenManager,
 		String apiName
-	)
-	{
+	) {
 		this.httpClient = httpClient;
 		this.arcConfiguration = arcConfiguration;
 		this.zoneOffset = zoneOffset;
@@ -36,8 +34,7 @@ public abstract class AbstractArcRestApi
 		this.apiName = apiName;
 	}
 
-	protected void refreshTokenIfNecessary()
-	{
+	protected void refreshTokenIfNecessary() {
 		tokenManager.refreshTokenIfNecessary();
 	}
 }

@@ -5,8 +5,7 @@ import com.teslagov.joan.core.ArcConfiguration;
 /**
  * @author Kevin Chen
  */
-public class ArcConfigurationBuilder
-{
+public class ArcConfigurationBuilder {
 	private String portalAdminUsername;
 
 	private String portalAdminPassword;
@@ -31,120 +30,99 @@ public class ArcConfigurationBuilder
 
 	private boolean arcServerUsingWebAdaptor;
 
-	private void assertNothingNull()
-	{
-		if ( portalAdminUsername == null || portalAdminPassword == null || portalUrl == null || portalContextPath == null )
-		{
+	private void assertNothingNull() {
+		if (portalAdminUsername == null || portalAdminPassword == null || portalUrl == null || portalContextPath == null) {
 			throw new IllegalStateException("Null properties");
 		}
 
-		if ( arcServerAdminUsername == null || arcServerAdminPassword == null || arcServerUrl == null || arcServerContextPath == null )
-		{
+		if (arcServerAdminUsername == null || arcServerAdminPassword == null || arcServerUrl == null || arcServerContextPath == null) {
 			throw new IllegalStateException("Null properties");
 		}
 	}
 
-	public static ArcConfigurationBuilder arcConfig()
-	{
+	public static ArcConfigurationBuilder arcConfig() {
 		return new ArcConfigurationBuilder();
 	}
 
-	public ArcConfigurationBuilder portalAdminUsername( String portalAdminUsername )
-	{
+	public ArcConfigurationBuilder portalAdminUsername(String portalAdminUsername) {
 		this.portalAdminUsername = portalAdminUsername;
 		return this;
 	}
 
-	public ArcConfigurationBuilder portalAdminPassword( String portalAdminPassword )
-	{
+	public ArcConfigurationBuilder portalAdminPassword(String portalAdminPassword) {
 		this.portalAdminPassword = portalAdminPassword;
 		return this;
 	}
 
-	public ArcConfigurationBuilder portalUrl( String portalUrl )
-	{
+	public ArcConfigurationBuilder portalUrl(String portalUrl) {
 		this.portalUrl = portalUrl;
 		return this;
 	}
 
-	public ArcConfigurationBuilder portalContextPath( String contextPath )
-	{
+	public ArcConfigurationBuilder portalContextPath(String contextPath) {
 		if (contextPath.startsWith("/")) contextPath = contextPath.substring(1);
 		this.portalContextPath = contextPath;
 		return this;
 	}
 
-	public ArcConfigurationBuilder portalPort( int portalPort )
-	{
+	public ArcConfigurationBuilder portalPort(int portalPort) {
 		this.portalPort = portalPort;
 		return this;
 	}
 
-	public ArcConfigurationBuilder portalIsUsingWebAdaptor( boolean portalUsingWebAdaptor )
-	{
+	public ArcConfigurationBuilder portalIsUsingWebAdaptor(boolean portalUsingWebAdaptor) {
 		this.portalUsingWebAdaptor = portalUsingWebAdaptor;
 		return this;
 	}
 
-	public ArcConfigurationBuilder arcServerAdminUsername( String arcServerAdminUsername )
-	{
+	public ArcConfigurationBuilder arcServerAdminUsername(String arcServerAdminUsername) {
 		this.arcServerAdminUsername = arcServerAdminUsername;
 		return this;
 	}
 
-	public ArcConfigurationBuilder arcServerAdminPassword( String arcServerAdminPassword )
-	{
+	public ArcConfigurationBuilder arcServerAdminPassword(String arcServerAdminPassword) {
 		this.arcServerAdminPassword = arcServerAdminPassword;
 		return this;
 	}
 
-	public ArcConfigurationBuilder arcServerContextPath( String contextPath )
-	{
+	public ArcConfigurationBuilder arcServerContextPath(String contextPath) {
 		if (contextPath.startsWith("/")) contextPath = contextPath.substring(1);
 		this.arcServerContextPath = contextPath;
 		return this;
 	}
 
-	public ArcConfigurationBuilder arcServerUrl( String arcServerUrl )
-	{
+	public ArcConfigurationBuilder arcServerUrl(String arcServerUrl) {
 		this.arcServerUrl = arcServerUrl;
 		return this;
 	}
 
-	public ArcConfigurationBuilder arcServerPort( int arcServerPort )
-	{
+	public ArcConfigurationBuilder arcServerPort(int arcServerPort) {
 		this.arcServerPort = arcServerPort;
 		return this;
 	}
 
-	public ArcConfigurationBuilder arcServerIsUsingWebAdaptor( boolean arcServerUsingWebAdaptor )
-	{
+	public ArcConfigurationBuilder arcServerIsUsingWebAdaptor(boolean arcServerUsingWebAdaptor) {
 		this.arcServerUsingWebAdaptor = arcServerUsingWebAdaptor;
 		return this;
 	}
 
-	public ArcConfiguration build()
-	{
+	public ArcConfiguration build() {
 		assertNothingNull();
 
 		// TODO throw exception if any are null
-		return new ArcConfiguration()
-		{
+		return new ArcConfiguration() {
 			@Override
-			public String getPortalAdminUsername()
-			{
+			public String getPortalAdminUsername() {
 				return portalAdminUsername;
 			}
 
 			@Override
-			public String getPortalAdminPassword()
-			{
+			public String getPortalAdminPassword() {
 				return portalAdminPassword;
 			}
 
 			@Override
-			public String getPortalUrl()
-			{
+			public String getPortalUrl() {
 				return portalUrl;
 			}
 
@@ -154,8 +132,7 @@ public class ArcConfigurationBuilder
 			}
 
 			@Override
-			public int getPortalPort()
-			{
+			public int getPortalPort() {
 				return portalPort;
 			}
 
@@ -165,8 +142,7 @@ public class ArcConfigurationBuilder
 			}
 
 			@Override
-			public String getPortalAdminApiPath()
-			{
+			public String getPortalAdminApiPath() {
 				if (!isPortalUsingWebAdaptor()) {
 					return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
 				}
@@ -174,8 +150,7 @@ public class ArcConfigurationBuilder
 			}
 
 			@Override
-			public String getPortalSharingApiPath()
-			{
+			public String getPortalSharingApiPath() {
 				if (!isPortalUsingWebAdaptor()) {
 					return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
 				}
@@ -183,20 +158,17 @@ public class ArcConfigurationBuilder
 			}
 
 			@Override
-			public String getArcServerAdminUsername()
-			{
+			public String getArcServerAdminUsername() {
 				return arcServerAdminUsername;
 			}
 
 			@Override
-			public String getArcServerAdminPassword()
-			{
+			public String getArcServerAdminPassword() {
 				return arcServerAdminPassword;
 			}
 
 			@Override
-			public String getArcServerUrl()
-			{
+			public String getArcServerUrl() {
 				return arcServerUrl;
 			}
 
@@ -206,8 +178,7 @@ public class ArcConfigurationBuilder
 			}
 
 			@Override
-			public int getArcServerPort()
-			{
+			public int getArcServerPort() {
 				return arcServerPort;
 			}
 
@@ -217,8 +188,7 @@ public class ArcConfigurationBuilder
 			}
 
 			@Override
-			public String getArcServerAdminApiPath()
-			{
+			public String getArcServerAdminApiPath() {
 				if (!isArcServerUsingWebAdaptor()) {
 					return getArcServerUrl() + ":" + getArcServerPort() + "/arcgis/admin";
 				}

@@ -22,8 +22,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author Kevin Chen
  */
-public class TrustingHttpClientFactory
-{
+public class TrustingHttpClientFactory {
 	/**
 	 * Timeout in milliseconds until a connection is established.
 	 */
@@ -39,52 +38,45 @@ public class TrustingHttpClientFactory
 	 */
 	private static final int CONNECTION_REQUEST_TIMEOUT = 30000;
 
-	public static HttpClient createVeryUnsafePortalHttpClient( ArcConfiguration arcConfiguration )
-	{
+	public static HttpClient createVeryUnsafePortalHttpClient(ArcConfiguration arcConfiguration) {
 		int portNumber = arcConfiguration.getPortalPort();
-		return createVeryUnsafeHttpClient( portNumber );
+		return createVeryUnsafeHttpClient(portNumber);
 	}
 
-	public static HttpClient createVeryUnsafeHttpClient( int portNumber )
-	{
+	public static HttpClient createVeryUnsafeHttpClient(int portNumber) {
 		return HttpClientBuilder.create()
 			// The NO_OP HostnameVerifier essentially turns hostname verification off.
 			// This implementation is a no-op, and never throws the SSLException.
-			.setSSLHostnameVerifier( new NoopHostnameVerifier() )
-			.setSSLContext( getSslContext() )
+			.setSSLHostnameVerifier(new NoopHostnameVerifier())
+			.setSSLContext(getSslContext())
 			.setDefaultRequestConfig(
 				RequestConfig.custom()
-					.setSocketTimeout( SOCKET_TIMEOUT )
-					.setConnectTimeout( CONNECTION_TIMEOUT )
-					.setConnectionRequestTimeout( CONNECTION_REQUEST_TIMEOUT )
+					.setSocketTimeout(SOCKET_TIMEOUT)
+					.setConnectTimeout(CONNECTION_TIMEOUT)
+					.setConnectionRequestTimeout(CONNECTION_REQUEST_TIMEOUT)
 					.build()
 			)
-			.setSchemePortResolver( host -> portNumber )
+			.setSchemePortResolver(host -> portNumber)
 			.setConnectionManager(
 				new BasicHttpClientConnectionManager(
 					RegistryBuilder.<ConnectionSocketFactory>create()
-						.register( "https", getSslConnectionSocketFactory() )
+						.register("https", getSslConnectionSocketFactory())
 						.build()
 				)
 			)
-			.setSSLSocketFactory( getSslConnectionSocketFactory() )
+			.setSSLSocketFactory(getSslConnectionSocketFactory())
 			.build();
 	}
 
-	private static SSLContext getSslContext()
-	{
-		try
-		{
-			return SSLContexts.custom().loadTrustMaterial( null, new TrustSelfSignedStrategy() ).build();
-		}
-		catch ( KeyStoreException | KeyManagementException | NoSuchAlgorithmException e )
-		{
-			throw new RuntimeException( "Could not make default SSLContext", e );
+	private static SSLContext getSslContext() {
+		try {
+			return SSLContexts.custom().loadTrustMaterial(null, new TrustSelfSignedStrategy()).build();
+		} catch (KeyStoreException | KeyManagementException | NoSuchAlgorithmException e) {
+			throw new RuntimeException("Could not make default SSLContext", e);
 		}
 	}
 
-	private static SSLConnectionSocketFactory getSslConnectionSocketFactory()
-	{
-		return new SSLConnectionSocketFactory( getSslContext(), new NoopHostnameVerifier() );
+	private static SSLConnectionSocketFactory getSslConnectionSocketFactory() {
+		return new SSLConnectionSocketFactory(getSslContext(), new NoopHostnameVerifier());
 	}
 }

@@ -6,10 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 /**
  * @author Kevin Chen
  */
-@JsonInclude( JsonInclude.Include.NON_NULL )
-@JsonIgnoreProperties( ignoreUnknown = true )
-public class UserRequestModel
-{
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserRequestModel {
 	private final String username;
 
 	private final String password;
@@ -32,8 +31,7 @@ public class UserRequestModel
 		String email,
 		String role,
 		String accountId
-	)
-	{
+	) {
 		this.username = username;
 		this.password = password;
 		this.fullname = fullname;
@@ -43,14 +41,12 @@ public class UserRequestModel
 		this.accountId = accountId;
 	}
 
-	public static Builder newUser( String username, String password, String email, Role role, String accountId,
-								   String description, String fullname )
-	{
-		return new Builder( username, password, email, role, accountId, description, fullname );
+	public static Builder newUser(String username, String password, String email, Role role, String accountId,
+	                              String description, String fullname) {
+		return new Builder(username, password, email, role, accountId, description, fullname);
 	}
 
-	public static class Builder
-	{
+	public static class Builder {
 		private final String username;
 
 		private final String password;
@@ -73,8 +69,7 @@ public class UserRequestModel
 			String accountId,
 			String description,
 			String fullname
-		)
-		{
+		) {
 			this.username = username;
 			this.password = password;
 			this.fullname = fullname;
@@ -84,59 +79,51 @@ public class UserRequestModel
 			this.accountId = accountId;
 		}
 
-		public Builder fullname( String fullname )
-		{
+		public Builder fullname(String fullname) {
 			this.fullname = fullname;
 			return this;
 		}
 
-		public Builder description( String description )
-		{
+		public Builder description(String description) {
 			this.description = description;
 			return this;
 		}
 
-		public UserRequestModel build()
-		{
-			return new UserRequestModel( username, password, fullname, description, email, role.getName(), accountId);
+		public UserRequestModel build() {
+			return new UserRequestModel(username, password, fullname, description, email, role.getName(), accountId);
 		}
 	}
 
-	public String getUsername()
-	{
+	public String getUsername() {
 		return username;
 	}
 
-	public String getPassword()
-	{
+	public String getPassword() {
 		return password;
 	}
 
-	public String getFullname()
-	{
+	public String getFullname() {
 		return fullname;
 	}
 
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 
-	public String getEmail()
-	{
+	public String getEmail() {
 		return email;
 	}
 
-	public String getRole()
-	{
+	public String getRole() {
 		return role;
 	}
 
-	public String getAccountId() { return accountId; }
+	public String getAccountId() {
+		return accountId;
+	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "UserRequestModel{" +
 			"username='" + username + '\'' +
 			", password='" + password + '\'' +

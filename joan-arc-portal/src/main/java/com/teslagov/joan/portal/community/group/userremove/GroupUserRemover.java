@@ -14,26 +14,25 @@ import java.util.List;
 
 /**
  * {}/sharing/rest/community/groups/{id}/removeUsers
+ *
  * @author Kevin Chen
  */
-public class GroupUserRemover
-{
+public class GroupUserRemover {
 	public GroupUserRemoveResponse removeUsersFromGroup(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		Group group,
 		List<String> usernames
-	)
-	{
-		String path = PortalEndpointFactory.SharingRest.Community.Groups.makeRemoveUserToGroupPath( arcConfiguration, group.id );
+	) {
+		String path = PortalEndpointFactory.SharingRest.Community.Groups.makeRemoveUserToGroupPath(arcConfiguration, group.id);
 		HttpPost httpPost =
-			new HttpPostBuilder( path )
-				.urlFormParam( "token", tokenResponse.getToken() )
-				.urlFormParam( "f", "json" )
-				.urlFormParam( "users", StringUtils.join( usernames, "," ) )
+			new HttpPostBuilder(path)
+				.urlFormParam("token", tokenResponse.getToken())
+				.urlFormParam("f", "json")
+				.urlFormParam("users", StringUtils.join(usernames, ","))
 				.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, GroupUserRemoveResponse.class );
+		return HttpExecutor.getResponse(httpClient, httpPost, GroupUserRemoveResponse.class);
 	}
 }

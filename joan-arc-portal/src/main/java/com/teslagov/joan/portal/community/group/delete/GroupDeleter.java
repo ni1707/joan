@@ -10,24 +10,23 @@ import org.apache.http.client.methods.HttpPost;
 
 /**
  * {}/sharing/rest/community/groups/{id}/delete
+ *
  * @author Kevin Chen
  */
-public class GroupDeleter
-{
+public class GroupDeleter {
 	public GroupDeleteResponse deleteGroup(
 		HttpClient httpClient,
 		ArcConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
 		String groupID
-	)
-	{
-		String path = PortalEndpointFactory.SharingRest.Community.Groups.makeDeleteGroupPath( arcConfiguration, groupID );
+	) {
+		String path = PortalEndpointFactory.SharingRest.Community.Groups.makeDeleteGroupPath(arcConfiguration, groupID);
 		HttpPost httpPost =
-			new HttpPostBuilder( path )
-				.urlFormParam( "token", tokenResponse.getToken() )
-				.urlFormParam( "f", "json" )
+			new HttpPostBuilder(path)
+				.urlFormParam("token", tokenResponse.getToken())
+				.urlFormParam("f", "json")
 				.build();
 
-		return HttpExecutor.getResponse( httpClient, httpPost, GroupDeleteResponse.class );
+		return HttpExecutor.getResponse(httpClient, httpPost, GroupDeleteResponse.class);
 	}
 }
