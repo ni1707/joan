@@ -38,6 +38,16 @@ public class ArcConfigurationFactory
 			}
 
 			@Override
+			public String getPortalContextPath() {
+				return properties.getString( ArcProperties.PORTAL_CONTEXT_PATH );
+			}
+
+			@Override
+			public boolean isPortalUsingWebAdaptor() {
+				return properties.getBoolean( ArcProperties.PORTAL_IS_USING_WEB_ADAPTOR );
+			}
+
+			@Override
 			public String getPortalAdminApiPath()
 			{
 				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
@@ -71,6 +81,16 @@ public class ArcConfigurationFactory
 			public int getArcServerPort()
 			{
 				return properties.getInteger( ArcProperties.ARC_GIS_SERVER_PORT );
+			}
+
+			@Override
+			public String getArcServerContextPath() {
+				return properties.getString( ArcProperties.ARC_GIS_SERVER_CONTEXT_PATH );
+			}
+
+			@Override
+			public boolean isArcServerUsingWebAdaptor() {
+				return properties.getBoolean( ArcProperties.ARC_GIS_SERVER_IS_USING_WEB_ADAPTOR );
 			}
 
 			@Override

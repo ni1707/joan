@@ -56,10 +56,14 @@ public class ArcPortalApiTest
                         .portalAdminPassword( properties.getString( ArcProperties.PORTAL_ADMIN_PASSWORD ) )
                         .portalUrl( properties.getString( ArcProperties.PORTAL_URL ) )
                         .portalPort( properties.getInteger( ArcProperties.PORTAL_PORT ) )
+                        .portalContextPath( properties.getString( ArcProperties.PORTAL_CONTEXT_PATH ) )
+                        .portalIsUsingWebAdaptor( properties.getBoolean( ArcProperties.PORTAL_IS_USING_WEB_ADAPTOR) )
                         .arcServerAdminUsername( properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_USERNAME ) )
                         .arcServerAdminPassword( properties.getString( ArcProperties.ARC_GIS_SERVER_ADMIN_PASSWORD ) )
                         .arcServerUrl( properties.getString( ArcProperties.ARC_GIS_SERVER_URL ) )
                         .arcServerPort( properties.getInteger( ArcProperties.ARC_GIS_SERVER_PORT ) )
+                        .arcServerContextPath( properties.getString( ArcProperties.ARC_GIS_SERVER_CONTEXT_PATH ) )
+                        .arcServerIsUsingWebAdaptor( properties.getBoolean( ArcProperties.ARC_GIS_SERVER_IS_USING_WEB_ADAPTOR) )
                         .build();
 
         httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient( arcConfiguration );
