@@ -42,12 +42,18 @@ public class ArcPortalConfigurationFactory {
 
 			@Override
 			public String getPortalAdminApiPath() {
-				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
+				if (!isPortalUsingWebAdaptor()) {
+					return getPortalUrl() + ":" + getPortalPort() + "/arcgis/portaladmin";
+				}
+				return getPortalUrl() + "/" + getPortalContextPath() + "/portaladmin";
 			}
 
 			@Override
 			public String getPortalSharingApiPath() {
-				return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
+				if (!isPortalUsingWebAdaptor()) {
+					return getPortalUrl() + ":" + getPortalPort() + "/arcgis/sharing/rest";
+				}
+				return getPortalUrl() + "/" + getPortalContextPath() + "/sharing/rest";
 			}
 		};
 	}
