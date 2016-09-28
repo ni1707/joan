@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import static com.teslagov.joan.api.ArcConfigurationBuilder.arcConfig;
+import static com.teslagov.joan.api.ArcPortalConfigurationBuilder.portalConfig;
 import static com.teslagov.joan.core.UserRequestModel.newUser;
 import static com.teslagov.joan.portal.community.group.GroupBuilder.newGroup;
 import static org.junit.Assert.*;
@@ -48,18 +49,16 @@ public class ArcPortalApiTest {
 
 		arcConfiguration =
 			arcConfig()
-				.portalAdminUsername(properties.getString(ArcProperties.PORTAL_ADMIN_USERNAME))
-				.portalAdminPassword(properties.getString(ArcProperties.PORTAL_ADMIN_PASSWORD))
-				.portalUrl(properties.getString(ArcProperties.PORTAL_URL))
-				.portalPort(properties.getInteger(ArcProperties.PORTAL_PORT))
-				.portalContextPath(properties.getString(ArcProperties.PORTAL_CONTEXT_PATH))
-				.portalIsUsingWebAdaptor(properties.getBoolean(ArcProperties.PORTAL_IS_USING_WEB_ADAPTOR))
-				.arcServerAdminUsername(properties.getString(ArcProperties.ARC_GIS_SERVER_ADMIN_USERNAME))
-				.arcServerAdminPassword(properties.getString(ArcProperties.ARC_GIS_SERVER_ADMIN_PASSWORD))
-				.arcServerUrl(properties.getString(ArcProperties.ARC_GIS_SERVER_URL))
-				.arcServerPort(properties.getInteger(ArcProperties.ARC_GIS_SERVER_PORT))
-				.arcServerContextPath(properties.getString(ArcProperties.ARC_GIS_SERVER_CONTEXT_PATH))
-				.arcServerIsUsingWebAdaptor(properties.getBoolean(ArcProperties.ARC_GIS_SERVER_IS_USING_WEB_ADAPTOR))
+				.arcPortalConfiguration(
+					portalConfig()
+						.portalAdminUsername(properties.getString(ArcProperties.PORTAL_ADMIN_USERNAME))
+						.portalAdminPassword(properties.getString(ArcProperties.PORTAL_ADMIN_PASSWORD))
+						.portalUrl(properties.getString(ArcProperties.PORTAL_URL))
+						.portalPort(properties.getInteger(ArcProperties.PORTAL_PORT))
+						.portalContextPath(properties.getString(ArcProperties.PORTAL_CONTEXT_PATH))
+						.portalIsUsingWebAdaptor(properties.getBoolean(ArcProperties.PORTAL_IS_USING_WEB_ADAPTOR))
+						.build()
+				)
 				.build();
 
 		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
