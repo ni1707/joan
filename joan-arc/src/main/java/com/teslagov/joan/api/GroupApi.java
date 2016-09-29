@@ -27,64 +27,64 @@ import java.util.List;
  * Created by joncrain on 9/22/16.
  */
 public class GroupApi extends AbstractArcRestApi {
-    private static final Logger logger = LoggerFactory.getLogger(GroupApi.class);
+	private static final Logger logger = LoggerFactory.getLogger(GroupApi.class);
 
-    private final GroupCreator groupCreator = new GroupCreator();
+	private final GroupCreator groupCreator = new GroupCreator();
 
-    private final GroupDeleter groupDeleter = new GroupDeleter();
+	private final GroupDeleter groupDeleter = new GroupDeleter();
 
-    private final GroupUpdater groupUpdater = new GroupUpdater();
+	private final GroupUpdater groupUpdater = new GroupUpdater();
 
-    private final GroupUserAdder groupUserAdder = new GroupUserAdder();
+	private final GroupUserAdder groupUserAdder = new GroupUserAdder();
 
-    private final GroupUserRemover groupUserRemover = new GroupUserRemover();
+	private final GroupUserRemover groupUserRemover = new GroupUserRemover();
 
-    private final GroupUserFetcher groupUserFetcher = new GroupUserFetcher();
+	private final GroupUserFetcher groupUserFetcher = new GroupUserFetcher();
 
-    public GroupApi(
-            HttpClient httpClient,
-            ArcPortalConfiguration arcConfiguration,
-            ZoneOffset zoneOffset,
-            TokenManager tokenManager
-    ) {
-        super(httpClient, arcConfiguration, zoneOffset, tokenManager, "Group Api");
-    }
+	public GroupApi(
+		HttpClient httpClient,
+		ArcPortalConfiguration arcConfiguration,
+		ZoneOffset zoneOffset,
+		TokenManager tokenManager
+	) {
+		super(httpClient, arcConfiguration, zoneOffset, tokenManager, "Group Api");
+	}
 
-    public GroupCreateResponse createGroup(Group group) {
-        refreshTokenIfNecessary();
-        GroupCreateResponse groupCreateResponse = groupCreator.createGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group);
-        logger.debug("GROUP ACCESS = {}", groupCreateResponse.group.access);
+	public GroupCreateResponse createGroup(Group group) {
+		refreshTokenIfNecessary();
+		GroupCreateResponse groupCreateResponse = groupCreator.createGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group);
+		logger.debug("GROUP ACCESS = {}", groupCreateResponse.group.access);
 
-        return groupCreateResponse;
-    }
+		return groupCreateResponse;
+	}
 
-    public GroupDeleteResponse deleteGroup(Group group) {
-        return deleteGroup(group.id);
-    }
+	public GroupDeleteResponse deleteGroup(Group group) {
+		return deleteGroup(group.id);
+	}
 
-    public GroupDeleteResponse deleteGroup(String groupID) {
-        refreshTokenIfNecessary();
-        return groupDeleter.deleteGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), groupID);
-    }
+	public GroupDeleteResponse deleteGroup(String groupID) {
+		refreshTokenIfNecessary();
+		return groupDeleter.deleteGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), groupID);
+	}
 
-    public GroupUpdateResponse updateGroup(Group group) {
-        refreshTokenIfNecessary();
-        return groupUpdater.updateGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group);
-    }
+	public GroupUpdateResponse updateGroup(Group group) {
+		refreshTokenIfNecessary();
+		return groupUpdater.updateGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group);
+	}
 
-    public GroupUserAddResponse addUsersToGroup(Group group, List<String> usernames) {
-        refreshTokenIfNecessary();
-        return groupUserAdder.addUserToGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames);
-    }
+	public GroupUserAddResponse addUsersToGroup(Group group, List<String> usernames) {
+		refreshTokenIfNecessary();
+		return groupUserAdder.addUserToGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames);
+	}
 
-    public GroupUserRemoveResponse removeUsersFromGroup(Group group, List<String> usernames) {
-        refreshTokenIfNecessary();
-        return groupUserRemover.removeUsersFromGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames);
-    }
+	public GroupUserRemoveResponse removeUsersFromGroup(Group group, List<String> usernames) {
+		refreshTokenIfNecessary();
+		return groupUserRemover.removeUsersFromGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames);
+	}
 
-    public GroupUserFetchResponse fetchGroupUsers(String id) {
-        refreshTokenIfNecessary();
-        return groupUserFetcher.fetchGroupUsers(httpClient, arcConfiguration, tokenManager.getTokenResponse(), id);
-    }
+	public GroupUserFetchResponse fetchGroupUsers(String id) {
+		refreshTokenIfNecessary();
+		return groupUserFetcher.fetchGroupUsers(httpClient, arcConfiguration, tokenManager.getTokenResponse(), id);
+	}
 }
 
