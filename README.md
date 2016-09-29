@@ -131,6 +131,12 @@ response.notRemoved.size() == 1
 response.notRemoved.contains( "stark.impostor" ) == true
 ```
 
+#### Fetch Users In Group
+```java
+GroupUserFetchResponse groupUserFetchResponse = arcPortalApi.groupApi.fetchGroupUsers( groupId );
+System.out.println(groupUserFetchResponse.users);
+```
+
 ### Items API
 #### Upload Item
 ```java

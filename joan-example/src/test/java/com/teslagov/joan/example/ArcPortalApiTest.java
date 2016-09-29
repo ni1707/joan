@@ -8,6 +8,7 @@ import com.teslagov.joan.portal.community.group.Group;
 import com.teslagov.joan.portal.community.group.GroupAccess;
 import com.teslagov.joan.portal.community.group.GroupSortField;
 import com.teslagov.joan.portal.community.group.create.GroupCreateResponse;
+import com.teslagov.joan.portal.community.group.fetchUsers.GroupUserFetchResponse;
 import com.teslagov.joan.portal.community.user.create.UserCreateResponse;
 import com.teslagov.joan.portal.content.publish.ItemPublishResponse;
 import com.teslagov.joan.portal.content.upload.ItemUploadResponse;
@@ -48,29 +49,29 @@ public class ArcPortalApiTest {
 		Properties properties = ArcPropertiesFactory.createArcProperties();
 
 		arcConfiguration =
-			arcConfig()
-				.arcPortalConfiguration(
-					portalConfig()
-						.portalAdminUsername(properties.getString(ArcProperties.PORTAL_ADMIN_USERNAME))
-						.portalAdminPassword(properties.getString(ArcProperties.PORTAL_ADMIN_PASSWORD))
-						.portalUrl(properties.getString(ArcProperties.PORTAL_URL))
-						.portalPort(properties.getInteger(ArcProperties.PORTAL_PORT))
-						.portalContextPath(properties.getString(ArcProperties.PORTAL_CONTEXT_PATH))
-						.portalIsUsingWebAdaptor(properties.getBoolean(ArcProperties.PORTAL_IS_USING_WEB_ADAPTOR))
-						.build()
-				)
-				.build();
+				arcConfig()
+						.arcPortalConfiguration(
+								portalConfig()
+										.portalAdminUsername(properties.getString(ArcProperties.PORTAL_ADMIN_USERNAME))
+										.portalAdminPassword(properties.getString(ArcProperties.PORTAL_ADMIN_PASSWORD))
+										.portalUrl(properties.getString(ArcProperties.PORTAL_URL))
+										.portalPort(properties.getInteger(ArcProperties.PORTAL_PORT))
+										.portalContextPath(properties.getString(ArcProperties.PORTAL_CONTEXT_PATH))
+										.portalIsUsingWebAdaptor(properties.getBoolean(ArcProperties.PORTAL_IS_USING_WEB_ADAPTOR))
+										.build()
+						)
+						.build();
 
 		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
 
 		httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration);
 
 		arcPortalApi = new ArcPortalApi(httpClient, arcPortalConfiguration, ZoneOffset.UTC,
-			new TokenManager(
-				new TokenRefresher(
-					new PortalTokenFetcher(httpClient, arcPortalConfiguration), ZoneOffset.UTC
+				new TokenManager(
+						new TokenRefresher(
+								new PortalTokenFetcher(httpClient, arcPortalConfiguration), ZoneOffset.UTC
+						)
 				)
-			)
 		);
 	}
 
@@ -200,12 +201,29 @@ public class ArcPortalApiTest {
 		arcPortalApi.groupApi.deleteGroup(group.group.id);
 	}
 
+	@Test
+	public void groupFetchTest()
+	{
+		GroupCreateResponse group = createGroup();
+		UserCreateResponse user = createUser();
+
+		arcPortalApi.groupApi.addUsersToGroup(group.group, Arrays.asList(user.username));
+
+		GroupUserFetchResponse groupUserFetchResponse = arcPortalApi.groupApi.fetchGroupUsers(group.group.id);
+
+		assertNull(groupUserFetchResponse.getError());
+
+		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
+		arcPortalApi.userApi.deleteUser( user.username );
+		arcPortalApi.groupApi.deleteGroup( group.group.id );
+	}
+
 	private UserCreateResponse createUser() {
 		String username = UUID.randomUUID().toString();
 
 		//Try to create a valid user
 		UserRequestModel validUser = newUser(username, "Password123!", username + "@example.com", Role.ORG_PUBLISHER,
-			username, "Description", "Full Name").build();
+				username, "Description", "Full Name").build();
 
 		UserCreateResponse validUserResponse = arcPortalApi.userApi.addUser(validUser);
 
@@ -222,18 +240,18 @@ public class ArcPortalApiTest {
 		String name = UUID.randomUUID().toString();
 
 		Group group = newGroup()
-			.title(name)
-			.description("A test group owned by Kevin")
-			.snippet("snippet...")
-			.tag("tag1").tag("tag2").tag("tag3")
-			.phone("1600 Pennsylvania Ave")
-			.access(GroupAccess.PUBLIC)
-			.sortField(GroupSortField.TITLE)
-			.sortOrder(SortOrder.ASCENDING)
-			.isViewOnly(true)
-			.isInvitationOnly(false)
-			.thumbnail("")
-			.build();
+				.title(name)
+				.description("A test group owned by Kevin")
+				.snippet("snippet...")
+				.tag("tag1").tag("tag2").tag("tag3")
+				.phone("1600 Pennsylvania Ave")
+				.access(GroupAccess.PUBLIC)
+				.sortField(GroupSortField.TITLE)
+				.sortOrder(SortOrder.ASCENDING)
+				.isViewOnly(true)
+				.isInvitationOnly(false)
+				.thumbnail("")
+				.build();
 
 		GroupCreateResponse groupCreateResponse = arcPortalApi.groupApi.createGroup(group);
 
@@ -247,21 +265,21 @@ public class ArcPortalApiTest {
 		File file = new File(Main.class.getClassLoader().getResource("example.csv").getFile());
 
 		ItemUploadModel itemUploadModel = new ItemUploadModel(file, "CSV")
-			.text("This is an example file")
-			.title(UUID.randomUUID().toString().replace("-", ""))
-			.typeKeywords("csv, map")
-			.description("This example file is some cities")
-			.tags("csv, cities, file")
-			.snippet("A snippet about the file")
-			.licenseInfo("Apache 2.0")
-			.culture("US")
-			.properties("some=properties")
-			.extent("North America")
-			.destinationItemId("Destination ID")
-			.appCategories("mapping, points, interest")
-			.industries("Tech")
-			.languages("EN")
-			.format("json");
+				.text("This is an example file")
+				.title(UUID.randomUUID().toString().replace("-", ""))
+				.typeKeywords("csv, map")
+				.description("This example file is some cities")
+				.tags("csv, cities, file")
+				.snippet("A snippet about the file")
+				.licenseInfo("Apache 2.0")
+				.culture("US")
+				.properties("some=properties")
+				.extent("North America")
+				.destinationItemId("Destination ID")
+				.appCategories("mapping, points, interest")
+				.industries("Tech")
+				.languages("EN")
+				.format("json");
 
 		ItemUploadResponse itemUploadResponse = arcPortalApi.itemApi.uploadItem(itemUploadModel, username);
 
@@ -274,11 +292,11 @@ public class ArcPortalApiTest {
 	private String getToken(String username, String password) {
 		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
 		HttpPost httpPost = new HttpPostBuilder(arcPortalConfiguration.getPortalUrl() + "/arcgis/sharing/rest/generateToken")
-			.urlFormParam("f", "json")
-			.urlFormParam("username", username)
-			.urlFormParam("password", password)
-			.urlFormParam("referer", "referer")
-			.build();
+				.urlFormParam("f", "json")
+				.urlFormParam("username", username)
+				.urlFormParam("password", password)
+				.urlFormParam("referer", "referer")
+				.build();
 
 		PortalTokenResponse tokenResponse = HttpExecutor.getResponse(httpClient, httpPost, PortalTokenResponse.class);
 
