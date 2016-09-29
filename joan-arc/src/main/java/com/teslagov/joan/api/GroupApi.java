@@ -7,6 +7,8 @@ import com.teslagov.joan.portal.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.community.group.create.GroupCreator;
 import com.teslagov.joan.portal.community.group.delete.GroupDeleteResponse;
 import com.teslagov.joan.portal.community.group.delete.GroupDeleter;
+import com.teslagov.joan.portal.community.group.fetchUsers.GroupUserFetchResponse;
+import com.teslagov.joan.portal.community.group.fetchUsers.GroupUserFetcher;
 import com.teslagov.joan.portal.community.group.update.GroupUpdateResponse;
 import com.teslagov.joan.portal.community.group.update.GroupUpdater;
 import com.teslagov.joan.portal.community.group.useradd.GroupUserAddResponse;
@@ -36,6 +38,8 @@ public class GroupApi extends AbstractArcRestApi {
 	private final GroupUserAdder groupUserAdder = new GroupUserAdder();
 
 	private final GroupUserRemover groupUserRemover = new GroupUserRemover();
+
+	private final GroupUserFetcher groupUserFetcher = new GroupUserFetcher();
 
 	public GroupApi(
 		HttpClient httpClient,
@@ -77,4 +81,10 @@ public class GroupApi extends AbstractArcRestApi {
 		refreshTokenIfNecessary();
 		return groupUserRemover.removeUsersFromGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames);
 	}
+
+	public GroupUserFetchResponse fetchGroupUsers(String id) {
+		refreshTokenIfNecessary();
+		return groupUserFetcher.fetchGroupUsers(httpClient, arcConfiguration, tokenManager.getTokenResponse(), id);
+	}
 }
+

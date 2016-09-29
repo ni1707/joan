@@ -8,6 +8,7 @@ import com.teslagov.joan.portal.community.group.Group;
 import com.teslagov.joan.portal.community.group.GroupAccess;
 import com.teslagov.joan.portal.community.group.GroupSortField;
 import com.teslagov.joan.portal.community.group.create.GroupCreateResponse;
+import com.teslagov.joan.portal.community.group.fetchUsers.GroupUserFetchResponse;
 import com.teslagov.joan.portal.community.user.create.UserCreateResponse;
 import com.teslagov.joan.portal.content.publish.ItemPublishResponse;
 import com.teslagov.joan.portal.content.upload.ItemUploadResponse;
@@ -197,6 +198,22 @@ public class ArcPortalApiTest {
 		arcPortalApi.userApi.deleteUser(user.username);
 		arcPortalApi.userApi.deleteUser(userWithAccess.username);
 		arcPortalApi.groupApi.deleteGroup(anotherGroup.group.id);
+		arcPortalApi.groupApi.deleteGroup(group.group.id);
+	}
+
+	@Test
+	public void groupFetchTest() {
+		GroupCreateResponse group = createGroup();
+		UserCreateResponse user = createUser();
+
+		arcPortalApi.groupApi.addUsersToGroup(group.group, Arrays.asList(user.username));
+
+		GroupUserFetchResponse groupUserFetchResponse = arcPortalApi.groupApi.fetchGroupUsers(group.group.id);
+
+		assertNull(groupUserFetchResponse.getError());
+
+		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
+		arcPortalApi.userApi.deleteUser(user.username);
 		arcPortalApi.groupApi.deleteGroup(group.group.id);
 	}
 

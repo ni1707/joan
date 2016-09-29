@@ -92,6 +92,11 @@ public class PortalEndpointFactory {
 				public static String makeRemoveUserToGroupPath(ArcPortalConfiguration arcConfiguration, String groupID) {
 					return groupUrl(arcConfiguration, groupID) + "/removeUsers";
 				}
+
+				public static String makeFetchUsersPath( ArcPortalConfiguration arcConfiguration, String groupID )
+				{
+					return groupUrl( arcConfiguration, groupID ) + "/users?f=pjson";
+				}
 			}
 		}
 
