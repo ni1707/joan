@@ -50,10 +50,9 @@ public class GroupApi extends AbstractArcRestApi {
 		super(httpClient, arcConfiguration, zoneOffset, tokenManager, "Group Api");
 	}
 
-	public GroupCreateResponse createGroup(Group group) {
+		public GroupCreateResponse createGroup(Group group) {
 		refreshTokenIfNecessary();
 		GroupCreateResponse groupCreateResponse = groupCreator.createGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group);
-		logger.debug("GROUP ACCESS = {}", groupCreateResponse.group.access);
 
 		return groupCreateResponse;
 	}
