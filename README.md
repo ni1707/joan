@@ -2,6 +2,15 @@
 [Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a **Java 8** SDK that simplifies communicating with 
 [ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).
 
+## Publishing to Bintray
+1. Make sure you're on the `master` branch: `git checkout master`
+2. Pull latest code: `git pull`
+3. Tag a new release: `git tag -a x.y.z -m "added new feature" && git push --tags`
+4. Make sure you have a legit `gradle.properties` file
+5. Clean and build new artifacts: `./gradlew clean build `
+6. Publish to Bintray: `./gradlew bintrayUploadAllArtifacts`
+7. Login to Bintray and press "Publish"
+
 ## Usage
 ### Dependency
 In a Gradle buildscript
