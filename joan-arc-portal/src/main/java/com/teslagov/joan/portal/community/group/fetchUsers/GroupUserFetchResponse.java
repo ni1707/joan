@@ -7,9 +7,8 @@ import java.util.List;
 /**
  * Created by joncrain on 9/29/16.
  */
-public class GroupUserFetchResponse extends Response
-{
-    public String owner;
-    public List<String> admins;
-    public List<String> users;
+public class GroupUserFetchResponse extends Response {
+	public String owner;
+	public List<String> admins;
+	public List<String> users;
 }
