@@ -106,7 +106,6 @@ public class ArcPortalApiTest {
 		GroupCreateResponse group = createGroup();
 		UserCreateResponse user = createUser();
 
-		arcPortalApi.groupApi.addUsersToGroup(group.group, Arrays.asList(user.username));
 		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
 
 		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
@@ -226,6 +225,9 @@ public class ArcPortalApiTest {
 		assertNull(groupUserFetchResponse.getError());
 
 		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
+
+		groupUserFetchResponse = arcPortalApi.groupApi.fetchGroupUsers(group.group.id);
+
 		arcPortalApi.userApi.deleteUser(user.username);
 		arcPortalApi.groupApi.deleteGroup(group.group.id);
 	}

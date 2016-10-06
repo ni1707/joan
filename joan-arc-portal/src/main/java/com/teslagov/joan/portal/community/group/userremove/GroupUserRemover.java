@@ -34,5 +34,11 @@ public class GroupUserRemover {
 				.urlFormParam("f", "json")
 				.urlFormParam("users", StringUtils.join(usernames, ","))
 				.build();
+
+		try {
+			HttpExecutor.getStringResponse(httpClient, httpPost);
+		} catch( Exception e ) {
+			//We're going to eat this exception because there will never be a response
+		}
 	}
 }

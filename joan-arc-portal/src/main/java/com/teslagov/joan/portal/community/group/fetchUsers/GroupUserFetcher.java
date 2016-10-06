@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 
 /**
  * Created by joncrain on 9/29/16.
+ * {}/sharing/community/groups/{id}/users?f=pjson
  */
 public class GroupUserFetcher {
 	public GroupUserFetchResponse fetchGroupUsers(
