@@ -102,6 +102,19 @@ public class ArcPortalApiTest {
 	}
 
 	@Test
+	public void removeUserFromGroupTest() {
+		GroupCreateResponse group = createGroup();
+		UserCreateResponse user = createUser();
+
+		arcPortalApi.groupApi.addUsersToGroup(group.group, Arrays.asList(user.username));
+		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
+
+		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
+		arcPortalApi.userApi.deleteUser(user.username);
+		arcPortalApi.groupApi.deleteGroup(group.group.id);
+	}
+
+	@Test
 	public void uploadItemTest() {
 		UserCreateResponse user = createUser();
 		ItemUploadResponse item = uploadItem(user.username);
