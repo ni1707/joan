@@ -1,8 +1,6 @@
 package com.teslagov.joan.api;
 
-import com.teslagov.joan.core.ArcPortalConfiguration;
-import com.teslagov.joan.core.TokenManager;
-import com.teslagov.joan.core.UserRequestModel;
+import com.teslagov.joan.core.*;
 import com.teslagov.joan.portal.community.user.create.UserCreateResponse;
 import com.teslagov.joan.portal.community.user.create.UserCreator;
 import com.teslagov.joan.portal.community.user.delete.UserDeleteResponse;
@@ -11,6 +9,7 @@ import com.teslagov.joan.portal.community.user.fetch.UserFetcher;
 import com.teslagov.joan.portal.community.user.fetch.UserListResponse;
 import com.teslagov.joan.portal.portal.self.PortalFetcher;
 import com.teslagov.joan.portal.portal.self.PortalResponse;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +45,10 @@ public class UserApi extends AbstractArcRestApi {
 	public UserCreateResponse addUser(UserRequestModel userRequestModel) {
 		refreshTokenIfNecessary();
 		return userCreator.createUser(httpClient, arcConfiguration, tokenManager.getTokenResponse(), userRequestModel);
+	}
+
+	public UserCreateResponse adminAddUser(UserAdminRequestModel userAdminRequestModel, CookieStore cookieStore) {
+		return userCreator.adminCreateUser(httpClient, arcConfiguration, userAdminRequestModel, cookieStore);
 	}
 
 	public UserDeleteResponse deleteUser(String username) {

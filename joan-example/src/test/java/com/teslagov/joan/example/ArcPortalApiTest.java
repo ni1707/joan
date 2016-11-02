@@ -17,9 +17,11 @@ import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
 import com.teslagov.props.Properties;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,6 +44,7 @@ public class ArcPortalApiTest {
 	private ArcPortalApi arcPortalApi;
 	private HttpClient httpClient;
 	private TokenManager tokenManager;
+	private CookieStore cookieStore;
 
 	@Before
 	public void setup() {
@@ -64,7 +67,9 @@ public class ArcPortalApiTest {
 
 		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
 
-		httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration);
+		cookieStore = new BasicCookieStore();
+
+		httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration, cookieStore);
 
 		arcPortalApi = new ArcPortalApi(httpClient, arcPortalConfiguration, ZoneOffset.UTC,
 			new TokenManager(
@@ -232,6 +237,36 @@ public class ArcPortalApiTest {
 		arcPortalApi.groupApi.deleteGroup(group.group.id);
 	}
 
+	@Test
+	public void adminUserCreateTest() {
+		UserCreateResponse user = adminCreateUser();
+
+		arcPortalApi.userApi.deleteUser(user.username);
+	}
+
+	//  NOTE: Portaladmin
+	private UserCreateResponse adminCreateUser() {
+		String username = UUID.randomUUID().toString().replace("-", "");
+
+		UserAdminRequestModel userAdminRequestModel = new UserAdminRequestModel()
+			.username(username)
+			.firstname("Tester")
+			.lastname("McGee")
+			.role("org_publisher") //org_user, org_admin
+			.email("testmc@example.com")
+			.provider("enterprise")
+			.f("pjson");
+
+		UserCreateResponse user = arcPortalApi.userApi.adminAddUser(userAdminRequestModel, cookieStore);
+
+		user.username = username;
+
+		assertNotNull(user);
+
+		return user;
+	}
+
+	//  NOTE: Sharing/Rest
 	private UserCreateResponse createUser() {
 		String username = UUID.randomUUID().toString();
 

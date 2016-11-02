@@ -2,6 +2,7 @@ package com.teslagov.joan.example;
 
 import com.teslagov.joan.core.ArcConfiguration;
 import com.teslagov.joan.core.ArcPortalConfiguration;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.RegistryBuilder;
@@ -9,6 +10,8 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
@@ -39,13 +42,13 @@ public class TrustingHttpClientFactory {
 	 */
 	private static final int CONNECTION_REQUEST_TIMEOUT = 30000;
 
-	public static HttpClient createVeryUnsafePortalHttpClient(ArcConfiguration arcConfiguration) {
+	public static HttpClient createVeryUnsafePortalHttpClient(ArcConfiguration arcConfiguration, CookieStore cookieStore) {
 		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
 		int portNumber = arcPortalConfiguration.getPortalPort();
-		return createVeryUnsafeHttpClient(portNumber);
+		return createVeryUnsafeHttpClient(portNumber, cookieStore);
 	}
 
-	public static HttpClient createVeryUnsafeHttpClient(int portNumber) {
+	public static HttpClient createVeryUnsafeHttpClient(int portNumber, CookieStore cookieStore) {
 		return HttpClientBuilder.create()
 			// The NO_OP HostnameVerifier essentially turns hostname verification off.
 			// This implementation is a no-op, and never throws the SSLException.
@@ -67,6 +70,7 @@ public class TrustingHttpClientFactory {
 				)
 			)
 			.setSSLSocketFactory(getSslConnectionSocketFactory())
+			.setDefaultCookieStore(cookieStore)
 			.build();
 	}
 
