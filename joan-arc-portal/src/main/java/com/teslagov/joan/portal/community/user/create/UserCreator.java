@@ -7,32 +7,22 @@ import com.teslagov.joan.core.UserRequestModel;
 import com.teslagov.joan.core.http.HttpExecutor;
 import com.teslagov.joan.core.http.HttpPostBuilder;
 import com.teslagov.joan.portal.PortalEndpointFactory;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
-import java.io.InputStreamReader;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-
-import static java.lang.Thread.sleep;
 
 /**
  * {}/sharing/rest/community/createUser
@@ -112,15 +102,16 @@ public class UserCreator {
 				.urlFormParam("lastname", userAdminRequestModel.getLastname())
 				.build();
 
-		httpPost.addHeader("Host", "john.office.teslagovernment.com");
+		String host = arcConfiguration.getPortalUrl().substring(8);
+		httpPost.addHeader("Host", host);
 		httpPost.addHeader("Connection", "keep-alive");
 		httpPost.addHeader("Cache-Control", "max-age=0");
-		httpPost.addHeader("Origin", "https://john.office.teslagovernment.com");
+		httpPost.addHeader("Origin", arcConfiguration.getPortalUrl());
 		httpPost.addHeader("Upgrade-Insecure-Requests", "1");
 		httpPost.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36");
 		httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
 		httpPost.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-		httpPost.addHeader("Referer", "https://john.office.teslagovernment.com/arcgis/portaladmin/security/users/createUser");
+		httpPost.addHeader("Referer", PortalEndpointFactory.PortalAdmin.makeLoginPath(arcConfiguration));
 		httpPost.addHeader("Accept-Encoding", "gzip, deflate, br");
 		httpPost.addHeader("Accept-Language", "en-US,en;q=0.8");
 
