@@ -1,7 +1,7 @@
 # Joan
 [Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a **Java 8** SDK that simplifies communicating with 
 [ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).  
-Most of these can be found in the ArcPortalApiTest.
+Most of these examples can be found in the ArcPortalApiTest.
 
 ## Publishing to Bintray
 1. Make sure you're on the `master` branch: `git checkout master`
