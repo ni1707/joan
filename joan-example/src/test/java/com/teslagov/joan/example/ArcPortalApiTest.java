@@ -259,9 +259,9 @@ public class ArcPortalApiTest {
 
 		UserCreateResponse user = arcPortalApi.userApi.adminAddUser(userAdminRequestModel, cookieStore);
 
-		user.username = username;
-
 		assertNotNull(user);
+
+		user.username = username;
 
 		return user;
 	}

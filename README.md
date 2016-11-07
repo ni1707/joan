@@ -1,6 +1,7 @@
 # Joan
 [Joan](https://en.wikipedia.org/wiki/Joan_of_Arc) is a **Java 8** SDK that simplifies communicating with 
-[ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).
+[ArcGIS REST APIs](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html).  
+Most of these can be found in the ArcPortalApiTest.
 
 ## Publishing to Bintray
 1. Make sure you're on the `master` branch: `git checkout master`
@@ -15,135 +16,165 @@
 ### Dependency
 In a Gradle buildscript
 ```groovy
-dependencies {
-  compile 'com.teslagov:joan-arc:0.0.1'
-}
+    dependencies {
+      compile 'com.teslagov:joan-arc:0.0.1'
+    }
 ```
 
 ### Constructing an ArcApi
 Then in Java, you'd create your configuration class
 ```java
-ArcConfiguration arcConfiguration =
-  arcConfig()
-    .portalAdminUsername( "PORTAL_ADMIN_USERNAME" )
-    .portalAdminPassword( "PORTAL_ADMIN_PASSWORD" )
-    .portalUrl( "https://my.arcgis.portal.hostname" )
-    .portalPort( 7443 )
-    .arcServerAdminUsername( "ARC_GIS_SERVER_ADMIN_USERNAME" )
-    .arcServerAdminPassword( "ARC_GIS_SERVER_ADMIN_PASSWORD" )
-    .arcServerUrl( "https://my.arcgis.server.hostname" )
-    .arcServerPort( 6443 )
-    .build();
+    //Setup our ArcConfiguration and Api
+    Properties properties = ArcPropertiesFactory.createArcProperties();
+    
+    arcConfiguration =
+        arcConfig()
+            .arcPortalConfiguration(
+                portalConfig()
+                    .portalAdminUsername(properties.getString(ArcProperties.PORTAL_ADMIN_USERNAME))
+                    .portalAdminPassword(properties.getString(ArcProperties.PORTAL_ADMIN_PASSWORD))
+                    .portalUrl(properties.getString(ArcProperties.PORTAL_URL))
+                    .portalPort(properties.getInteger(ArcProperties.PORTAL_PORT))
+                    .portalContextPath(properties.getString(ArcProperties.PORTAL_CONTEXT_PATH))
+                    .portalIsUsingWebAdaptor(properties.getBoolean(ArcProperties.PORTAL_IS_USING_WEB_ADAPTOR))
+                    .build()
+            )
+            .build();
+    
+    ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
 ```
 
 and your [Apache `HttpClient`](https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/), and you'd be on your way:
 
 ```java
-ArcApi arcApi = new ArcApi( httpClient, arcConfiguration );
+    cookieStore = new BasicCookieStore();
+    
+    httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration, cookieStore);
+    
+    arcPortalApi = new ArcPortalApi(httpClient, arcPortalConfiguration, ZoneOffset.UTC,
+        new TokenManager(
+            new TokenRefresher(
+                new PortalTokenFetcher(httpClient, arcPortalConfiguration), ZoneOffset.UTC
+            )
+        )
+    );
 ```
 
 ### Users API
 #### Fetch User List
 ```java
-// fetch first 100 users
-List<User> users = arcApi.fetchUsers();
-
-// fetch users 101 thru 150
-List<User> users = arcApi.fetchUsers( 100, 50 );
+    // fetch first 100 users
+    List<User> users = arcPortalApi.userApi.fetchUsers();
+    
+    // fetch users 101 thru 150
+    List<User> users = arcPortalApi.userApi.fetchUsers( 100, 50 );
 ```
 
 #### Create User
 ```java
-// create a user object
-UserRequestModel newUserRequestModel = newUser( "Username", "Password123!", "example@example.com",
-				Role.ORG_USER, "Account ID", Description", "Full Name" )
-				.build();
+//Create a user request object
+    UserRequestModel validUser = newUser(username, "Password123!", username + "@example.com", Role.ORG_PUBLISHER,
+        username, "Description", "Full Name").build();
+    
+    //Create a user
+    UserCreateResponse validUserResponse = arcPortalApi.userApi.addUser(validUser);
+```
 
-// add user to ArcGIS portal
-arcApi.addUserViaPortal( newUserRequestModel );
+#### Create Enterprise User(Without a password)
+```java
+UserAdminRequestModel userAdminRequestModel = new UserAdminRequestModel()
+    .username(username)
+    .firstname("Tester")
+    .lastname("McGee")
+    .role("org_publisher") //org_user, org_admin
+    .email("testmc@example.com")
+    .provider("enterprise")
+    .f("pjson");
+
+UserCreateResponse user = arcPortalApi.userApi.adminAddUser(userAdminRequestModel, cookieStore);
 ```
 
 #### Delete User
 ```java
-// delete user from the ArcGIS portal
-arcApi.removeUser( "UserToDelete" );
+    // delete user from the ArcGIS portal
+    arcApi.removeUser( "UserToDelete" );
 ```
 
 ### Groups API
 #### Create Group
 ```java
-// upload a new group
-Group group = newGroup()
-  .title( "House Stark" )
-  .description( "House Stark of Winterfell is one of the oldest lines of Westerosi nobility, stretching back over 8000 years." )
-  .snippet( "Jon Snow is the current King in the North" )
-  .tag( "game of thrones" ).tag( "got" ).tag( "alive" )
-  .phone( "Winterfell, The North" )
-  .access( GroupAccess.PUBLIC )
-  .sortField( GroupSortField.TITLE )
-  .sortOrder( SortOrder.ASCENDING )
-  .isViewOnly( true )
-  .isInvitationOnly( false )
-  .thumbnail( "" )
-  .build();
-
-group = arcApi.createGroup( group ).group;
+    // upload a new group
+    Group group = newGroup()
+        .title(name)
+        .description("A test group owned by Kevin")
+        .snippet("snippet...")
+        .tag("tag1").tag("tag2").tag("tag3")
+        .phone("1600 Pennsylvania Ave")
+        .access(GroupAccess.PUBLIC)
+        .sortField(GroupSortField.TITLE)
+        .sortOrder(SortOrder.ASCENDING)
+        .isViewOnly(true)
+        .isInvitationOnly(false)
+        .thumbnail("")
+        .build();
+    
+    GroupCreateResponse groupCreateResponse = arcPortalApi.groupApi.createGroup(group);
 ```
 
 #### Update Group
 ```java
-group.title = "Roose Bolton Group";
-group.description = "Weddings..."
-group.snippet = "What goes around comes around"
-arcApi.updateGroup( group );
+    group.title = "Roose Bolton Group";
+    group.description = "Weddings..."
+    group.snippet = "What goes around comes around"
+    arcPortalApi.groupApi.updateGroup( group );
 ```
 
 #### Delete Group
 ```java
-String groupID = group.id;
-
-arcApi.deleteGroup( groupID );
+    String groupID = group.id;
+    
+    arcPortalApi.groupApi.deleteGroup( groupID );
 ```
 
 #### Add Users To Group
 ```java
-GroupUserAddResponse response;
-List<String> usersToAdd;
-
-usersToAdd = Arrays.asList(
-  "arya.stark",
-  "jon.snow",
-  "robb.stark",
-  "talisa.stark",
-  "catelyn.stark",
-  "edmure.tully"
-);
-response = arcApi.addUsersToGroup( group, usersToAdd );
-response.allUsersAdded() == true
+    GroupUserAddResponse response;
+    List<String> usersToAdd;
+    
+    usersToAdd = Arrays.asList(
+      "arya.stark",
+      "jon.snow",
+      "robb.stark",
+      "talisa.stark",
+      "catelyn.stark",
+      "edmure.tully"
+    );
+    response = arcApi.groupApi.addUsersToGroup( group, usersToAdd );
+    response.allUsersAdded() == true
 ```
 
 #### Remove Users From Group
 ```java
-GroupUserRemoveResponse response;
-List<String> usersToRemove;
-
-usersToRemove = Arrays.asList(
-  "robb.stark",
-  "talisa.stark",
-  "catelyn.stark",
-  "edmure.tully",
-  "stark.impostor"
-);
-response = arcApi.removeUsersFromGroup( group, usersToRemove );
-response.allUsersRemoved() == true
-response.notRemoved.size() == 1
-response.notRemoved.contains( "stark.impostor" ) == true
+    GroupUserRemoveResponse response;
+    List<String> usersToRemove;
+    
+    usersToRemove = Arrays.asList(
+      "robb.stark",
+      "talisa.stark",
+      "catelyn.stark",
+      "edmure.tully",
+      "stark.impostor"
+    );
+    response = arcApi.groupApi.removeUsersFromGroup( group, usersToRemove );
+    response.allUsersRemoved() == true
+    response.notRemoved.size() == 1
+    response.notRemoved.contains( "stark.impostor" ) == true
 ```
 
 #### Fetch Users In Group
 ```java
-GroupUserFetchResponse groupUserFetchResponse = arcPortalApi.groupApi.fetchGroupUsers( groupId );
-System.out.println(groupUserFetchResponse.users);
+    GroupUserFetchResponse groupUserFetchResponse = arcPortalApi.groupApi.fetchGroupUsers( groupId );
+    System.out.println(groupUserFetchResponse.users);
 ```
 
 ### Items API
@@ -153,42 +184,42 @@ System.out.println(groupUserFetchResponse.users);
 
     //Required parameters are either File and Type or URL and Type
     //Any others are optional
-    UploadItemModel itemUploadModel = new UploadItemModel(file, "CSV")
-            .text("This is an example file")
-            .title("An example file")
-            .typeKeywords("csv, map")
-            .description("This example file is some cities")
-            .tags("csv, cities, file")
-            .snippet("A snippet about the file")
-            .licenseInfo("Apache 2.0")
-            .culture("US")
-            .properties("some=properties")
-            .extent("North America")
-            .destinationItemId("Destination ID")
-            .appCategories("mapping, points, interest")
-            .industries("Tech")
-            .languages("EN")
-            .format("json");
+    ItemUploadModel itemUploadModel = new ItemUploadModel(file, "CSV")
+        .text("This is an example file")
+        .title(UUID.randomUUID().toString().replace("-", ""))
+        .typeKeywords("csv, map")
+        .description("This example file is some cities")
+        .tags("csv, cities, file")
+        .snippet("A snippet about the file")
+        .licenseInfo("Apache 2.0")
+        .culture("US")
+        .properties("some=properties")
+        .extent("North America")
+        .destinationItemId("Destination ID")
+        .appCategories("mapping, points, interest")
+        .industries("Tech")
+        .languages("EN")
+        .format("json");
 
-    return arcApi.uploadItem(itemUploadModel, username).id;
+    ItemUploadResponse itemUploadResponse = arcPortalApi.itemApi.uploadItem(itemUploadModel, username);
 ```
 
 #### Publish Item
 ```java
     //This requires publisher or admin role
-    PublishItemModel itemPublishModel = new PublishItemModel(id);
-    arcApi.publishItem( itemPublishModel, username );
+    ItemPublishModel itemPublishModel = new ItemPublishModel(item.id, "CSV", "{\"name\":\"" + item.id + "\"}");
+    ItemPublishResponse itemPublishResponse = arcPortalApi.itemApi.publishItem(itemPublishModel, user.username);
 ```
 
 #### Share Item
 ```java
     //ids is a comma seperated list of item ids, groups is a comma seperated list of groups to share with
-	//in the example it's just one item for one group
-	arcApi.shareItem( id, username, groupId );
+    //in the example it's just one item for one group
+    arcPortalApi.itemApi.shareItem(item.id, user.username, group.group.id);
 ```
 
 #### Delete Item
 ```java
-    arcApi.deleteItem( id, username );
+    arcPortalApi.itemApi.deleteItem(item.id, user.username);
 ```
 
