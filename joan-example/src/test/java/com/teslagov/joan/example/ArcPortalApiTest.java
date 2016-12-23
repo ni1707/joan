@@ -248,7 +248,7 @@ public class ArcPortalApiTest {
 
 		assertNull(updateResponse.getError());
 
-		//arcPortalApi.userApi.deleteUser(user.username);
+		arcPortalApi.userApi.deleteUser(user.username);
 	}
 
 	//  NOTE: Portaladmin
@@ -262,8 +262,7 @@ public class ArcPortalApiTest {
 			.role("org_publisher") //org_user, org_admin
 			.email("testmc@example.com")
 			.provider("enterprise")
-			.f("pjson")
-			.access("private");
+			.f("pjson");
 
 		UserCreateResponse user = arcPortalApi.userApi.adminAddUser(userAdminRequestModel, cookieStore);
 
