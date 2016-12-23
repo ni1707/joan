@@ -10,6 +10,7 @@ import com.teslagov.joan.portal.community.group.GroupSortField;
 import com.teslagov.joan.portal.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.community.group.fetchUsers.GroupUserFetchResponse;
 import com.teslagov.joan.portal.community.user.create.UserCreateResponse;
+import com.teslagov.joan.portal.community.user.update.UserUpdateResponse;
 import com.teslagov.joan.portal.content.publish.ItemPublishResponse;
 import com.teslagov.joan.portal.content.upload.ItemUploadResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
@@ -241,7 +242,13 @@ public class ArcPortalApiTest {
 	public void adminUserCreateTest() {
 		UserCreateResponse user = adminCreateUser();
 
-		arcPortalApi.userApi.deleteUser(user.username);
+		assertNull(user.getError());
+
+		UserUpdateResponse updateResponse = arcPortalApi.userApi.updateUser(user.username, "access", "private");
+
+		assertNull(updateResponse.getError());
+
+		//arcPortalApi.userApi.deleteUser(user.username);
 	}
 
 	//  NOTE: Portaladmin
@@ -255,7 +262,8 @@ public class ArcPortalApiTest {
 			.role("org_publisher") //org_user, org_admin
 			.email("testmc@example.com")
 			.provider("enterprise")
-			.f("pjson");
+			.f("pjson")
+			.access("private");
 
 		UserCreateResponse user = arcPortalApi.userApi.adminAddUser(userAdminRequestModel, cookieStore);
 

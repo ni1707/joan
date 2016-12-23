@@ -7,6 +7,8 @@ import com.teslagov.joan.portal.community.user.delete.UserDeleteResponse;
 import com.teslagov.joan.portal.community.user.delete.UserDeleter;
 import com.teslagov.joan.portal.community.user.fetch.UserFetcher;
 import com.teslagov.joan.portal.community.user.fetch.UserListResponse;
+import com.teslagov.joan.portal.community.user.update.UserUpdateResponse;
+import com.teslagov.joan.portal.community.user.update.UserUpdater;
 import com.teslagov.joan.portal.portal.self.PortalFetcher;
 import com.teslagov.joan.portal.portal.self.PortalResponse;
 import org.apache.http.client.CookieStore;
@@ -31,6 +33,8 @@ public class UserApi extends AbstractArcRestApi {
 
 	private final PortalFetcher portalFetcher = new PortalFetcher();
 
+	private final UserUpdater userUpdater = new UserUpdater();
+
 	private PortalResponse portalResponse;
 
 	public UserApi(
@@ -54,6 +58,11 @@ public class UserApi extends AbstractArcRestApi {
 	public UserDeleteResponse deleteUser(String username) {
 		refreshTokenIfNecessary();
 		return userDeleter.deleteUser(httpClient, arcConfiguration, tokenManager.getTokenResponse(), username);
+	}
+
+	public UserUpdateResponse updateUser(String username, String key, String value) {
+		refreshTokenIfNecessary();
+		return userUpdater.updateUser(httpClient, arcConfiguration, tokenManager.getTokenResponse(), username, key, value);
 	}
 
 

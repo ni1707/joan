@@ -72,6 +72,10 @@ public class PortalEndpointFactory {
 				return communityPath(arcConfiguration) + "/users/" + username + "/delete";
 			}
 
+			public static String makeUpdateUserPath(ArcPortalConfiguration arcPortalConfiguration, String username ) {
+				return  communityPath(arcPortalConfiguration) + "/users/" + username + "/update";
+			}
+
 			public static class Groups {
 				private static String groupsUrl(ArcPortalConfiguration arcConfiguration) {
 					return communityPath(arcConfiguration) + "/groups";
