@@ -50,7 +50,7 @@ public class Main {
 				)
 				.build();
 
-		HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration);
+		HttpClient httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration, null);
 
 		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
 

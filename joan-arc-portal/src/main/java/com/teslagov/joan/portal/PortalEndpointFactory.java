@@ -15,6 +15,10 @@ public class PortalEndpointFactory {
 			private static String users(ArcPortalConfiguration arcConfiguration) {
 				return security(arcConfiguration) + "/users";
 			}
+
+			public static String makeCreateUserPath(ArcPortalConfiguration arcPortalConfiguration) {
+				return users(arcPortalConfiguration) + "/createUser";
+			}
 		}
 
 		public static class Uploads {
@@ -25,6 +29,10 @@ public class PortalEndpointFactory {
 			public static String makeUploadPath(ArcPortalConfiguration arcConfiguration) {
 				return uploads(arcConfiguration) + "/upload";
 			}
+		}
+
+		public static String makeLoginPath(ArcPortalConfiguration arcConfiguration) {
+			return arcConfiguration.getPortalAdminApiPath() + "/login";
 		}
 	}
 
@@ -62,6 +70,10 @@ public class PortalEndpointFactory {
 
 			public static String makeDeleteUserPath(ArcPortalConfiguration arcConfiguration, String username) {
 				return communityPath(arcConfiguration) + "/users/" + username + "/delete";
+			}
+
+			public static String makeUpdateUserPath(ArcPortalConfiguration arcPortalConfiguration, String username ) {
+				return  communityPath(arcPortalConfiguration) + "/users/" + username + "/update";
 			}
 
 			public static class Groups {

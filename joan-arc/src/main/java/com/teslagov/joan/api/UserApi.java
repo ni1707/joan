@@ -1,16 +1,17 @@
 package com.teslagov.joan.api;
 
-import com.teslagov.joan.core.ArcPortalConfiguration;
-import com.teslagov.joan.core.TokenManager;
-import com.teslagov.joan.core.UserRequestModel;
+import com.teslagov.joan.core.*;
 import com.teslagov.joan.portal.community.user.create.UserCreateResponse;
 import com.teslagov.joan.portal.community.user.create.UserCreator;
 import com.teslagov.joan.portal.community.user.delete.UserDeleteResponse;
 import com.teslagov.joan.portal.community.user.delete.UserDeleter;
 import com.teslagov.joan.portal.community.user.fetch.UserFetcher;
 import com.teslagov.joan.portal.community.user.fetch.UserListResponse;
+import com.teslagov.joan.portal.community.user.update.UserUpdateResponse;
+import com.teslagov.joan.portal.community.user.update.UserUpdater;
 import com.teslagov.joan.portal.portal.self.PortalFetcher;
 import com.teslagov.joan.portal.portal.self.PortalResponse;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,8 @@ public class UserApi extends AbstractArcRestApi {
 
 	private final PortalFetcher portalFetcher = new PortalFetcher();
 
+	private final UserUpdater userUpdater = new UserUpdater();
+
 	private PortalResponse portalResponse;
 
 	public UserApi(
@@ -48,9 +51,18 @@ public class UserApi extends AbstractArcRestApi {
 		return userCreator.createUser(httpClient, arcConfiguration, tokenManager.getTokenResponse(), userRequestModel);
 	}
 
+	public UserCreateResponse adminAddUser(UserAdminRequestModel userAdminRequestModel, CookieStore cookieStore) {
+		return userCreator.adminCreateUser(httpClient, arcConfiguration, userAdminRequestModel, cookieStore);
+	}
+
 	public UserDeleteResponse deleteUser(String username) {
 		refreshTokenIfNecessary();
 		return userDeleter.deleteUser(httpClient, arcConfiguration, tokenManager.getTokenResponse(), username);
+	}
+
+	public UserUpdateResponse updateUser(String username, String key, String value) {
+		refreshTokenIfNecessary();
+		return userUpdater.updateUser(httpClient, arcConfiguration, tokenManager.getTokenResponse(), username, key, value);
 	}
 
 

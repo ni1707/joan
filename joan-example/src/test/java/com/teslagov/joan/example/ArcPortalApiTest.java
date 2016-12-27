@@ -10,6 +10,7 @@ import com.teslagov.joan.portal.community.group.GroupSortField;
 import com.teslagov.joan.portal.community.group.create.GroupCreateResponse;
 import com.teslagov.joan.portal.community.group.fetchUsers.GroupUserFetchResponse;
 import com.teslagov.joan.portal.community.user.create.UserCreateResponse;
+import com.teslagov.joan.portal.community.user.update.UserUpdateResponse;
 import com.teslagov.joan.portal.content.publish.ItemPublishResponse;
 import com.teslagov.joan.portal.content.upload.ItemUploadResponse;
 import com.teslagov.joan.portal.models.ItemPublishModel;
@@ -17,9 +18,11 @@ import com.teslagov.joan.portal.models.ItemUploadModel;
 import com.teslagov.joan.portal.token.PortalTokenFetcher;
 import com.teslagov.joan.portal.token.PortalTokenResponse;
 import com.teslagov.props.Properties;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,6 +45,7 @@ public class ArcPortalApiTest {
 	private ArcPortalApi arcPortalApi;
 	private HttpClient httpClient;
 	private TokenManager tokenManager;
+	private CookieStore cookieStore;
 
 	@Before
 	public void setup() {
@@ -64,7 +68,9 @@ public class ArcPortalApiTest {
 
 		ArcPortalConfiguration arcPortalConfiguration = arcConfiguration.getArcPortalConfiguration();
 
-		httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration);
+		cookieStore = new BasicCookieStore();
+
+		httpClient = TrustingHttpClientFactory.createVeryUnsafePortalHttpClient(arcConfiguration, cookieStore);
 
 		arcPortalApi = new ArcPortalApi(httpClient, arcPortalConfiguration, ZoneOffset.UTC,
 			new TokenManager(
@@ -95,6 +101,18 @@ public class ArcPortalApiTest {
 		UserCreateResponse user = createUser();
 
 		arcPortalApi.groupApi.addUsersToGroup(group.group, Arrays.asList(user.username));
+
+		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
+		arcPortalApi.userApi.deleteUser(user.username);
+		arcPortalApi.groupApi.deleteGroup(group.group.id);
+	}
+
+	@Test
+	public void removeUserFromGroupTest() {
+		GroupCreateResponse group = createGroup();
+		UserCreateResponse user = createUser();
+
+		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
 
 		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
 		arcPortalApi.userApi.deleteUser(user.username);
@@ -213,10 +231,49 @@ public class ArcPortalApiTest {
 		assertNull(groupUserFetchResponse.getError());
 
 		arcPortalApi.groupApi.removeUsersFromGroup(group.group, Arrays.asList(user.username));
+
+		groupUserFetchResponse = arcPortalApi.groupApi.fetchGroupUsers(group.group.id);
+
 		arcPortalApi.userApi.deleteUser(user.username);
 		arcPortalApi.groupApi.deleteGroup(group.group.id);
 	}
 
+	@Test
+	public void adminUserCreateTest() {
+		UserCreateResponse user = adminCreateUser();
+
+		assertNull(user.getError());
+
+		UserUpdateResponse updateResponse = arcPortalApi.userApi.updateUser(user.username, "access", "private");
+
+		assertNull(updateResponse.getError());
+
+		arcPortalApi.userApi.deleteUser(user.username);
+	}
+
+	//  NOTE: Portaladmin
+	private UserCreateResponse adminCreateUser() {
+		String username = UUID.randomUUID().toString().replace("-", "");
+
+		UserAdminRequestModel userAdminRequestModel = new UserAdminRequestModel()
+			.username(username)
+			.firstname("Tester")
+			.lastname("McGee")
+			.role("org_publisher") //org_user, org_admin
+			.email("testmc@example.com")
+			.provider("enterprise")
+			.f("pjson");
+
+		UserCreateResponse user = arcPortalApi.userApi.adminAddUser(userAdminRequestModel, cookieStore);
+
+		assertNotNull(user);
+
+		user.username = username;
+
+		return user;
+	}
+
+	//  NOTE: Sharing/Rest
 	private UserCreateResponse createUser() {
 		String username = UUID.randomUUID().toString();
 

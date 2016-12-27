@@ -14,11 +14,13 @@ import java.util.List;
 
 /**
  * {}/sharing/rest/community/groups/{id}/removeUsers
+ * This class doesn't have a response because Portal doesn't provide one
  *
  * @author Kevin Chen
+ * @author Jon Crain
  */
 public class GroupUserRemover {
-	public GroupUserRemoveResponse removeUsersFromGroup(
+	public void removeUsersFromGroup(
 		HttpClient httpClient,
 		ArcPortalConfiguration arcConfiguration,
 		TokenResponse tokenResponse,
@@ -33,6 +35,10 @@ public class GroupUserRemover {
 				.urlFormParam("users", StringUtils.join(usernames, ","))
 				.build();
 
-		return HttpExecutor.getResponse(httpClient, httpPost, GroupUserRemoveResponse.class);
+		try {
+			HttpExecutor.getStringResponse(httpClient, httpPost);
+		} catch( Exception e ) {
+			//We're going to eat this exception because there will never be a response
+		}
 	}
 }

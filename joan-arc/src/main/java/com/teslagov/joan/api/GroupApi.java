@@ -76,9 +76,9 @@ public class GroupApi extends AbstractArcRestApi {
 		return groupUserAdder.addUserToGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames);
 	}
 
-	public GroupUserRemoveResponse removeUsersFromGroup(Group group, List<String> usernames) {
+	public void removeUsersFromGroup(Group group, List<String> usernames) {
 		refreshTokenIfNecessary();
-		return groupUserRemover.removeUsersFromGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames);
+		groupUserRemover.removeUsersFromGroup(httpClient, arcConfiguration, tokenManager.getTokenResponse(), group, usernames);
 	}
 
 	public GroupUserFetchResponse fetchGroupUsers(String id) {
